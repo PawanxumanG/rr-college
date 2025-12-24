@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Follow Us - RR International College</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+body{
+    margin:0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background:#0f0f0f;
+    color:#ffffff;
+}
+
+/* HEADER */
+.header{
+    background: linear-gradient(90deg,#f36b21,#ff8c42);
+    padding:22px 16px;
+    text-align:center;
+}
+.header h1{
+    margin:0;
+    font-size:22px;
+    font-weight:800;
+}
+.header p{
+    margin-top:6px;
+    font-size:14px;
+    opacity:0.9;
+}
+
+/* CONTAINER */
+.container{
+    padding:18px;
+}
+
+/* CARD */
+.social-card{
+    background:#1a1a1a;
+    border-radius:16px;
+    padding:16px;
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    box-shadow:0 10px 24px rgba(0,0,0,0.6);
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease;
+}
+.social-card:active{
+    transform:scale(0.97);
+}
+.social-icon{
+    width:52px;
+    height:52px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-right:14px;
+}
+.social-icon img{
+    width:32px;
+    height:32px;
+}
+
+/* TEXT */
+.social-text h2{
+    margin:0;
+    font-size:17px;
+}
+.social-text p{
+    margin:4px 0 0;
+    font-size:13px;
+    opacity:0.8;
+}
+
+/* COLORS */
+.instagram{
+    background: linear-gradient(45deg,#f58529,#dd2a7b,#8134af);
+}
+.youtube{
+    background:#ff0000;
+}
+
+/* BACK BUTTON */
+.back-btn{
+    margin-top:28px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:#2c2c2c;
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>📲 Follow Us</h1>
+    <p>RR International College • Official Pages</p>
+</div>
+
+<div class="container">
+
+    <!-- INSTAGRAM -->
+    <div class="social-card"
+        onclick="location.href='https://www.instagram.com/r.r._international_college'">
+        <div class="social-icon instagram">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Instagram_icon.png">
+        </div>
+        <div class="social-text">
+            <h2>Instagram</h2>
+            <p>Photos • Reels • Updates</p>
+        </div>
+    </div>
+
+    <!-- YOUTUBE -->
+    <div class="social-card"
+        onclick="location.href='https://www.youtube.com/'">
+        <div class="social-icon youtube">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg">
+        </div>
+        <div class="social-text">
+            <h2>YouTube</h2>
+            <p>Events • Videos • Highlights</p>
+        </div>
+    </div>
+
+    <!-- BACK -->
+    <button class="back-btn" onclick="history.back()">
+        ⬅ Back
+    </button>
+
+</div>
+
+</body>
+</html>
