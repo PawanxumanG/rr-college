@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Contact Committee</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:#0f1218;
+    color:#fff;
+}
+
+.header{
+    background:linear-gradient(90deg,#ff9800,#ff6a00);
+    padding:16px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.container{
+    padding:16px;
+}
+
+.contact-card{
+    background:#161a22;
+    border-radius:14px;
+    padding:16px;
+    margin-bottom:14px;
+    box-shadow:0 0 14px rgba(0,0,0,.6);
+}
+
+.contact-card h3{
+    margin:0 0 6px 0;
+    font-size:16px;
+}
+
+.contact-card p{
+    margin:0 0 10px 0;
+    opacity:.85;
+}
+
+.btn{
+    display:block;
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(90deg,#25D366,#128C7E);
+    color:#fff;
+    font-size:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.back-btn{
+    margin-top:22px;
+    background:#2a2f3a;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+📞 Contact Committee
+</div>
+
+<div class="container">
+
+<!-- 👤 SENIOR -->
+<div class="contact-card">
+    <h3>Senior Committee Member</h3>
+    <p>Pawan</p>
+    <button class="btn"
+        onclick="openWhatsApp('9867637326')">
+        💬 WhatsApp
+    </button>
+</div>
+
+<!-- 👤 JUNIOR -->
+<div class="contact-card">
+    <h3>Junior Committee Member</h3>
+    <p>Reetima</p>
+    <button class="btn"
+        onclick="openWhatsApp('8454811751')">
+        💬 WhatsApp
+    </button>
+</div>
+
+<!-- ⬅ BACK -->
+<button class="btn back-btn" onclick="goHome()">
+⬅ Back to Home
+</button>
+
+</div>
+
+<script>
+function openWhatsApp(number){
+    const msg =
+    "Hello, I am a student from RR International College.";
+    window.location.href =
+    "https://wa.me/91"+number+"?text="+encodeURIComponent(msg);
+}
+
+function goHome(){
+    window.location.href = "index.html";
+}
+</script>
+
+</body>
+</html>

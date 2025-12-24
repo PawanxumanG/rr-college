@@ -1,0 +1,156 @@
+/* ===== GLOBAL RESET ===== */
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    max-width: 100%;
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ===== BODY ===== */
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0f1117;
+    color: #eaeaea;
+    text-align: center;
+}
+
+/* ===== HEADER ===== */
+.header {
+    background: linear-gradient(90deg, #ff6a00, #ff9800);
+    color: #ffffff;
+    padding: 16px 10px;
+    width: 100%;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+.header p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+    padding: 16px;
+    width: 100%;
+    overflow-x: hidden;
+}
+
+/* ===== EVENT / CARD ===== */
+.event {
+    background: #161a22;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 0 18px rgba(0,0,0,0.6);
+    text-align: left;
+}
+
+/* ===== HEADINGS ===== */
+.event h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+.event h3 {
+    margin: 10px 0 8px;
+    font-size: 16px;
+    color: #ffcc80;
+    text-align: center;
+}
+
+/* ===== TEXT ===== */
+.event p {
+    color: #dcdcdc;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.text-muted {
+    font-size: 13px;
+    color: #aaaaaa;
+}
+
+.text-warning {
+    color: #ffb74d;
+    font-weight: 600;
+}
+
+/* ===== POSTER / IMAGE BOX ===== */
+.poster-box {
+    background: #0f1117;
+    border-radius: 12px;
+    padding: 12px;
+    margin-top: 14px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.6);
+}
+
+.poster-box img {
+    width: 100%;
+    border-radius: 10px;
+    margin-top: 8px;
+    display: block;
+    box-shadow: 0 6px 16px rgba(0,0,0,0.7);
+}
+
+/* ===== BUTTONS (COLOR COMES FROM JS) ===== */
+.nav-btn,
+.btn,
+button {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 14px 0 20px;
+    color: #ffffff;
+
+    /* DEFAULT FALLBACK (in case JS fails) */
+    background: linear-gradient(90deg, #2196f3, #00bcd4);
+    box-shadow: 0 6px 14px rgba(33,150,243,0.35);
+
+    transition:
+        transform 0.12s ease,
+        box-shadow 0.12s ease,
+        background 0.2s ease;
+}
+
+.nav-btn:active,
+.btn:active,
+button:active {
+    transform: scale(0.97);
+}
+
+/* ===== SMOOTH IMAGE LOADING ===== */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ===== SMALL SCREENS ===== */
+@media (max-width: 360px) {
+    .header h1 {
+        font-size: 16px;
+    }
+
+    .event h2 {
+        font-size: 16px;
+    }
+
+    .event h3 {
+        font-size: 15px;
+    }
+}

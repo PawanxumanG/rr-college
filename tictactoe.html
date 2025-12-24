@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>RR Games Zone</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GOOGLE ANALYTICS -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9JW1V42V83"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9JW1V42V83', {
+  page_title: 'RR Games Zone',
+  page_path: '/games.html'
+});
+</script>
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{
+    margin:0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:#0f1117;
+    color:#fff;
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(90deg,#6a11cb,#2575fc);
+    padding:28px 16px;
+    text-align:center;
+}
+.header h1{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+}
+.header p{
+    margin-top:8px;
+    opacity:.9;
+    font-size:14px;
+}
+
+/* CONTAINER */
+.container{
+    padding:16px;
+}
+
+/* NOTICE */
+.notice-box{
+    background:#1c2230;
+    border-left:4px solid #ff9800;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:20px;
+    font-size:13px;
+    line-height:1.5;
+    color:#ddd;
+}
+.notice-box b{
+    color:#ffb74d;
+}
+
+/* SECTION TITLE */
+.section-title{
+    margin:24px 4px 12px;
+    font-size:18px;
+    font-weight:700;
+}
+
+/* GAME CARD */
+.game-card{
+    background:#161a22;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 10px 24px rgba(0,0,0,.6);
+}
+.game-card h2{
+    margin:0;
+    font-size:20px;
+}
+.game-card p{
+    margin:8px 0 0;
+    font-size:14px;
+    opacity:.85;
+}
+
+/* BADGE */
+.badge{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 10px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:600;
+}
+.badge-hot{background:#e74c3c;}
+.badge-ai{background:#ff9800;}
+.badge-brain{background:#3498db;}
+.badge-quick{background:#2ecc71;}
+
+/* PLAY BUTTON */
+.play-btn{
+    width:100%;
+    margin-top:14px;
+    padding:14px;
+    font-size:16px;
+    font-weight:700;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    color:#fff;
+}
+
+/* BUTTON COLORS */
+.btn-ttt{background:linear-gradient(90deg,#ff9800,#ff6a00);}
+.btn-2048{background:linear-gradient(90deg,#00c6ff,#0072ff);}
+.btn-reaction{background:linear-gradient(90deg,#2ecc71,#27ae60);}
+
+/* FOOTER BUTTON */
+.back-btn{
+    width:100%;
+    margin:28px 0 80px;
+    padding:14px;
+    font-size:16px;
+    font-weight:700;
+    border:none;
+    border-radius:14px;
+    background:#34495e;
+    color:#fff;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="header">
+    <h1>🎮 RR Games Zone</h1>
+    <p>Play • Chill • Compete</p>
+</div>
+
+<div class="container">
+
+    <!-- NOTICE -->
+    <div class="notice-box">
+        ⚠️ <b>Important Note:</b><br>
+        Poki Games have been removed because downloading games was increasing
+        app storage usage on students’ devices.  
+        To keep the app lightweight and smooth, only built-in games are available now.
+        <br><br>
+        Thank you for your understanding 💙
+    </div>
+
+    <!-- FEATURED -->
+    <div class="section-title">🔥 Featured Challenge</div>
+
+    <div class="game-card">
+        <h2>❌⭕ Tic Tac Toe</h2>
+        <p>
+            Think you’re smart?  
+            Try defeating the <b>RR AI Bot (Hard Mode)</b>.
+        </p>
+        <span class="badge badge-hot">🧠 Power</span>
+        <span class="badge badge-ai">🤖 AI Challenge</span>
+
+        <button class="play-btn btn-ttt"
+            onclick="gtag('event','play_tictactoe'); location.href='tictactoe_game.html'">
+            ▶ Play Now
+        </button>
+    </div>
+
+    <!-- BRAIN GAMES -->
+    <div class="section-title">🧠 Brain Games</div>
+
+    <div class="game-card">
+        <h2>🧩 2048</h2>
+        <p>
+            Simple to play.  
+            Hard to master.  
+            Only legends reach <b>2048</b>.
+        </p>
+        <span class="badge badge-brain">🔥 Trending</span>
+
+        <button class="play-btn btn-2048"
+            onclick="gtag('event','play_2048'); location.href='2048.html'">
+            ▶ Play 2048
+        </button>
+    </div>
+
+    <!-- QUICK GAMES -->
+    <div class="section-title">⚡ Quick Games</div>
+
+    <div class="game-card">
+        <h2>⚡ Reaction Time</h2>
+        <p>
+            Blink and you lose.  
+            Tap fast when it turns green.
+        </p>
+        <span class="badge badge-quick">⏱ Ego Game</span>
+
+        <button class="play-btn btn-reaction"
+            onclick="gtag('event','play_reaction_time'); location.href='reaction.html'">
+            ▶ Test Your Speed
+        </button>
+    </div>
+
+    <!-- BACK -->
+    <button class="back-btn"
+        onclick="gtag('event','back_to_notices'); location.href='index.html'">
+        ⬅ Back to Notices
+    </button>
+
+</div>
+
+</body>
+</html>
