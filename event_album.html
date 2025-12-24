@@ -12,13 +12,71 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'G-9JW1V42V83', {
     page_title: 'Event Album',
     page_path: '/event_album.html'
   });
 </script>
 <!-- =================================================== -->
+
+<style>
+/* ===== DOWNLOAD BUTTON ===== */
+.download-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 14px;
+    background: #F36B21;
+    color: #fff;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+.download-btn:hover {
+    opacity: 0.85;
+}
+
+/* ===== DIALOG ===== */
+.dialog-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+}
+
+.dialog-box {
+    background: #1c1c1c;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 80%;
+    max-width: 300px;
+}
+
+.dialog-box h3 {
+    color: #F36B21;
+    margin-bottom: 8px;
+}
+
+.dialog-box p {
+    color: #ccc;
+    font-size: 14px;
+}
+
+.dialog-box button {
+    margin-top: 12px;
+    padding: 8px 16px;
+    border: none;
+    background: #F36B21;
+    color: #fff;
+    border-radius: 6px;
+    cursor: pointer;
+}
+</style>
 </head>
 
 <body>
@@ -34,77 +92,94 @@
     <!-- FORMAL DAY -->
     <div class="event">
         <h2 onclick="trackSection('Formal Day')">👔 Formal Day</h2>
-        <p>
-            Students are required to follow the Formal Day Dress Code.
-            Below are reference group photos.
-        </p>
+        <p>Students are required to follow the Formal Day Dress Code.</p>
 
-        <!-- BOYS -->
         <div class="poster-box">
             <h3>👨 Boys Formal</h3>
             <img src="boys_formal.jpg" alt="Boys Formal"
                  onclick="trackImage('Formal Day - Boys')">
+            <a class="download-btn"
+               onclick="downloadImage('boys_formal.jpg','Formal_Day_Boys.jpg')">
+               ⬇ Download
+            </a>
         </div>
 
-        <!-- GIRLS -->
         <div class="poster-box">
             <h3>👩 Girls Formal</h3>
             <img src="girls_formal.jpg" alt="Girls Formal"
                  onclick="trackImage('Formal Day - Girls')">
+            <a class="download-btn"
+               onclick="downloadImage('girls_formal.jpg','Formal_Day_Girls.jpg')">
+               ⬇ Download
+            </a>
         </div>
     </div>
 
     <!-- DENIM DAY -->
     <div class="event">
         <h2 onclick="trackSection('Denim Day')">👖 Denim Day</h2>
-        <p>
-            Denim Day celebration moments captured during the event.
-        </p>
 
         <div class="poster-box">
             <h3>💙 Denim Day Group</h3>
             <img src="denim.png" alt="Denim Day"
                  onclick="trackImage('Denim Day')">
+            <a class="download-btn"
+               onclick="downloadImage('denim.png','Denim_Day.jpg')">
+               ⬇ Download
+            </a>
         </div>
     </div>
 
-    <!-- FUTURE EVENTS -->
-    <div class="event">
-        <h2 onclick="trackSection('Upcoming Albums')">📅 Upcoming Event Albums</h2>
-        <p class="text-muted">
-            Photos from upcoming events like Cultural Week, Traditional Day,
-            Sports Day, etc. will be updated here.
-        </p>
-    </div>
-
-    <!-- BACK -->
-    <button onclick="goBack()" class="nav-btn">
-        ⬅ Back to Home
-    </button>
-
+    <button onclick="goBack()" class="nav-btn">⬅ Back to Home</button>
 </div>
 
-<!-- ================= TRACKING SCRIPTS ================= -->
+<!-- ===== DOWNLOAD DIALOG ===== -->
+<div class="dialog-overlay" id="downloadDialog">
+    <div class="dialog-box">
+        <h3>Download Started</h3>
+        <p>Your file is downloading.<br>
+        Check your Downloads folder.</p>
+        <button onclick="closeDialog()">OK</button>
+    </div>
+</div>
+
+<!-- ================= SCRIPTS ================= -->
 <script>
-function trackSection(sectionName) {
+function downloadImage(url, filename) {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    gtag('event', 'image_download', {
+        event_category: 'Event Album',
+        event_label: filename
+    });
+
+    document.getElementById('downloadDialog').style.display = 'flex';
+}
+
+function closeDialog() {
+    document.getElementById('downloadDialog').style.display = 'none';
+}
+
+function trackSection(name) {
     gtag('event', 'album_section_view', {
         event_category: 'Event Album',
-        event_label: sectionName
+        event_label: name
     });
 }
 
-function trackImage(imageName) {
+function trackImage(name) {
     gtag('event', 'album_image_click', {
         event_category: 'Event Album',
-        event_label: imageName
+        event_label: name
     });
 }
 
 function goBack() {
-    gtag('event', 'back_to_home', {
-        event_category: 'Navigation',
-        event_label: 'Back from Event Album'
-    });
     history.back();
 }
 </script>
