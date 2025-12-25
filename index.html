@@ -101,7 +101,7 @@ gtag('event','home_loaded');
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:12px;
-    margin-bottom:22px;
+    margin-bottom:18px;
 }
 .grid button{
     padding:14px;
@@ -117,9 +117,27 @@ gtag('event','home_loaded');
 .btn-album{background:linear-gradient(135deg,#ff9800,#ff2e63)}
 .btn-events{background:linear-gradient(135deg,#00b09b,#96c93d)}
 
+/* ===== SHARE APP BUTTON ===== */
+.share-app-btn{
+    margin:10px 0 6px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ff9800,#ff5722);
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 0 16px rgba(255,152,0,.45);
+}
+.share-app-btn:active{
+    transform:scale(.98);
+}
+
 /* ===== POWERED BY ===== */
 .app-footer{
-    margin-top:18px;
+    margin-top:12px;
     padding-top:14px;
     text-align:center;
     border-top:1px solid rgba(255,255,255,0.08);
@@ -173,7 +191,7 @@ gtag('event','home_loaded');
 👨‍🏫 OUR CHAIRMAN – Shri R. R. Pardeshi
 </button>
 
-<!-- ================= NOTICE SECTION (UPDATED ONLY HERE) ================= -->
+<!-- ================= NOTICE SECTION ================= -->
 <div class="event">
   <h2>📢 IMPORTANT NOTICE</h2>
 
@@ -186,7 +204,6 @@ gtag('event','home_loaded');
     📌 All updates will be published only in this app.
   </p>
 
-  <!-- COLLAPSIBLE UPDATES -->
   <div class="update-header" onclick="toggleUpdates()">
     <b>🆕 New App Updates (v2.1)</b>
     <span class="update-toggle" id="updateToggle">Tap to open</span>
@@ -207,7 +224,6 @@ gtag('event','home_loaded');
     </p>
   </div>
 </div>
-<!-- ====================================================================== -->
 
 <div class="streak-mini">
 🔥 Daily Streak
@@ -238,6 +254,11 @@ gtag('event','home_loaded');
   <button class="btn-album" onclick="trackAndGo('album')">📸 Album</button>
   <button class="btn-events" onclick="trackAndGo('events')">📅 Events</button>
 </div>
+
+<!-- ✅ SHARE APP BUTTON (EXACT MARKED PLACE) -->
+<button class="share-app-btn" onclick="location.href='shareapp.html'">
+📤 Share RR Events App
+</button>
 
 <div class="app-footer">
   <span class="powered-text">Powered by </span>
