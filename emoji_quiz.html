@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Emoji Quiz 🎯</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+body{
+    margin:0;
+    font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial;
+    background:#0f1117;
+    color:#ffffff;
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(90deg,#7b2cff,#2575fc);
+    padding:22px 16px;
+    text-align:center;
+}
+.header h1{
+    margin:0;
+    font-size:22px;
+    font-weight:800;
+}
+.header p{
+    margin-top:6px;
+    font-size:14px;
+    opacity:.9;
+}
+
+/* CONTAINER */
+.container{
+    padding:20px;
+    max-width:420px;
+    margin:auto;
+}
+
+/* QUIZ CARD */
+.quiz-card{
+    background:#161a22;
+    border-radius:18px;
+    padding:24px;
+    text-align:center;
+    box-shadow:0 0 30px rgba(0,0,0,.7);
+}
+
+/* EMOJI */
+.emoji{
+    font-size:48px;
+    margin-bottom:14px;
+}
+
+/* QUESTION */
+.question{
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:18px;
+}
+
+/* OPTIONS */
+.option{
+    width:100%;
+    padding:14px;
+    margin-bottom:12px;
+    border:none;
+    border-radius:14px;
+    font-size:15px;
+    font-weight:600;
+    background:#1f2937;
+    color:#fff;
+    cursor:pointer;
+    transition:.15s ease;
+}
+.option:active{
+    transform:scale(.97);
+}
+
+/* CORRECT / WRONG */
+.correct{background:#16a34a;}
+.wrong{background:#dc2626;}
+
+/* SCORE */
+.score{
+    margin-top:14px;
+    font-size:14px;
+    opacity:.85;
+}
+
+/* NEXT */
+.next-btn{
+    margin-top:18px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:700;
+    color:#fff;
+    cursor:pointer;
+    background:linear-gradient(135deg,#ff9800,#ff2e63);
+    display:none;
+}
+
+/* BACK */
+.back-btn{
+    margin-top:22px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:#242424;
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>😄 Emoji Quiz</h1>
+    <p>Guess the word from emojis</p>
+</div>
+
+<div class="container">
+
+    <div class="quiz-card">
+        <div class="emoji" id="emoji">🎓📚</div>
+        <div class="question" id="question">What does this mean?</div>
+
+        <button class="option" onclick="checkAnswer(this)">College</button>
+        <button class="option" onclick="checkAnswer(this)">School</button>
+        <button class="option" onclick="checkAnswer(this)">Library</button>
+        <button class="option" onclick="checkAnswer(this)">Exam</button>
+
+        <div class="score" id="score">Score: 0 / 0</div>
+
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()">Next ➜</button>
+    </div>
+
+    <button class="back-btn" onclick="history.back()">⬅ Back</button>
+
+</div>
+
+<script>
+const quiz = [
+  {
+    emoji:"🎓📚",
+    answer:"College",
+    options:["College","School","Library","Exam"]
+  },
+  {
+    emoji:"🎤🎶🔥",
+    answer:"Concert",
+    options:["Dance","Concert","DJ","Festival"]
+  },
+  {
+    emoji:"🏏🇮🇳",
+    answer:"Cricket",
+    options:["Football","Cricket","Hockey","Kabaddi"]
+  },
+  {
+    emoji:"📱📸",
+    answer:"Instagram",
+    options:["Facebook","WhatsApp","Instagram","Snapchat"]
+  },
+  {
+    emoji:"🍕🍔",
+    answer:"Fast Food",
+    options:["Dinner","Fast Food","Lunch","Party"]
+  }
+];
+
+let index = 0;
+let score = 0;
+let total = 0;
+
+function loadQuestion(){
+    const q = quiz[index];
+    document.getElementById("emoji").innerText = q.emoji;
+    document.getElementById("question").innerText = "What does this mean?";
+
+    const buttons = document.querySelectorAll(".option");
+    buttons.forEach((btn,i)=>{
+        btn.innerText = q.options[i];
+        btn.className = "option";
+        btn.disabled = false;
+    });
+
+    document.getElementById("nextBtn").style.display = "none";
+}
+
+function checkAnswer(btn){
+    const correct = quiz[index].answer;
+    total++;
+
+    if(btn.innerText === correct){
+        btn.classList.add("correct");
+        score++;
+    } else {
+        btn.classList.add("wrong");
+        document.querySelectorAll(".option").forEach(b=>{
+            if(b.innerText === correct){
+                b.classList.add("correct");
+            }
+        });
+    }
+
+    document.querySelectorAll(".option").forEach(b=>b.disabled=true);
+    document.getElementById("score").innerText = `Score: ${score} / ${total}`;
+    document.getElementById("nextBtn").style.display = "block";
+}
+
+function nextQuestion(){
+    index++;
+    if(index >= quiz.length){
+        index = 0;
+        score = 0;
+        total = 0;
+        document.getElementById("score").innerText = "Score: 0 / 0";
+    }
+    loadQuestion();
+}
+
+loadQuestion();
+</script>
+
+</body>
+</html>
