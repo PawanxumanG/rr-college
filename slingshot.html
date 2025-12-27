@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Slingshot Challenge</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<style>
+body{
+    margin:0;
+    background:#0f1117;
+    font-family:system-ui,Arial;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    height:100vh;
+}
+h1{
+    margin:6px 0;
+    font-size:20px;
+    color:#ff9800;
+}
+canvas{
+    background:linear-gradient(#87ceeb,#e0f7fa);
+    border-radius:14px;
+    box-shadow:0 0 20px rgba(0,0,0,.6);
+}
+.score{
+    margin-top:6px;
+    font-size:15px;
+}
+.btn{
+    margin-top:8px;
+    padding:10px 18px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#ff9800,#ff5722);
+    color:#fff;
+    font-size:14px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🐦 Slingshot Challenge</h1>
+<canvas id="game" width="320" height="420"></canvas>
+
+<div class="score">🎯 Score: <span id="score">0</span></div>
+<button class="btn" onclick="resetGame()">🔄 Restart</button>
+
+<script>
+const canvas = document.getElementById("game");
+const ctx = canvas.getContext("2d");
+
+let bird = {
+    x:80, y:300, r:12,
+    vx:0, vy:0,
+    dragging:false
+};
+
+let target = {
+    x:260, y:310, w:28, h:28
+};
+
+let score = 0;
+let gravity = 0.6;
+let launched = false;
+
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    // ground
+    ctx.fillStyle="#4caf50";
+    ctx.fillRect(0,330,canvas.width,90);
+
+    // target
+    ctx.fillStyle="#e53935";
+    ctx.fillRect(target.x,target.y,target.w,target.h);
+
+    // slingshot line
+    if(bird.dragging){
+        ctx.strokeStyle="#6d4c41";
+        ctx.lineWidth=3;
+        ctx.beginPath();
+        ctx.moveTo(80,300);
+        ctx.lineTo(bird.x,bird.y);
+        ctx.stroke();
+    }
+
+    // bird
+    ctx.fillStyle="#ffeb3b";
+    ctx.beginPath();
+    ctx.arc(bird.x,bird.y,bird.r,0,Math.PI*2);
+    ctx.fill();
+}
+
+function update(){
+    if(launched){
+        bird.vy += gravity;
+        bird.x += bird.vx;
+        bird.y += bird.vy;
+
+        // collision
+        if(
+            bird.x+bird.r > target.x &&
+            bird.x-bird.r < target.x+target.w &&
+            bird.y+bird.r > target.y &&
+            bird.y-bird.r < target.y+target.h
+        ){
+            score++;
+            document.getElementById("score").innerText=score;
+            resetRound();
+        }
+
+        // ground hit
+        if(bird.y > 330){
+            resetRound();
+        }
+    }
+}
+
+function loop(){
+    update();
+    draw();
+    requestAnimationFrame(loop);
+}
+
+function resetRound(){
+    bird.x=80;
+    bird.y=300;
+    bird.vx=0;
+    bird.vy=0;
+    launched=false;
+}
+
+function resetGame(){
+    score=0;
+    document.getElementById("score").innerText=score;
+    resetRound();
+}
+
+// touch + mouse controls
+function startDrag(x,y){
+    if(Math.hypot(x-bird.x,y-bird.y)<20){
+        bird.dragging=true;
+        launched=false;
+    }
+}
+function moveDrag(x,y){
+    if(bird.dragging){
+        bird.x=x;
+        bird.y=y;
+    }
+}
+function endDrag(){
+    if(bird.dragging){
+        bird.dragging=false;
+        bird.vx=(80-bird.x)/4;
+        bird.vy=(300-bird.y)/4;
+        launched=true;
+    }
+}
+
+canvas.addEventListener("mousedown",e=>startDrag(e.offsetX,e.offsetY));
+canvas.addEventListener("mousemove",e=>moveDrag(e.offsetX,e.offsetY));
+canvas.addEventListener("mouseup",endDrag);
+
+canvas.addEventListener("touchstart",e=>{
+    let r=canvas.getBoundingClientRect();
+    let t=e.touches[0];
+    startDrag(t.clientX-r.left,t.clientY-r.top);
+});
+canvas.addEventListener("touchmove",e=>{
+    let r=canvas.getBoundingClientRect();
+    let t=e.touches[0];
+    moveDrag(t.clientX-r.left,t.clientY-r.top);
+});
+canvas.addEventListener("touchend",endDrag);
+
+loop();
+</script>
+
+</body>
+</html>
