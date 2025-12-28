@@ -9,7 +9,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{
   margin:0;
-  font-family:'Segoe UI',Arial,sans-serif;
+  font-family:system-ui,Arial;
   background:#0f1117;
   color:#fff;
   text-align:center;
@@ -19,43 +19,7 @@ body{
   padding:22px 12px;
 }
 .header h1{margin:0;font-size:26px;}
-.header p{margin-top:6px;opacity:.85;}
-
-.mode-btn{
-  background:rgba(0,0,0,.35);
-  border:none;
-  border-radius:24px;
-  padding:10px 20px;
-  color:#fff;
-  font-size:14px;
-  cursor:pointer;
-  margin-top:12px;
-  display:inline-flex;
-  gap:6px;
-  align-items:center;
-}
-
-.ai-levels{
-  display:none;
-  justify-content:center;
-  gap:10px;
-  margin-top:12px;
-}
-.ai-levels button{
-  padding:8px 16px;
-  border:none;
-  border-radius:20px;
-  font-weight:600;
-  color:#fff;
-  cursor:pointer;
-  opacity:.6;
-}
-.ai-levels button.active{
-  opacity:1;
-  box-shadow:0 0 14px rgba(255,255,255,.6);
-}
-.medium{background:#f39c12;}
-.hard{background:#e74c3c;}
+.header p{opacity:.85;margin-top:6px;}
 
 .status{
   margin:18px 0;
@@ -79,35 +43,32 @@ body{
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  box-shadow:0 6px 18px rgba(0,0,0,.6);
 }
 .cell.X{color:#4fc3f7;}
 .cell.O{color:#ffb74d;}
 .cell.win{
   background:linear-gradient(135deg,#ff512f,#dd2476);
-  box-shadow:0 0 22px rgba(255,81,47,.9);
 }
 
 .btn{
   width:80%;
   max-width:280px;
   padding:14px;
-  font-size:16px;
-  font-weight:600;
+  margin-top:16px;
   border:none;
   border-radius:12px;
-  cursor:pointer;
-  margin-top:16px;
+  font-size:16px;
+  font-weight:600;
   color:#fff;
+  cursor:pointer;
 }
-.btn-restart{background:linear-gradient(90deg,#ff9800,#ff6a00);}
+.btn-restart{background:#ff9800;}
 .btn-back{background:#34495e;}
 
-/* 🚨 CHEATER OVERLAY */
 .cheat-overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.88);
+  background:rgba(0,0,0,.9);
   display:none;
   align-items:center;
   justify-content:center;
@@ -119,26 +80,18 @@ body{
   border-radius:18px;
   width:85%;
   max-width:320px;
-  box-shadow:0 0 30px rgba(255,0,0,.7);
 }
-.cheat-box h2{
-  color:#ff5252;
-  margin:0 0 10px;
-}
-.cheat-box p{
-  font-size:15px;
-  opacity:.9;
-}
+.cheat-box h2{color:#ff5252;margin:0 0 10px;}
+.cheat-box p{opacity:.9;}
 .cheat-box button{
-  margin-top:16px;
   width:100%;
+  margin-top:16px;
   padding:12px;
   border:none;
   border-radius:12px;
-  background:linear-gradient(135deg,#ff9800,#ff5722);
+  background:#ff9800;
   color:#fff;
   font-weight:700;
-  font-size:15px;
   cursor:pointer;
 }
 </style>
@@ -149,54 +102,31 @@ body{
 <div class="header">
   <h1>❌ ⭕ Tic Tac Toe</h1>
   <p>Play • Chill • Compete</p>
-
-  <button class="mode-btn" onclick="toggleMode()">
-    <span id="modeIcon">👥</span>
-    <span id="modeText">Friend</span>
-  </button>
-
-  <div class="ai-levels" id="aiLevels">
-    <button id="btnMedium" class="medium" onclick="setLevel('medium')">Medium</button>
-    <button id="btnHard" class="hard" onclick="setLevel('hard')">Hard</button>
-  </div>
 </div>
 
 <div class="status" id="status">Player X Turn</div>
 <div class="board" id="board"></div>
 
-<button class="btn btn-restart" onclick="restartGame()">🔁 Restart Game</button>
-<button class="btn btn-back" onclick="location.href='games.html'">⬅ Back to Games</button>
+<button class="btn btn-restart" onclick="restartGame()">Restart Game</button>
+<button class="btn btn-back" onclick="location.href='games.html'">Back</button>
 
 <!-- 🚨 CHEATER POPUP -->
 <div class="cheat-overlay" id="cheatOverlay">
   <div class="cheat-box">
     <h2>🚨 Cheater Detected 😂</h2>
-    <p>You can’t beat Hard mode.<br>Play fair and try again 😈</p>
-    <button onclick="restartGame()">🔄 Restart Fairly</button>
+    <p>You can’t win as Player X.<br>Play fair and try again.</p>
+    <button onclick="restartGame()">Restart Fair</button>
   </div>
 </div>
 
 <script>
 const boardEl = document.getElementById("board");
 const statusEl = document.getElementById("status");
-const modeIcon = document.getElementById("modeIcon");
-const modeText = document.getElementById("modeText");
-const aiLevels = document.getElementById("aiLevels");
-const btnMedium = document.getElementById("btnMedium");
-const btnHard = document.getElementById("btnHard");
 const cheatOverlay = document.getElementById("cheatOverlay");
 
-let vsAI = false;
-let aiLevel = "medium";
 let board, currentPlayer, gameOver, isAITurn;
-let matchStartTime = 0;
 
-/* TAP BURST TRACKING */
-let tapHistory = [];
-const TAP_WINDOW = 600;
-const TAP_LIMIT = 5;
-
-const wins = [
+const wins=[
   [0,1,2],[3,4,5],[6,7,8],
   [0,3,6],[1,4,7],[2,5,8],
   [0,4,8],[2,4,6]
@@ -207,8 +137,6 @@ function init(){
   currentPlayer = "X";
   gameOver = false;
   isAITurn = false;
-  tapHistory = [];
-  matchStartTime = Date.now();
   cheatOverlay.style.display = "none";
   statusEl.innerText = "Player X Turn";
   boardEl.innerHTML = "";
@@ -216,145 +144,92 @@ function init(){
   board.forEach((_,i)=>{
     const c = document.createElement("div");
     c.className = "cell";
-    c.onclick = ()=>move(i);
+    c.onclick = ()=>playerMove(i);
     boardEl.appendChild(c);
   });
-
-  aiLevels.style.display = vsAI ? "flex" : "none";
-  updateLevelGlow();
 }
 init();
 
-function trackTap(){
-  const now = Date.now();
-  tapHistory.push(now);
-  tapHistory = tapHistory.filter(t => now - t <= TAP_WINDOW);
-  return tapHistory.length >= TAP_LIMIT;
-}
+function playerMove(i){
+  if(gameOver || isAITurn || board[i]) return;
 
-function move(i){
-  if(trackTap()){
+  makeMove(i,"X");
+
+  if(checkWin("X")){
+    gameOver = true;
+    isAITurn = false;
     cheatOverlay.style.display = "flex";
     return;
   }
-  if(board[i] || gameOver || isAITurn) return;
 
-  board[i] = currentPlayer;
+  if(isDraw()) return;
+
+  // AI turn
+  currentPlayer = "O";
+  isAITurn = true;
+  statusEl.innerText = "🤖 AI Thinking...";
+
+  setTimeout(aiMove, 500);
+}
+
+function aiMove(){
+  if(gameOver) return;
+
+  const empty = board
+    .map((v,i)=>v===""?i:null)
+    .filter(v=>v!==null);
+
+  // Simple AI (can upgrade later)
+  const move = empty[Math.floor(Math.random()*empty.length)];
+  makeMove(move,"O");
+
+  if(checkWin("O")){
+    statusEl.innerText = "🎉 AI Wins!";
+    gameOver = true;
+    isAITurn = false;
+    return;
+  }
+
+  if(isDraw()) return;
+
+  currentPlayer = "X";
+  isAITurn = false;
+  statusEl.innerText = "Player X Turn";
+}
+
+function makeMove(i,player){
+  board[i]=player;
   render();
-
-  const winLine = wins.find(w => w.every(x => board[x] === currentPlayer));
-  if(winLine){
-
-    /* 🚨 BLOCK HARD MODE WIN BEFORE UI */
-    if(vsAI && aiLevel === "hard" && currentPlayer === "X"){
-      gameOver = true;
-      cheatOverlay.style.display = "flex";
-      return;
-    }
-
-    winLine.forEach(i => boardEl.children[i].classList.add("win"));
-    endGame(`🎉 Player ${currentPlayer} Wins!`);
-    return;
-  }
-
-  if(board.every(v => v)){
-    endGame("🤝 Match Draw");
-    return;
-  }
-
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
-  statusEl.innerText = `Player ${currentPlayer} Turn`;
-
-  if(vsAI && currentPlayer === "O"){
-    isAITurn = true;
-    statusEl.innerText = "🤖 AI Thinking...";
-    setTimeout(()=>{
-      move(aiLevel === "hard" ? bestMove() : mediumMove());
-      isAITurn = false;
-    },400);
-  }
 }
 
-function endGame(text){
-  gameOver = true;
-  const duration = (Date.now() - matchStartTime) / 1000;
-
-  if(vsAI && (aiLevel==="hard"||aiLevel==="medium") && duration < 3.2){
-    cheatOverlay.style.display = "flex";
-    return;
+function checkWin(player){
+  const line = wins.find(w=>w.every(i=>board[i]===player));
+  if(line){
+    line.forEach(i=>boardEl.children[i].classList.add("win"));
+    return true;
   }
-  statusEl.innerText = text;
+  return false;
 }
 
-/* AI LOGIC */
-function mediumMove(){
-  const empty = board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
-  if(Math.random()<0.4) return empty[Math.floor(Math.random()*empty.length)];
-  return bestMove();
-}
-
-function bestMove(){
-  let best=-Infinity,move;
-  board.forEach((v,i)=>{
-    if(v===""){
-      board[i]="O";
-      let s=minimax(board,0,false);
-      board[i]="";
-      if(s>best){best=s;move=i;}
-    }
-  });
-  return move;
-}
-
-function minimax(b,d,isMax){
-  const r = checkResult(b);
-  if(r!==null) return r==="O"?10-d:r==="X"?d-10:0;
-  let best = isMax ? -Infinity : Infinity;
-  b.forEach((v,i)=>{
-    if(v===""){
-      b[i]=isMax?"O":"X";
-      best=isMax?Math.max(best,minimax(b,d+1,!isMax)):
-                  Math.min(best,minimax(b,d+1,!isMax));
-      b[i]="";
-    }
-  });
-  return best;
-}
-
-function checkResult(b){
-  for(const[w,x,y] of wins){
-    if(b[w]&&b[w]===b[x]&&b[w]===b[y]) return b[w];
+function isDraw(){
+  if(board.every(v=>v)){
+    statusEl.innerText = "🤝 Match Draw";
+    gameOver = true;
+    isAITurn = false;
+    return true;
   }
-  return b.includes("")?null:"draw";
+  return false;
 }
 
 function render(){
   [...boardEl.children].forEach((c,i)=>{
     c.innerText = board[i];
-    c.className = "cell " + board[i];
+    c.className = "cell "+board[i];
   });
 }
 
-function restartGame(){ init(); }
-
-function toggleMode(){
-  vsAI = !vsAI;
-  modeIcon.innerText = vsAI ? "🤖" : "👥";
-  modeText.innerText = vsAI ? "RR AI Bot" : "Friend";
-  restartGame();
-}
-
-function setLevel(lvl){
-  aiLevel = lvl;
-  updateLevelGlow();
-  restartGame();
-}
-
-function updateLevelGlow(){
-  btnMedium.classList.remove("active");
-  btnHard.classList.remove("active");
-  if(aiLevel==="medium") btnMedium.classList.add("active");
-  if(aiLevel==="hard") btnHard.classList.add("active");
+function restartGame(){
+  init();
 }
 </script>
 
