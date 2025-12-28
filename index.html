@@ -181,18 +181,29 @@ gtag('event','home_loaded');
     margin-bottom:18px;
     box-shadow:0 0 16px rgba(0,0,0,.6);
 }
+/* ===== RULES HEADER (ONE LINE, ATTRACTIVE) ===== */
 .rules-header{
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
     cursor:pointer;
+    padding:14px 16px;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ff9800,#ff6a00);
+    box-shadow:0 0 18px rgba(255,152,0,.45);
 }
+
 .rules-header b{
-    color:#ff9800;
+    font-size:15px;
+    font-weight:700;
+    color:#0f1117;
 }
+
 .rules-toggle{
     font-size:13px;
-    color:#ff9800;
+    font-weight:600;
+    color:#0f1117;
+    opacity:.85;
 }
 .rules-content{
     display:none;
@@ -271,11 +282,10 @@ gtag('event','home_loaded');
 </div>
 
 <!-- 📜 RULES & REGULATIONS -->
-<div class="rules-box">
-  <div class="rules-header" onclick="toggleRules()">
-    <b>📜 Rules & Regulations – Karmanya 2025</b>
-    <span class="rules-toggle" id="rulesToggle">Tap to open</span>
-  </div>
+<div class="rules-header" onclick="toggleRules()">
+  <b>📜 Rules & Regulations – Karmanya 2025</b>
+  <span class="rules-toggle" id="rulesToggle">Tap to open</span>
+</div>
 
   <div class="rules-content" id="rulesContent">
     <ol>
