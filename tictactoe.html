@@ -109,6 +109,45 @@ body{
 }
 .btn-restart{background:linear-gradient(90deg,#ff9800,#ff6a00);}
 .btn-back{background:#34495e;}
+
+/* 🚨 CHEATER OVERLAY */
+.cheat-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:999;
+}
+.cheat-box{
+    background:#161a22;
+    padding:26px;
+    border-radius:18px;
+    width:85%;
+    max-width:320px;
+    box-shadow:0 0 30px rgba(255,0,0,.6);
+}
+.cheat-box h2{
+    color:#ff5252;
+    margin:0 0 10px;
+}
+.cheat-box p{
+    font-size:15px;
+    opacity:.9;
+}
+.cheat-box button{
+    margin-top:16px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:linear-gradient(135deg,#ff9800,#ff5722);
+    color:#fff;
+    font-weight:700;
+    font-size:15px;
+    cursor:pointer;
+}
 </style>
 </head>
 
@@ -135,152 +174,158 @@ body{
 <button class="btn btn-restart" onclick="restartGame()">🔁 Restart Game</button>
 <button class="btn btn-back" onclick="location.href='games.html'">⬅ Back to Games</button>
 
+<!-- 🚨 CHEATER POPUP -->
+<div class="cheat-overlay" id="cheatOverlay">
+  <div class="cheat-box">
+    <h2>🚨 Cheater Detected 😂</h2>
+    <p>You can’t beat me that fast.<br>Play fair and try again 😈</p>
+    <button onclick="restartGame()">🔄 Restart Fairly</button>
+  </div>
+</div>
+
 <script>
-const boardEl = document.getElementById("board");
-const statusEl = document.getElementById("status");
-const modeIcon = document.getElementById("modeIcon");
-const modeText = document.getElementById("modeText");
-const aiLevels = document.getElementById("aiLevels");
-const btnMedium = document.getElementById("btnMedium");
-const btnHard = document.getElementById("btnHard");
+const boardEl=document.getElementById("board");
+const statusEl=document.getElementById("status");
+const modeIcon=document.getElementById("modeIcon");
+const modeText=document.getElementById("modeText");
+const aiLevels=document.getElementById("aiLevels");
+const btnMedium=document.getElementById("btnMedium");
+const btnHard=document.getElementById("btnHard");
+const cheatOverlay=document.getElementById("cheatOverlay");
 
-let vsAI = false;
-let aiLevel = "medium";
-let board, currentPlayer, gameOver;
-let isAITurn = false;
+let vsAI=false;
+let aiLevel="medium";
+let board,currentPlayer,gameOver,isAITurn;
+let matchStartTime=0;
 
-const wins = [
- [0,1,2],[3,4,5],[6,7,8],
- [0,3,6],[1,4,7],[2,5,8],
- [0,4,8],[2,4,6]
+const wins=[
+[0,1,2],[3,4,5],[6,7,8],
+[0,3,6],[1,4,7],[2,5,8],
+[0,4,8],[2,4,6]
 ];
 
 function init(){
-    board = Array(9).fill("");
-    currentPlayer = "X";
-    gameOver = false;
-    isAITurn = false;
-    statusEl.innerText = "Player X Turn";
-    boardEl.innerHTML = "";
-
+    board=Array(9).fill("");
+    currentPlayer="X";
+    gameOver=false;
+    isAITurn=false;
+    matchStartTime=Date.now();
+    cheatOverlay.style.display="none";
+    statusEl.innerText="Player X Turn";
+    boardEl.innerHTML="";
     board.forEach((_,i)=>{
-        const c = document.createElement("div");
-        c.className = "cell";
-        c.onclick = ()=>move(i);
+        const c=document.createElement("div");
+        c.className="cell";
+        c.onclick=()=>move(i);
         boardEl.appendChild(c);
     });
-
-    aiLevels.style.display = vsAI ? "flex" : "none";
+    aiLevels.style.display=vsAI?"flex":"none";
     updateLevelGlow();
 }
 init();
 
 function move(i){
-    if(board[i] || gameOver || isAITurn) return;
+    if(board[i]||gameOver||isAITurn) return;
 
-    board[i] = currentPlayer;
+    board[i]=currentPlayer;
     render();
 
-    const winLine = wins.find(w => w.every(x => board[x] === currentPlayer));
+    const winLine=wins.find(w=>w.every(x=>board[x]===currentPlayer));
     if(winLine){
-        winLine.forEach(i => boardEl.children[i].classList.add("win"));
-        statusEl.innerText = `🎉 Player ${currentPlayer} Wins!`;
-        gameOver = true;
+        winLine.forEach(i=>boardEl.children[i].classList.add("win"));
+        endGame(`🎉 Player ${currentPlayer} Wins!`);
         return;
     }
 
-    if(board.every(v => v)){
-        statusEl.innerText = "🤝 Match Draw";
-        gameOver = true;
+    if(board.every(v=>v)){
+        endGame("🤝 Match Draw");
         return;
     }
 
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
-    statusEl.innerText = `Player ${currentPlayer} Turn`;
+    currentPlayer=currentPlayer==="X"?"O":"X";
+    statusEl.innerText=`Player ${currentPlayer} Turn`;
 
-    if(vsAI && currentPlayer === "O"){
-        isAITurn = true;
-        statusEl.innerText = "🤖 AI Thinking...";
+    if(vsAI && currentPlayer==="O"){
+        isAITurn=true;
+        statusEl.innerText="🤖 AI Thinking...";
         setTimeout(()=>{
-            move(aiLevel === "hard" ? bestMove() : mediumMove());
-            isAITurn = false;
-        }, 400);
+            move(aiLevel==="hard"?bestMove():mediumMove());
+            isAITurn=false;
+        },400);
     }
 }
 
-/* MEDIUM AI */
+function endGame(text){
+    gameOver=true;
+    const duration=(Date.now()-matchStartTime)/1000;
+
+    if(vsAI && (aiLevel==="hard"||aiLevel==="medium") && duration<2.5){
+        cheatOverlay.style.display="flex";
+        return;
+    }
+
+    statusEl.innerText=text;
+}
+
 function mediumMove(){
-    const empty = board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
-    if(Math.random() < 0.4) return empty[Math.floor(Math.random()*empty.length)];
+    const empty=board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
+    if(Math.random()<0.4) return empty[Math.floor(Math.random()*empty.length)];
     return bestMove();
 }
 
-/* HARD AI – TRUE UNBEATABLE */
 function bestMove(){
-    let bestScore = -Infinity;
-    let move;
+    let best=-Infinity,move;
     board.forEach((v,i)=>{
-        if(v === ""){
-            board[i] = "O";
-            let score = minimax(board, 0, false);
-            board[i] = "";
-            if(score > bestScore){
-                bestScore = score;
-                move = i;
-            }
+        if(v===""){
+            board[i]="O";
+            let s=minimax(board,0,false);
+            board[i]="";
+            if(s>best){best=s;move=i;}
         }
     });
     return move;
 }
 
-function minimax(b, depth, isMax){
-    const result = checkResult(b);
-    if(result !== null){
-        if(result === "O") return 10 - depth;
-        if(result === "X") return depth - 10;
-        return 0;
-    }
-
-    let best = isMax ? -Infinity : Infinity;
-
+function minimax(b,d,isMax){
+    const r=checkResult(b);
+    if(r!==null) return r==="O"?10-d:r==="X"?d-10:0;
+    let best=isMax?-Infinity:Infinity;
     b.forEach((v,i)=>{
-        if(v === ""){
-            b[i] = isMax ? "O" : "X";
-            const score = minimax(b, depth + 1, !isMax);
-            b[i] = "";
-            best = isMax ? Math.max(best, score) : Math.min(best, score);
+        if(v===""){
+            b[i]=isMax?"O":"X";
+            best=isMax?Math.max(best,minimax(b,d+1,!isMax)):
+                        Math.min(best,minimax(b,d+1,!isMax));
+            b[i]="";
         }
     });
-
     return best;
 }
 
 function checkResult(b){
-    for(const w of wins){
-        const [a,c,d] = w;
-        if(b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
+    for(const[w,x,y]of wins){
+        if(b[w]&&b[w]===b[x]&&b[w]===b[y]) return b[w];
     }
-    return b.includes("") ? null : "draw";
+    return b.includes("")?null:"draw";
 }
 
 function render(){
     [...boardEl.children].forEach((c,i)=>{
-        c.innerText = board[i];
-        c.className = "cell " + board[i];
+        c.innerText=board[i];
+        c.className="cell "+board[i];
     });
 }
 
 function restartGame(){ init(); }
 
 function toggleMode(){
-    vsAI = !vsAI;
-    modeIcon.innerText = vsAI ? "🤖" : "👥";
-    modeText.innerText = vsAI ? "RR AI Bot" : "Friend";
+    vsAI=!vsAI;
+    modeIcon.innerText=vsAI?"🤖":"👥";
+    modeText.innerText=vsAI?"RR AI Bot":"Friend";
     restartGame();
 }
 
 function setLevel(lvl){
-    aiLevel = lvl;
+    aiLevel=lvl;
     updateLevelGlow();
     restartGame();
 }
@@ -288,8 +333,8 @@ function setLevel(lvl){
 function updateLevelGlow(){
     btnMedium.classList.remove("active");
     btnHard.classList.remove("active");
-    if(aiLevel === "medium") btnMedium.classList.add("active");
-    if(aiLevel === "hard") btnHard.classList.add("active");
+    if(aiLevel==="medium")btnMedium.classList.add("active");
+    if(aiLevel==="hard")btnHard.classList.add("active");
 }
 </script>
 
