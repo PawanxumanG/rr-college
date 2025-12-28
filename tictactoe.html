@@ -14,6 +14,8 @@ body{
   color:#fff;
   text-align:center;
 }
+
+/* HEADER */
 .header{
   background:linear-gradient(90deg,#6a11cb,#2575fc);
   padding:22px 12px;
@@ -21,12 +23,44 @@ body{
 .header h1{margin:0;font-size:26px;}
 .header p{opacity:.85;margin-top:6px;}
 
+/* MODE */
+.mode-btn{
+  margin-top:12px;
+  background:rgba(0,0,0,.35);
+  border:none;
+  border-radius:24px;
+  padding:10px 20px;
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+}
+.ai-levels{
+  display:none;
+  justify-content:center;
+  gap:10px;
+  margin-top:12px;
+}
+.ai-levels button{
+  padding:8px 16px;
+  border:none;
+  border-radius:20px;
+  font-weight:600;
+  opacity:.6;
+  cursor:pointer;
+  color:#fff;
+}
+.ai-levels .active{opacity:1;}
+.medium{background:#f39c12;}
+.hard{background:#e74c3c;}
+
+/* STATUS */
 .status{
   margin:18px 0;
   font-size:18px;
   font-weight:600;
 }
 
+/* BOARD */
 .board{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -50,6 +84,7 @@ body{
   background:linear-gradient(135deg,#ff512f,#dd2476);
 }
 
+/* BUTTONS */
 .btn{
   width:80%;
   max-width:280px;
@@ -65,6 +100,7 @@ body{
 .btn-restart{background:#ff9800;}
 .btn-back{background:#34495e;}
 
+/* CHEAT POPUP */
 .cheat-overlay{
   position:fixed;
   inset:0;
@@ -102,6 +138,16 @@ body{
 <div class="header">
   <h1>❌ ⭕ Tic Tac Toe</h1>
   <p>Play • Chill • Compete</p>
+
+  <button class="mode-btn" onclick="toggleMode()">
+    <span id="modeIcon">👥</span>
+    <span id="modeText">Friend</span>
+  </button>
+
+  <div class="ai-levels" id="aiLevels">
+    <button id="btnMedium" class="medium" onclick="setLevel('medium')">Medium</button>
+    <button id="btnHard" class="hard active" onclick="setLevel('hard')">Hard</button>
+  </div>
 </div>
 
 <div class="status" id="status">Player X Turn</div>
@@ -110,11 +156,11 @@ body{
 <button class="btn btn-restart" onclick="restartGame()">Restart Game</button>
 <button class="btn btn-back" onclick="location.href='games.html'">Back</button>
 
-<!-- 🚨 CHEATER POPUP -->
+<!-- CHEATER POPUP -->
 <div class="cheat-overlay" id="cheatOverlay">
   <div class="cheat-box">
     <h2>🚨 Cheater Detected 😂</h2>
-    <p>You can’t win as Player X.<br>Play fair and try again.</p>
+    <p>You can’t beat RR AI Bot.<br>Play fair and try again.</p>
     <button onclick="restartGame()">Restart Fair</button>
   </div>
 </div>
@@ -125,8 +171,10 @@ const statusEl = document.getElementById("status");
 const cheatOverlay = document.getElementById("cheatOverlay");
 
 let board, currentPlayer, gameOver, isAITurn;
+let vsAI = false;
+let aiLevel = "hard";
 
-const wins=[
+const wins = [
   [0,1,2],[3,4,5],[6,7,8],
   [0,3,6],[1,4,7],[2,5,8],
   [0,4,8],[2,4,6]
@@ -144,43 +192,55 @@ function init(){
   board.forEach((_,i)=>{
     const c = document.createElement("div");
     c.className = "cell";
-    c.onclick = ()=>playerMove(i);
+    c.onclick = ()=>handleMove(i);
     boardEl.appendChild(c);
   });
 }
 init();
 
-function playerMove(i){
+/* PLAYER MOVE */
+function handleMove(i){
   if(gameOver || isAITurn || board[i]) return;
 
-  makeMove(i,"X");
+  makeMove(i, currentPlayer);
 
-  if(checkWin("X")){
+  if(checkWin(currentPlayer)){
+    if(currentPlayer==="X" && vsAI){
+      gameOver = true;
+      cheatOverlay.style.display = "flex";
+      return;
+    }
+    statusEl.innerText = `🎉 Player ${currentPlayer} Wins!`;
     gameOver = true;
-    isAITurn = false;
-    cheatOverlay.style.display = "flex";
     return;
   }
 
   if(isDraw()) return;
 
-  // AI turn
-  currentPlayer = "O";
-  isAITurn = true;
-  statusEl.innerText = "🤖 AI Thinking...";
+  currentPlayer = currentPlayer==="X"?"O":"X";
 
-  setTimeout(aiMove, 500);
+  if(vsAI && currentPlayer==="O"){
+    isAITurn = true;
+    statusEl.innerText = "🤖 AI Thinking...";
+    setTimeout(aiMove, 500);
+  } else {
+    statusEl.innerText = `Player ${currentPlayer} Turn`;
+  }
 }
 
+/* AI MOVE */
 function aiMove(){
   if(gameOver) return;
 
-  const empty = board
-    .map((v,i)=>v===""?i:null)
-    .filter(v=>v!==null);
+  const empty = board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
 
-  // Simple AI (can upgrade later)
-  const move = empty[Math.floor(Math.random()*empty.length)];
+  let move;
+  if(aiLevel==="hard"){
+    move = empty[Math.floor(Math.random()*empty.length)];
+  } else {
+    move = empty[Math.floor(Math.random()*empty.length)];
+  }
+
   makeMove(move,"O");
 
   if(checkWin("O")){
@@ -197,37 +257,52 @@ function aiMove(){
   statusEl.innerText = "Player X Turn";
 }
 
-function makeMove(i,player){
-  board[i]=player;
+/* HELPERS */
+function makeMove(i,p){
+  board[i]=p;
   render();
 }
-
-function checkWin(player){
-  const line = wins.find(w=>w.every(i=>board[i]===player));
-  if(line){
-    line.forEach(i=>boardEl.children[i].classList.add("win"));
-    return true;
-  }
-  return false;
-}
-
-function isDraw(){
-  if(board.every(v=>v)){
-    statusEl.innerText = "🤝 Match Draw";
-    gameOver = true;
-    isAITurn = false;
-    return true;
-  }
-  return false;
-}
-
 function render(){
   [...boardEl.children].forEach((c,i)=>{
     c.innerText = board[i];
     c.className = "cell "+board[i];
   });
 }
+function checkWin(p){
+  const line = wins.find(w=>w.every(i=>board[i]===p));
+  if(line){
+    line.forEach(i=>boardEl.children[i].classList.add("win"));
+    return true;
+  }
+  return false;
+}
+function isDraw(){
+  if(board.every(v=>v)){
+    statusEl.innerText="🤝 Match Draw";
+    gameOver=true;
+    isAITurn=false;
+    return true;
+  }
+  return false;
+}
 
+/* MODE CONTROLS */
+function toggleMode(){
+  vsAI = !vsAI;
+  document.getElementById("modeIcon").innerText = vsAI ? "🤖" : "👥";
+  document.getElementById("modeText").innerText = vsAI ? "RR AI Bot" : "Friend";
+  document.getElementById("aiLevels").style.display = vsAI ? "flex" : "none";
+  restartGame();
+}
+function setLevel(lvl){
+  aiLevel = lvl;
+  document.getElementById("btnMedium").classList.remove("active");
+  document.getElementById("btnHard").classList.remove("active");
+  document.getElementById(lvl==="medium"?"btnMedium":"btnHard").classList.add("active");
+  restartGame();
+}
+
+/* RESET */
 function restartGame(){
   init();
 }
