@@ -8,138 +8,138 @@
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{
-    margin:0;
-    font-family:'Segoe UI',Arial,sans-serif;
-    background:#0f1117;
-    color:#fff;
-    text-align:center;
+  margin:0;
+  font-family:'Segoe UI',Arial,sans-serif;
+  background:#0f1117;
+  color:#fff;
+  text-align:center;
 }
 .header{
-    background:linear-gradient(90deg,#6a11cb,#2575fc);
-    padding:22px 12px;
+  background:linear-gradient(90deg,#6a11cb,#2575fc);
+  padding:22px 12px;
 }
 .header h1{margin:0;font-size:26px;}
 .header p{margin-top:6px;opacity:.85;}
 
 .mode-btn{
-    background:rgba(0,0,0,.35);
-    border:none;
-    border-radius:24px;
-    padding:10px 20px;
-    color:#fff;
-    font-size:14px;
-    cursor:pointer;
-    margin-top:12px;
-    display:inline-flex;
-    gap:6px;
-    align-items:center;
+  background:rgba(0,0,0,.35);
+  border:none;
+  border-radius:24px;
+  padding:10px 20px;
+  color:#fff;
+  font-size:14px;
+  cursor:pointer;
+  margin-top:12px;
+  display:inline-flex;
+  gap:6px;
+  align-items:center;
 }
 
 .ai-levels{
-    display:none;
-    justify-content:center;
-    gap:10px;
-    margin-top:12px;
+  display:none;
+  justify-content:center;
+  gap:10px;
+  margin-top:12px;
 }
 .ai-levels button{
-    padding:8px 16px;
-    border:none;
-    border-radius:20px;
-    font-weight:600;
-    color:#fff;
-    cursor:pointer;
-    opacity:.6;
+  padding:8px 16px;
+  border:none;
+  border-radius:20px;
+  font-weight:600;
+  color:#fff;
+  cursor:pointer;
+  opacity:.6;
 }
 .ai-levels button.active{
-    opacity:1;
-    box-shadow:0 0 14px rgba(255,255,255,.6);
+  opacity:1;
+  box-shadow:0 0 14px rgba(255,255,255,.6);
 }
 .medium{background:#f39c12;}
 .hard{background:#e74c3c;}
 
 .status{
-    margin:18px 0;
-    font-size:18px;
-    font-weight:600;
+  margin:18px 0;
+  font-size:18px;
+  font-weight:600;
 }
 
 .board{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:14px;
-    max-width:320px;
-    margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  max-width:320px;
+  margin:0 auto;
 }
 .cell{
-    background:#161a22;
-    border-radius:16px;
-    height:90px;
-    font-size:42px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    box-shadow:0 6px 18px rgba(0,0,0,.6);
+  background:#161a22;
+  border-radius:16px;
+  height:90px;
+  font-size:42px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  box-shadow:0 6px 18px rgba(0,0,0,.6);
 }
 .cell.X{color:#4fc3f7;}
 .cell.O{color:#ffb74d;}
 .cell.win{
-    background:linear-gradient(135deg,#ff512f,#dd2476);
-    box-shadow:0 0 22px rgba(255,81,47,.9);
+  background:linear-gradient(135deg,#ff512f,#dd2476);
+  box-shadow:0 0 22px rgba(255,81,47,.9);
 }
 
 .btn{
-    width:80%;
-    max-width:280px;
-    padding:14px;
-    font-size:16px;
-    font-weight:600;
-    border:none;
-    border-radius:12px;
-    cursor:pointer;
-    margin-top:16px;
-    color:#fff;
+  width:80%;
+  max-width:280px;
+  padding:14px;
+  font-size:16px;
+  font-weight:600;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  margin-top:16px;
+  color:#fff;
 }
 .btn-restart{background:linear-gradient(90deg,#ff9800,#ff6a00);}
 .btn-back{background:#34495e;}
 
 /* 🚨 CHEATER OVERLAY */
 .cheat-overlay{
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.85);
-    display:none;
-    align-items:center;
-    justify-content:center;
-    z-index:999;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.88);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:999;
 }
 .cheat-box{
-    background:#161a22;
-    padding:26px;
-    border-radius:18px;
-    width:85%;
-    max-width:320px;
-    box-shadow:0 0 30px rgba(255,0,0,.6);
+  background:#161a22;
+  padding:26px;
+  border-radius:18px;
+  width:85%;
+  max-width:320px;
+  box-shadow:0 0 30px rgba(255,0,0,.7);
 }
 .cheat-box h2{
-    color:#ff5252;
-    margin:0 0 10px;
+  color:#ff5252;
+  margin:0 0 10px;
 }
 .cheat-box p{
-    font-size:15px;
-    opacity:.9;
+  font-size:15px;
+  opacity:.9;
 }
 .cheat-box button{
-    margin-top:16px;
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:12px;
-    background:linear-gradient(135deg,#ff9800,#ff5722);
-    color:#fff;
-    font-weight:700;
-    font-size:15px;
-    cursor:pointer;
+  margin-top:16px;
+  width:100%;
+  padding:12px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#ff9800,#ff5722);
+  color:#fff;
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -147,18 +147,18 @@ body{
 <body>
 
 <div class="header">
-    <h1>❌ ⭕ Tic Tac Toe</h1>
-    <p>Play • Chill • Compete</p>
+  <h1>❌ ⭕ Tic Tac Toe</h1>
+  <p>Play • Chill • Compete</p>
 
-    <button class="mode-btn" onclick="toggleMode()">
-        <span id="modeIcon">👥</span>
-        <span id="modeText">Friend</span>
-    </button>
+  <button class="mode-btn" onclick="toggleMode()">
+    <span id="modeIcon">👥</span>
+    <span id="modeText">Friend</span>
+  </button>
 
-    <div class="ai-levels" id="aiLevels">
-        <button id="btnMedium" class="medium" onclick="setLevel('medium')">Medium</button>
-        <button id="btnHard" class="hard" onclick="setLevel('hard')">Hard</button>
-    </div>
+  <div class="ai-levels" id="aiLevels">
+    <button id="btnMedium" class="medium" onclick="setLevel('medium')">Medium</button>
+    <button id="btnHard" class="hard" onclick="setLevel('hard')">Hard</button>
+  </div>
 </div>
 
 <div class="status" id="status">Player X Turn</div>
@@ -171,187 +171,190 @@ body{
 <div class="cheat-overlay" id="cheatOverlay">
   <div class="cheat-box">
     <h2>🚨 Cheater Detected 😂</h2>
-    <p>You can’t beat me like that.<br>Play fair and try again 😈</p>
+    <p>You can’t beat Hard mode.<br>Play fair and try again 😈</p>
     <button onclick="restartGame()">🔄 Restart Fairly</button>
   </div>
 </div>
 
 <script>
-const boardEl=document.getElementById("board");
-const statusEl=document.getElementById("status");
-const modeIcon=document.getElementById("modeIcon");
-const modeText=document.getElementById("modeText");
-const aiLevels=document.getElementById("aiLevels");
-const btnMedium=document.getElementById("btnMedium");
-const btnHard=document.getElementById("btnHard");
-const cheatOverlay=document.getElementById("cheatOverlay");
+const boardEl = document.getElementById("board");
+const statusEl = document.getElementById("status");
+const modeIcon = document.getElementById("modeIcon");
+const modeText = document.getElementById("modeText");
+const aiLevels = document.getElementById("aiLevels");
+const btnMedium = document.getElementById("btnMedium");
+const btnHard = document.getElementById("btnHard");
+const cheatOverlay = document.getElementById("cheatOverlay");
 
-let vsAI=false;
-let aiLevel="medium";
-let board,currentPlayer,gameOver,isAITurn;
-let matchStartTime=0;
+let vsAI = false;
+let aiLevel = "medium";
+let board, currentPlayer, gameOver, isAITurn;
+let matchStartTime = 0;
 
-/* 🔥 TAP BURST TRACKING */
-let tapHistory=[];
-const TAP_WINDOW=600; // ms
-const TAP_LIMIT=5;   // taps
+/* TAP BURST TRACKING */
+let tapHistory = [];
+const TAP_WINDOW = 600;
+const TAP_LIMIT = 5;
 
-const wins=[
-[0,1,2],[3,4,5],[6,7,8],
-[0,3,6],[1,4,7],[2,5,8],
-[0,4,8],[2,4,6]
+const wins = [
+  [0,1,2],[3,4,5],[6,7,8],
+  [0,3,6],[1,4,7],[2,5,8],
+  [0,4,8],[2,4,6]
 ];
 
 function init(){
-    board=Array(9).fill("");
-    currentPlayer="X";
-    gameOver=false;
-    isAITurn=false;
-    tapHistory=[];
-    matchStartTime=Date.now();
-    cheatOverlay.style.display="none";
-    statusEl.innerText="Player X Turn";
-    boardEl.innerHTML="";
-    board.forEach((_,i)=>{
-        const c=document.createElement("div");
-        c.className="cell";
-        c.onclick=()=>move(i);
-        boardEl.appendChild(c);
-    });
-    aiLevels.style.display=vsAI?"flex":"none";
-    updateLevelGlow();
+  board = Array(9).fill("");
+  currentPlayer = "X";
+  gameOver = false;
+  isAITurn = false;
+  tapHistory = [];
+  matchStartTime = Date.now();
+  cheatOverlay.style.display = "none";
+  statusEl.innerText = "Player X Turn";
+  boardEl.innerHTML = "";
+
+  board.forEach((_,i)=>{
+    const c = document.createElement("div");
+    c.className = "cell";
+    c.onclick = ()=>move(i);
+    boardEl.appendChild(c);
+  });
+
+  aiLevels.style.display = vsAI ? "flex" : "none";
+  updateLevelGlow();
 }
 init();
 
 function trackTap(){
-    const now=Date.now();
-    tapHistory.push(now);
-    tapHistory=tapHistory.filter(t=>now-t<=TAP_WINDOW);
-    return tapHistory.length>=TAP_LIMIT;
+  const now = Date.now();
+  tapHistory.push(now);
+  tapHistory = tapHistory.filter(t => now - t <= TAP_WINDOW);
+  return tapHistory.length >= TAP_LIMIT;
 }
 
 function move(i){
-    if(trackTap()){
-        cheatOverlay.style.display="flex";
-        return;
-    }
-    if(board[i]||gameOver||isAITurn) return;
+  if(trackTap()){
+    cheatOverlay.style.display = "flex";
+    return;
+  }
+  if(board[i] || gameOver || isAITurn) return;
 
-    board[i]=currentPlayer;
-    render();
+  board[i] = currentPlayer;
+  render();
 
-    const winLine=wins.find(w=>w.every(x=>board[x]===currentPlayer));
-    if(winLine){
-        winLine.forEach(i=>boardEl.children[i].classList.add("win"));
-        endGame(`🎉 Player ${currentPlayer} Wins!`);
-        return;
-    }
+  const winLine = wins.find(w => w.every(x => board[x] === currentPlayer));
+  if(winLine){
 
-    if(board.every(v=>v)){
-        endGame("🤝 Match Draw");
-        return;
+    /* 🚨 BLOCK HARD MODE WIN BEFORE UI */
+    if(vsAI && aiLevel === "hard" && currentPlayer === "X"){
+      gameOver = true;
+      cheatOverlay.style.display = "flex";
+      return;
     }
 
-    currentPlayer=currentPlayer==="X"?"O":"X";
-    statusEl.innerText=`Player ${currentPlayer} Turn`;
+    winLine.forEach(i => boardEl.children[i].classList.add("win"));
+    endGame(`🎉 Player ${currentPlayer} Wins!`);
+    return;
+  }
 
-    if(vsAI && currentPlayer==="O"){
-        isAITurn=true;
-        statusEl.innerText="🤖 AI Thinking...";
-        setTimeout(()=>{
-            move(aiLevel==="hard"?bestMove():mediumMove());
-            isAITurn=false;
-        },400);
-    }
+  if(board.every(v => v)){
+    endGame("🤝 Match Draw");
+    return;
+  }
+
+  currentPlayer = currentPlayer === "X" ? "O" : "X";
+  statusEl.innerText = `Player ${currentPlayer} Turn`;
+
+  if(vsAI && currentPlayer === "O"){
+    isAITurn = true;
+    statusEl.innerText = "🤖 AI Thinking...";
+    setTimeout(()=>{
+      move(aiLevel === "hard" ? bestMove() : mediumMove());
+      isAITurn = false;
+    },400);
+  }
 }
 
 function endGame(text){
-    gameOver=true;
-    const duration=(Date.now()-matchStartTime)/1000;
+  gameOver = true;
+  const duration = (Date.now() - matchStartTime) / 1000;
 
-    // 🚨 Hard mode can NEVER be beaten
-    if(vsAI && aiLevel==="hard" && text.includes("Player X Wins")){
-        cheatOverlay.style.display="flex";
-        return;
-    }
-
-    // ⏱️ Speed cheat (Medium + Hard)
-    if(vsAI && (aiLevel==="hard"||aiLevel==="medium") && duration<3.2){
-        cheatOverlay.style.display="flex";
-        return;
-    }
-
-    statusEl.innerText=text;
+  if(vsAI && (aiLevel==="hard"||aiLevel==="medium") && duration < 3.2){
+    cheatOverlay.style.display = "flex";
+    return;
+  }
+  statusEl.innerText = text;
 }
 
+/* AI LOGIC */
 function mediumMove(){
-    const empty=board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
-    if(Math.random()<0.4) return empty[Math.floor(Math.random()*empty.length)];
-    return bestMove();
+  const empty = board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
+  if(Math.random()<0.4) return empty[Math.floor(Math.random()*empty.length)];
+  return bestMove();
 }
 
 function bestMove(){
-    let best=-Infinity,move;
-    board.forEach((v,i)=>{
-        if(v===""){
-            board[i]="O";
-            let s=minimax(board,0,false);
-            board[i]="";
-            if(s>best){best=s;move=i;}
-        }
-    });
-    return move;
+  let best=-Infinity,move;
+  board.forEach((v,i)=>{
+    if(v===""){
+      board[i]="O";
+      let s=minimax(board,0,false);
+      board[i]="";
+      if(s>best){best=s;move=i;}
+    }
+  });
+  return move;
 }
 
 function minimax(b,d,isMax){
-    const r=checkResult(b);
-    if(r!==null) return r==="O"?10-d:r==="X"?d-10:0;
-    let best=isMax?-Infinity:Infinity;
-    b.forEach((v,i)=>{
-        if(v===""){
-            b[i]=isMax?"O":"X";
-            best=isMax?Math.max(best,minimax(b,d+1,!isMax)):
-                        Math.min(best,minimax(b,d+1,!isMax));
-            b[i]="";
-        }
-    });
-    return best;
+  const r = checkResult(b);
+  if(r!==null) return r==="O"?10-d:r==="X"?d-10:0;
+  let best = isMax ? -Infinity : Infinity;
+  b.forEach((v,i)=>{
+    if(v===""){
+      b[i]=isMax?"O":"X";
+      best=isMax?Math.max(best,minimax(b,d+1,!isMax)):
+                  Math.min(best,minimax(b,d+1,!isMax));
+      b[i]="";
+    }
+  });
+  return best;
 }
 
 function checkResult(b){
-    for(const[w,x,y] of wins){
-        if(b[w]&&b[w]===b[x]&&b[w]===b[y]) return b[w];
-    }
-    return b.includes("")?null:"draw";
+  for(const[w,x,y] of wins){
+    if(b[w]&&b[w]===b[x]&&b[w]===b[y]) return b[w];
+  }
+  return b.includes("")?null:"draw";
 }
 
 function render(){
-    [...boardEl.children].forEach((c,i)=>{
-        c.innerText=board[i];
-        c.className="cell "+board[i];
-    });
+  [...boardEl.children].forEach((c,i)=>{
+    c.innerText = board[i];
+    c.className = "cell " + board[i];
+  });
 }
 
 function restartGame(){ init(); }
 
 function toggleMode(){
-    vsAI=!vsAI;
-    modeIcon.innerText=vsAI?"🤖":"👥";
-    modeText.innerText=vsAI?"RR AI Bot":"Friend";
-    restartGame();
+  vsAI = !vsAI;
+  modeIcon.innerText = vsAI ? "🤖" : "👥";
+  modeText.innerText = vsAI ? "RR AI Bot" : "Friend";
+  restartGame();
 }
 
 function setLevel(lvl){
-    aiLevel=lvl;
-    updateLevelGlow();
-    restartGame();
+  aiLevel = lvl;
+  updateLevelGlow();
+  restartGame();
 }
 
 function updateLevelGlow(){
-    btnMedium.classList.remove("active");
-    btnHard.classList.remove("active");
-    if(aiLevel==="medium")btnMedium.classList.add("active");
-    if(aiLevel==="hard")btnHard.classList.add("active");
+  btnMedium.classList.remove("active");
+  btnHard.classList.remove("active");
+  if(aiLevel==="medium") btnMedium.classList.add("active");
+  if(aiLevel==="hard") btnHard.classList.add("active");
 }
 </script>
 
