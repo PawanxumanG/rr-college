@@ -2,168 +2,81 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RR International College - Notices</title>
+<title>RR International College – Notices</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link rel="stylesheet" href="style.css">
 
-<!-- ✅ GOOGLE ANALYTICS -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9JW1V42V83"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config','G-9JW1V42V83',{
-  page_title:'RR Events Home',
-  page_path:'/index.html'
-});
-gtag('event','home_loaded');
-</script>
-
 <style>
-.header-logo{
-    width:42px;
-    height:42px;
-    margin-right:10px;
-    vertical-align:middle;
-    filter:drop-shadow(0 0 6px rgba(255,255,255,0.6));
+/* ===== EXTRA ENHANCEMENTS ===== */
+
+/* NOTICE EXTRA LINE */
+.notice-extra{
+    margin-top:10px;
+    color:#ffd180;
+    font-size:14px;
+    line-height:1.5;
 }
-.streak-mini{
-    background:#161a22;
-    border-radius:12px;
-    padding:12px 14px;
-    margin:14px 0;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    box-shadow:0 0 12px rgba(0,0,0,.5);
-}
-.streak-mini b{color:#ff9800}
+
+/* OVERPOWERED COUNTDOWN */
 .countdown-box{
-    background:linear-gradient(135deg,#7b2cff,#2575fc);
-    border-radius:14px;
-    padding:14px;
-    margin-bottom:18px;
-    text-align:center;
-    color:#fff;
-    box-shadow:0 0 18px rgba(123,44,255,.6);
+    position:relative;
+    overflow:hidden;
+    animation:pulseGlow 1.5s infinite alternate;
+}
+.countdown-box::before{
+    content:"";
+    position:absolute;
+    inset:-2px;
+    background:linear-gradient(120deg,#ff9800,#7b2cff,#2575fc,#ff9800);
+    background-size:300%;
+    z-index:-1;
+    animation:shimmer 3s linear infinite;
 }
 .countdown-time{
-    font-size:18px;
-    font-weight:700;
-    margin-top:6px;
+    font-size:20px;
+    font-weight:800;
+    animation:blinkText 1s infinite;
 }
-.ai-box{
-    background:#161a22;
-    border-radius:14px;
-    padding:12px;
-    margin-bottom:18px;
-    box-shadow:0 0 18px rgba(0,0,0,.6);
-}
-.ai-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    cursor:pointer;
-}
-.ai-header h2{font-size:16px;margin:0}
-.ai-toggle{font-size:13px;opacity:.7}
-.ai-content{display:none;margin-top:10px}
-.ai-btn{
+
+/* FOOTER DIVIDER */
+.footer-divider{
+    height:4px;
     width:100%;
-    padding:10px;
-    margin-top:8px;
-    border:none;
-    border-radius:10px;
-    color:#fff;
-    font-size:14px;
-    cursor:pointer;
+    background:linear-gradient(90deg,#ff9800,#7b2cff,#2575fc);
+    border-radius:4px;
+    margin:26px 0 14px;
+    box-shadow:0 0 12px rgba(255,152,0,.6);
 }
-.ai-pay{background:linear-gradient(90deg,#7b2cff,#2575fc)}
-.ai-game{background:linear-gradient(90deg,#ff2e63,#ff9800)}
-.ai-answer{
-    margin-top:10px;
-    font-size:14px;
-    color:#ffcc80;
-    white-space:pre-line;
-}
-.grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:18px;
-}
-.grid button{
-    padding:14px;
-    border:none;
-    border-radius:14px;
-    font-size:15px;
-    color:#fff;
-    cursor:pointer;
-    box-shadow:0 0 16px rgba(0,0,0,.5);
-}
-.btn-karmanya{background:linear-gradient(135deg,#00c6ff,#0072ff)}
-.btn-promo{background:linear-gradient(135deg,#7b2cff,#ff2e63)}
-.btn-album{background:linear-gradient(135deg,#ff9800,#ff2e63)}
-.btn-events{background:linear-gradient(135deg,#00b09b,#96c93d)}
-.share-app-btn{
-    margin:10px 0 6px;
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:14px;
-    background:linear-gradient(135deg,#ff9800,#ff5722);
-    color:#fff;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-    box-shadow:0 0 16px rgba(255,152,0,.45);
-}
+
+/* FOOTER TEXT */
 .app-footer{
-    margin-top:12px;
-    padding-top:14px;
     text-align:center;
-    border-top:1px solid rgba(255,255,255,0.08);
+    padding-bottom:12px;
 }
-.update-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:12px;
-    cursor:pointer;
+.powered-text{
+    font-size:13px;
+    color:#9aa0a6;
 }
-.update-header b{color:#ff9800}
-.update-toggle{font-size:13px;color:#ff9800}
-.update-content{
-    display:none;
-    margin-top:10px;
+.powered-brand{
     font-size:14px;
-    line-height:1.6;
-}
-.home-poster{
-    margin:16px 0 10px;
-    border-radius:16px;
-    overflow:hidden;
-    box-shadow:0 0 20px rgba(0,0,0,.6);
-}
-.home-poster img{
-    width:100%;
-    display:block;
-}
-.poster-text{
-    text-align:center;
-    margin:0 0 18px;
-    padding:0 8px;
-}
-.poster-title{
-    font-size:16px;
+    color:#ffffff;
     font-weight:700;
-    color:#ff9800;
+    letter-spacing:.4px;
 }
-.poster-sub{
-    font-size:14px;
-    color:#cfcfcf;
-    margin-top:4px;
+
+/* ANIMATIONS */
+@keyframes pulseGlow{
+    from{box-shadow:0 0 12px rgba(123,44,255,.6);}
+    to{box-shadow:0 0 26px rgba(255,152,0,.9);}
+}
+@keyframes blinkText{
+    0%,100%{opacity:1;}
+    50%{opacity:.6;}
+}
+@keyframes shimmer{
+    0%{background-position:0%;}
+    100%{background-position:300%;}
 }
 </style>
 </head>
@@ -180,15 +93,29 @@ gtag('event','home_loaded');
 
 <div class="container">
 
-<button onclick="trackAndGo('chairman')" class="nav-btn">
+<button onclick="location.href='chairman.html'" class="nav-btn">
 👨‍🏫 OUR CHAIRMAN – Shri R. R. Pardeshi
 </button>
 
+<!-- NOTICE -->
 <div class="event">
   <h2>📢 IMPORTANT NOTICE</h2>
-  <p>All students are instructed to <b>open this app daily</b>.</p>
+
+  <p>
+    All students are instructed to <b>open this app daily</b> for official notices,
+    event updates, and important announcements.
+  </p>
+
   <p>💯🔥 New Game Added In RR Games Zone "Emoji Quiz"</p>
-  <p class="text-muted">📌 All updates will be published only in this app.</p>
+
+  <p class="text-muted">
+    📌 All updates will be published only in this app.
+  </p>
+
+  <!-- ✅ ADDED LINE -->
+  <p class="notice-extra">
+    📸 All Karmanya Fest photos will be shared here and can be downloaded from the <b>Album</b> page.
+  </p>
 
   <div class="update-header" onclick="toggleUpdates()">
     <b>🆕 New App Updates (v2.1)</b>
@@ -206,62 +133,55 @@ gtag('event','home_loaded');
   </div>
 </div>
 
-<!-- ✅ POSTER -->
-<div class="home-poster">
-  <img src="stage.jpg" alt="Karmanya Stage Poster">
-</div>
-
-<!-- ✅ POSTER TEXT -->
-<div class="poster-text">
-  <div class="poster-title">
-    Karmanya Fest 2025 is almost here 🎭✨
-  </div>
-  <div class="poster-sub">
-    Get ready for unforgettable performances, culture, and celebration — just a few days to go.
-  </div>
-</div>
-
+<!-- DAILY STREAK -->
 <div class="streak-mini">
 🔥 Daily Streak
 <b><span id="streakCount">1</span> Day</b>
 </div>
 
+<!-- COUNTDOWN -->
 <div class="countdown-box">
 ⏳ KARMANYA 2025 COUNTDOWN
 <div class="countdown-time" id="countdown">Loading...</div>
 </div>
 
+<!-- STUDENT HELPER -->
 <div class="ai-box">
 <div class="ai-header" onclick="toggleAI()">
   <h2>🤖 Student Helper</h2>
   <span class="ai-toggle" id="aiToggle">Tap to open</span>
 </div>
+
 <div class="ai-content" id="aiContent">
-  <button class="ai-btn ai-pay" onclick="aiReply('payment')">💳 How to pay?</button>
-  <button class="ai-btn ai-game" onclick="aiReply('ai_game')">🎮 How to play?</button>
+  <button class="ai-btn ai-pay">💳 How to pay for Karmanya?</button>
+  <button class="ai-btn ai-game">🎮 Games & Fun</button>
   <div class="ai-answer" id="aiAnswer"></div>
 </div>
 </div>
 
 <div class="grid">
-  <button class="btn-karmanya" onclick="trackAndGo('karmanya')">🎟️ Karmanya</button>
-  <button class="btn-promo" onclick="trackAndGo('promo')">🎬 Promo</button>
-  <button class="btn-album" onclick="trackAndGo('album')">📸 Album</button>
-  <button class="btn-events" onclick="trackAndGo('events')">📅 Events</button>
+  <button class="btn-karmanya" onclick="location.href='karmanya.html'">🎟️ Karmanya</button>
+  <button class="btn-promo" onclick="location.href='promo.html'">🎬 Promo</button>
+  <button class="btn-album" onclick="location.href='event_album.html'">📸 Album</button>
+  <button class="btn-events" onclick="location.href='events.html'">📅 Events</button>
 </div>
 
 <button class="share-app-btn" onclick="location.href='shareapp.html'">
 📤 Share RR Events App
 </button>
 
+<!-- FOOTER -->
+<div class="footer-divider"></div>
+
 <div class="app-footer">
-  <span class="powered-text">Powered by </span>
+  <span class="powered-text">Powered by</span><br>
   <span class="powered-brand">RR International College</span>
 </div>
 
 </div>
 
 <script>
+/* STREAK */
 let today=new Date().toDateString();
 let last=localStorage.getItem("lastOpenDate");
 let streak=parseInt(localStorage.getItem("dailyStreak")||"0");
@@ -272,38 +192,14 @@ if(last!==today){
 }
 document.getElementById("streakCount").innerText=streak;
 
+/* COUNTDOWN */
 const eventDate=new Date("2025-12-30T23:59:59").getTime();
 setInterval(()=>{
   const diff=eventDate-Date.now();
   document.getElementById("countdown").innerText=
-  diff<=0?"🎉 Countdown Ended!":
+  diff<=0 ? "🎉 Event Started!" :
   `${Math.floor(diff/86400000)}d : ${Math.floor(diff%86400000/3600000)}h : ${Math.floor(diff%3600000/60000)}m : ${Math.floor(diff%60000/1000)}s`;
 },1000);
-
-function toggleAI(){
-  const b=document.getElementById("aiContent");
-  const t=document.getElementById("aiToggle");
-  b.style.display=b.style.display==="block"?"none":"block";
-  t.innerText=b.style.display==="block"?"Tap to close":"Tap to open";
-}
-function toggleUpdates(){
-  const b=document.getElementById("updateContent");
-  const t=document.getElementById("updateToggle");
-  b.style.display=b.style.display==="block"?"none":"block";
-  t.innerText=b.style.display==="block"?"Tap to close":"Tap to open";
-}
-function aiReply(t){
-  document.getElementById("aiAnswer").innerText=
-  t==="payment"?"Open Karmanya → Scan QR → Pay ₹500":
-  "Games Zone → Tic Tac Toe → Hard Mode 🔥";
-}
-function trackAndGo(t){
-  if(t==='karmanya')location.href='karmanya.html';
-  if(t==='promo')location.href='promo.html';
-  if(t==='album')location.href='event_album.html';
-  if(t==='events')location.href='events.html';
-  if(t==='chairman')location.href='chairman.html';
-}
 </script>
 
 </body>
