@@ -2,311 +2,220 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Tic Tac Toe – RR Events App</title>
+<title>RR Games Zone</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GOOGLE ANALYTICS -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9JW1V42V83"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-9JW1V42V83', {
+  page_title: 'RR Games Zone',
+  page_path: '/games.html'
+});
+</script>
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{
-  margin:0;
-  font-family:system-ui,Arial;
-  background:#0f1117;
-  color:#fff;
-  text-align:center;
+    margin:0;
+    font-family:'Segoe UI',Arial,sans-serif;
+    background:#0f1117;
+    color:#fff;
 }
 
 /* HEADER */
 .header{
-  background:linear-gradient(90deg,#6a11cb,#2575fc);
-  padding:22px 12px;
+    background:linear-gradient(90deg,#6a11cb,#2575fc);
+    padding:28px 16px;
+    text-align:center;
 }
-.header h1{margin:0;font-size:26px;}
-.header p{opacity:.85;margin-top:6px;}
-
-/* MODE */
-.mode-btn{
-  margin-top:12px;
-  background:rgba(0,0,0,.35);
-  border:none;
-  border-radius:24px;
-  padding:10px 20px;
-  color:#fff;
-  font-size:14px;
-  cursor:pointer;
+.header h1{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
 }
-.ai-levels{
-  display:none;
-  justify-content:center;
-  gap:10px;
-  margin-top:12px;
-}
-.ai-levels button{
-  padding:8px 16px;
-  border:none;
-  border-radius:20px;
-  font-weight:600;
-  opacity:.6;
-  cursor:pointer;
-  color:#fff;
-}
-.ai-levels .active{opacity:1;}
-.medium{background:#f39c12;}
-.hard{background:#e74c3c;}
-
-/* STATUS */
-.status{
-  margin:18px 0;
-  font-size:18px;
-  font-weight:600;
+.header p{
+    margin-top:8px;
+    opacity:.9;
+    font-size:14px;
 }
 
-/* BOARD */
-.board{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:14px;
-  max-width:320px;
-  margin:0 auto;
-}
-.cell{
-  background:#161a22;
-  border-radius:16px;
-  height:90px;
-  font-size:42px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-}
-.cell.X{color:#4fc3f7;}
-.cell.O{color:#ffb74d;}
-.cell.win{
-  background:linear-gradient(135deg,#ff512f,#dd2476);
+/* CONTAINER */
+.container{
+    padding:16px;
 }
 
-/* BUTTONS */
-.btn{
-  width:80%;
-  max-width:280px;
-  padding:14px;
-  margin-top:16px;
-  border:none;
-  border-radius:12px;
-  font-size:16px;
-  font-weight:600;
-  color:#fff;
-  cursor:pointer;
+/* NOTICE */
+.notice-box{
+    background:#1c2230;
+    border-left:4px solid #ff9800;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:20px;
+    font-size:13px;
+    line-height:1.5;
+    color:#ddd;
 }
-.btn-restart{background:#ff9800;}
-.btn-back{background:#34495e;}
+.notice-box b{
+    color:#ffb74d;
+}
 
-/* CHEAT POPUP */
-.cheat-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.9);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  z-index:999;
+/* SECTION TITLE */
+.section-title{
+    margin:24px 4px 12px;
+    font-size:18px;
+    font-weight:700;
 }
-.cheat-box{
-  background:#161a22;
-  padding:26px;
-  border-radius:18px;
-  width:85%;
-  max-width:320px;
+
+/* GAME CARD */
+.game-card{
+    background:#161a22;
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:18px;
+    box-shadow:0 10px 24px rgba(0,0,0,.6);
 }
-.cheat-box h2{color:#ff5252;margin:0 0 10px;}
-.cheat-box p{opacity:.9;}
-.cheat-box button{
-  width:100%;
-  margin-top:16px;
-  padding:12px;
-  border:none;
-  border-radius:12px;
-  background:#ff9800;
-  color:#fff;
-  font-weight:700;
-  cursor:pointer;
+.game-card h2{
+    margin:0;
+    font-size:20px;
+}
+.game-card p{
+    margin:8px 0 0;
+    font-size:14px;
+    opacity:.85;
+}
+
+/* BADGE */
+.badge{
+    display:inline-block;
+    margin-top:8px;
+    padding:4px 10px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:600;
+}
+.badge-hot{background:#e74c3c;}
+.badge-ai{background:#ff9800;}
+.badge-brain{background:#3498db;}
+.badge-quick{background:#2ecc71;}
+
+/* PLAY BUTTON */
+.play-btn{
+    width:100%;
+    margin-top:14px;
+    padding:14px;
+    font-size:16px;
+    font-weight:700;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    color:#fff;
+}
+
+/* BUTTON COLORS */
+.btn-ttt{background:linear-gradient(90deg,#ff9800,#ff6a00);}
+.btn-2048{background:linear-gradient(90deg,#00c6ff,#0072ff);}
+.btn-reaction{background:linear-gradient(90deg,#2ecc71,#27ae60);}
+
+/* FOOTER BUTTON */
+.back-btn{
+    width:100%;
+    margin:28px 0 80px;
+    padding:14px;
+    font-size:16px;
+    font-weight:700;
+    border:none;
+    border-radius:14px;
+    background:#34495e;
+    color:#fff;
+    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <h1>❌ ⭕ Tic Tac Toe</h1>
-  <p>Play • Chill • Compete</p>
-
-  <button class="mode-btn" onclick="toggleMode()">
-    <span id="modeIcon">👥</span>
-    <span id="modeText">Friend</span>
-  </button>
-
-  <div class="ai-levels" id="aiLevels">
-    <button id="btnMedium" class="medium" onclick="setLevel('medium')">Medium</button>
-    <button id="btnHard" class="hard active" onclick="setLevel('hard')">Hard</button>
-  </div>
+    <h1>🎮 RR Games Zone</h1>
+    <p>Play • Chill • Compete</p>
 </div>
 
-<div class="status" id="status">Player X Turn</div>
-<div class="board" id="board"></div>
+<div class="container">
 
-<button class="btn btn-restart" onclick="restartGame()">Restart Game</button>
-<button class="btn btn-back" onclick="location.href='games.html'">Back</button>
+    <!-- NOTICE -->
+    <div class="notice-box">
+        ⚠️ <b>Important Note:</b><br>
+        Poki Games have been removed because downloading games was increasing
+        app storage usage on students’ devices.  
+        To keep the app lightweight and smooth, only built-in games are available now.
+        <br><br>
+        Thank you for your understanding 💙
+    </div>
 
-<!-- CHEATER POPUP -->
-<div class="cheat-overlay" id="cheatOverlay">
-  <div class="cheat-box">
-    <h2>🚨 Cheater Detected 😂</h2>
-    <p>You can’t beat RR AI Bot.<br>Play fair and try again.</p>
-    <button onclick="restartGame()">Restart Fair</button>
-  </div>
+    <!-- FEATURED -->
+    <div class="section-title">🔥 Featured Challenge</div>
+
+    <div class="game-card">
+        <h2>❌⭕ Tic Tac Toe</h2>
+        <p>
+            Think you’re smart?  
+            Try defeating the <b>RR AI Bot (Hard Mode)</b>.
+        </p>
+        <span class="badge badge-hot">🧠 Power</span>
+        <span class="badge badge-ai">🤖 AI Challenge</span>
+
+        <button class="play-btn btn-ttt"
+            onclick="gtag('event','play_tictactoe'); location.href='tictactoe_game.html'">
+            ▶ Play Now
+        </button>
+    </div>
+
+    <!-- BRAIN GAMES -->
+    <div class="section-title">🧠 Brain Games</div>
+
+    <div class="game-card">
+        <h2>🧩 2048</h2>
+        <p>
+            Simple to play.  
+            Hard to master.  
+            Only legends reach <b>2048</b>.
+        </p>
+        <span class="badge badge-brain">🔥 Trending</span>
+
+        <button class="play-btn btn-2048"
+            onclick="gtag('event','play_2048'); location.href='2048.html'">
+            ▶ Play 2048
+        </button>
+    </div>
+
+    <!-- QUICK GAMES -->
+    <div class="section-title">⚡ Quick Games</div>
+
+    <div class="game-card">
+        <h2>⚡ Reaction Time</h2>
+        <p>
+            Blink and you lose.  
+            Tap fast when it turns green.
+        </p>
+        <span class="badge badge-quick">⏱ Ego Game</span>
+
+        <button class="play-btn btn-reaction"
+            onclick="gtag('event','play_reaction_time'); location.href='reaction.html'">
+            ▶ Test Your Speed
+        </button>
+    </div>
+
+    <!-- BACK -->
+    <button class="back-btn"
+        onclick="gtag('event','back_to_notices'); location.href='index.html'">
+        ⬅ Back to Notices
+    </button>
+
 </div>
-
-<script>
-const boardEl = document.getElementById("board");
-const statusEl = document.getElementById("status");
-const cheatOverlay = document.getElementById("cheatOverlay");
-
-let board, currentPlayer, gameOver, isAITurn;
-let vsAI = false;
-let aiLevel = "hard";
-
-const wins = [
-  [0,1,2],[3,4,5],[6,7,8],
-  [0,3,6],[1,4,7],[2,5,8],
-  [0,4,8],[2,4,6]
-];
-
-function init(){
-  board = Array(9).fill("");
-  currentPlayer = "X";
-  gameOver = false;
-  isAITurn = false;
-  cheatOverlay.style.display = "none";
-  statusEl.innerText = "Player X Turn";
-  boardEl.innerHTML = "";
-
-  board.forEach((_,i)=>{
-    const c = document.createElement("div");
-    c.className = "cell";
-    c.onclick = ()=>handleMove(i);
-    boardEl.appendChild(c);
-  });
-}
-init();
-
-/* PLAYER MOVE */
-function handleMove(i){
-  if(gameOver || isAITurn || board[i]) return;
-
-  makeMove(i, currentPlayer);
-
-  if(checkWin(currentPlayer)){
-    if(currentPlayer==="X" && vsAI){
-      gameOver = true;
-      cheatOverlay.style.display = "flex";
-      return;
-    }
-    statusEl.innerText = `🎉 Player ${currentPlayer} Wins!`;
-    gameOver = true;
-    return;
-  }
-
-  if(isDraw()) return;
-
-  currentPlayer = currentPlayer==="X"?"O":"X";
-
-  if(vsAI && currentPlayer==="O"){
-    isAITurn = true;
-    statusEl.innerText = "🤖 AI Thinking...";
-    setTimeout(aiMove, 500);
-  } else {
-    statusEl.innerText = `Player ${currentPlayer} Turn`;
-  }
-}
-
-/* AI MOVE */
-function aiMove(){
-  if(gameOver) return;
-
-  const empty = board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
-
-  let move;
-  if(aiLevel==="hard"){
-    move = empty[Math.floor(Math.random()*empty.length)];
-  } else {
-    move = empty[Math.floor(Math.random()*empty.length)];
-  }
-
-  makeMove(move,"O");
-
-  if(checkWin("O")){
-    statusEl.innerText = "🎉 AI Wins!";
-    gameOver = true;
-    isAITurn = false;
-    return;
-  }
-
-  if(isDraw()) return;
-
-  currentPlayer = "X";
-  isAITurn = false;
-  statusEl.innerText = "Player X Turn";
-}
-
-/* HELPERS */
-function makeMove(i,p){
-  board[i]=p;
-  render();
-}
-function render(){
-  [...boardEl.children].forEach((c,i)=>{
-    c.innerText = board[i];
-    c.className = "cell "+board[i];
-  });
-}
-function checkWin(p){
-  const line = wins.find(w=>w.every(i=>board[i]===p));
-  if(line){
-    line.forEach(i=>boardEl.children[i].classList.add("win"));
-    return true;
-  }
-  return false;
-}
-function isDraw(){
-  if(board.every(v=>v)){
-    statusEl.innerText="🤝 Match Draw";
-    gameOver=true;
-    isAITurn=false;
-    return true;
-  }
-  return false;
-}
-
-/* MODE CONTROLS */
-function toggleMode(){
-  vsAI = !vsAI;
-  document.getElementById("modeIcon").innerText = vsAI ? "🤖" : "👥";
-  document.getElementById("modeText").innerText = vsAI ? "RR AI Bot" : "Friend";
-  document.getElementById("aiLevels").style.display = vsAI ? "flex" : "none";
-  restartGame();
-}
-function setLevel(lvl){
-  aiLevel = lvl;
-  document.getElementById("btnMedium").classList.remove("active");
-  document.getElementById("btnHard").classList.remove("active");
-  document.getElementById(lvl==="medium"?"btnMedium":"btnHard").classList.add("active");
-  restartGame();
-}
-
-/* RESET */
-function restartGame(){
-  init();
-}
-</script>
 
 </body>
 </html>
