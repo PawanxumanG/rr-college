@@ -48,6 +48,21 @@ body{
     padding:16px;
 }
 
+/* NOTICE */
+.notice-box{
+    background:#1c2230;
+    border-left:4px solid #ff9800;
+    border-radius:12px;
+    padding:12px 14px;
+    margin-bottom:20px;
+    font-size:13px;
+    line-height:1.5;
+    color:#ddd;
+}
+.notice-box b{
+    color:#ffb74d;
+}
+
 /* SECTION TITLE */
 .section-title{
     margin:24px 4px 12px;
@@ -86,8 +101,6 @@ body{
 .badge-ai{background:#ff9800;}
 .badge-brain{background:#3498db;}
 .badge-quick{background:#2ecc71;}
-.badge-fun{background:#9b59b6;}
-.badge-classic{background:#27ae60;}
 
 /* PLAY BUTTON */
 .play-btn{
@@ -106,9 +119,6 @@ body{
 .btn-ttt{background:linear-gradient(90deg,#ff9800,#ff6a00);}
 .btn-2048{background:linear-gradient(90deg,#00c6ff,#0072ff);}
 .btn-reaction{background:linear-gradient(90deg,#2ecc71,#27ae60);}
-.btn-emoji{background:linear-gradient(90deg,#9b59b6,#6c3483);}
-.btn-snake{background:linear-gradient(90deg,#16a085,#27ae60);}
-.btn-memory{background:linear-gradient(90deg,#3498db,#1f618d);}
 
 /* FOOTER BUTTON */
 .back-btn{
@@ -128,6 +138,7 @@ body{
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
     <h1>🎮 RR Games Zone</h1>
     <p>Play • Chill • Compete</p>
@@ -135,126 +146,74 @@ body{
 
 <div class="container">
 
-<!-- FEATURED -->
-<div class="section-title">🔥 Featured Challenge</div>
+    <!-- NOTICE -->
+    <div class="notice-box">
+        ⚠️ <b>Important Note:</b><br>
+        Poki Games have been removed because downloading games was increasing
+        app storage usage on students’ devices.  
+        To keep the app lightweight and smooth, only built-in games are available now.
+        <br><br>
+        Thank you for your understanding 💙
+    </div>
 
-<div class="game-card">
-    <h2>❌⭕ Tic Tac Toe</h2>
-    <p>
-        Think you’re smart?  
-        Try defeating the <b>RR AI Bot (Hard Mode)</b>.
-    </p>
-    <span class="badge badge-hot">🧠 Power</span>
-    <span class="badge badge-ai">🤖 AI Challenge</span>
+    <!-- FEATURED -->
+    <div class="section-title">🔥 Featured Challenge</div>
 
-    <button class="play-btn btn-ttt"
-        onclick="gtag('event','play_tictactoe'); location.href='tictactoe.html'">
-        ▶ Play Now
+    <div class="game-card">
+        <h2>❌⭕ Tic Tac Toe</h2>
+        <p>
+            Think you’re smart?  
+            Try defeating the <b>RR AI Bot (Hard Mode)</b>.
+        </p>
+        <span class="badge badge-hot">🧠 Power</span>
+        <span class="badge badge-ai">🤖 AI Challenge</span>
+
+        <button class="play-btn btn-ttt"
+            onclick="gtag('event','play_tictactoe'); location.href='tictactoe_game.html'">
+            ▶ Play Now
+        </button>
+    </div>
+
+    <!-- BRAIN GAMES -->
+    <div class="section-title">🧠 Brain Games</div>
+
+    <div class="game-card">
+        <h2>🧩 2048</h2>
+        <p>
+            Simple to play.  
+            Hard to master.  
+            Only legends reach <b>2048</b>.
+        </p>
+        <span class="badge badge-brain">🔥 Trending</span>
+
+        <button class="play-btn btn-2048"
+            onclick="gtag('event','play_2048'); location.href='2048.html'">
+            ▶ Play 2048
+        </button>
+    </div>
+
+    <!-- QUICK GAMES -->
+    <div class="section-title">⚡ Quick Games</div>
+
+    <div class="game-card">
+        <h2>⚡ Reaction Time</h2>
+        <p>
+            Blink and you lose.  
+            Tap fast when it turns green.
+        </p>
+        <span class="badge badge-quick">⏱ Ego Game</span>
+
+        <button class="play-btn btn-reaction"
+            onclick="gtag('event','play_reaction_time'); location.href='reaction.html'">
+            ▶ Test Your Speed
+        </button>
+    </div>
+
+    <!-- BACK -->
+    <button class="back-btn"
+        onclick="gtag('event','back_to_notices'); location.href='index.html'">
+        ⬅ Back to Notices
     </button>
-</div>
-
-<!-- BRAIN GAMES -->
-<div class="section-title">🧠 Brain Games</div>
-
-<div class="game-card">
-    <h2>🧩 2048</h2>
-    <p>
-        Simple to play.  
-        Hard to master.  
-        Only legends reach <b>2048</b>.
-    </p>
-    <span class="badge badge-brain">🔥 Trending</span>
-
-    <button class="play-btn btn-2048"
-        onclick="gtag('event','play_2048'); location.href='2048.html'">
-        ▶ Play 2048
-    </button>
-</div>
-
-<!-- 🧠 MEMORY GAME -->
-<div class="game-card">
-    <h2>🧠 Memory Game</h2>
-    <p>
-        Test your memory by matching cards.  
-        Fewer moves means a sharper mind.
-    </p>
-    <span class="badge badge-brain">🧠 Focus</span>
-    <span class="badge badge-fun">🎯 Match</span>
-
-    <button class="play-btn btn-memory"
-        onclick="gtag('event','play_memory_game'); location.href='memory.html'">
-        ▶ Play Memory Game
-    </button>
-</div>
-
-<!-- QUICK GAMES -->
-<div class="section-title">⚡ Quick Games</div>
-
-<div class="game-card">
-    <h2>⚡ Reaction Time</h2>
-    <p>
-        Blink and you lose.  
-        Tap fast when it turns green.
-    </p>
-    <span class="badge badge-quick">⏱ Ego Game</span>
-
-    <button class="play-btn btn-reaction"
-        onclick="gtag('event','play_reaction_time'); location.href='reaction.html'">
-        ▶ Test Your Speed
-    </button>
-</div>
-
-<div class="game-card">
-    <h2>🧩 Block Blast</h2>
-    <p>
-        Place blocks smartly.  
-        Clear rows and columns to score big.
-    </p>
-    <span class="badge badge-brain">🧠 Puzzle</span>
-    <span class="badge badge-fun">🔥 Addictive</span>
-
-    <button class="play-btn btn-2048"
-        onclick="gtag('event','play_block_blast'); location.href='blockblast.html'">
-        ▶ Play Block Blast
-    </button>
-</div>
-
-<!-- 🐍 SNAKE GAME -->
-<div class="game-card">
-    <h2>🐍 Snake (Classic)</h2>
-    <p>
-        The legendary Nokia Snake game.  
-        Simple, addictive, and pure childhood nostalgia.
-    </p>
-    <span class="badge badge-classic">🎮 Classic</span>
-    <span class="badge badge-fun">🕹 Retro</span>
-
-    <button class="play-btn btn-snake"
-        onclick="gtag('event','play_snake'); location.href='snake.html'">
-        ▶ Play Snake
-    </button>
-</div>
-
-<!-- EMOJI QUIZ -->
-<div class="game-card">
-    <h2>😄 Emoji Quiz</h2>
-    <p>
-        Can you guess the word using emojis only?  
-        Sounds easy… until it’s not 😏
-    </p>
-    <span class="badge badge-fun">🎉 Fun Game</span>
-
-    <button class="play-btn btn-emoji"
-        onclick="gtag('event','play_emoji_quiz'); location.href='emoji_quiz.html'">
-        ▶ Play Emoji Quiz
-    </button>
-</div>
-
-<!-- BACK -->
-<button class="back-btn"
-    onclick="gtag('event','back_to_notices'); location.href='index.html'">
-    ⬅ Back to Notices
-</button>
 
 </div>
 
