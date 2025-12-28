@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Block Blast – RR Games Zone</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{
+    margin:0;
+    background:#0f1117;
+    color:#fff;
+    font-family:system-ui,Arial;
+}
+
+.header{
+    background:linear-gradient(90deg,#6a11cb,#2575fc);
+    padding:22px 12px;
+    text-align:center;
+}
+.header h1{margin:0;font-size:26px;}
+.header p{margin-top:6px;opacity:.85;}
+
+.container{
+    padding:16px;
+    max-width:420px;
+    margin:auto;
+}
+
+.score{
+    text-align:center;
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:12px;
+    color:#ff9800;
+}
+
+/* BOARD */
+.board{
+    display:grid;
+    grid-template-columns:repeat(10,1fr);
+    gap:4px;
+    background:#161a22;
+    padding:8px;
+    border-radius:16px;
+}
+.cell{
+    aspect-ratio:1;
+    background:#0b0d13;
+    border-radius:6px;
+}
+.cell.filled{
+    background:#4fc3f7;
+}
+
+/* BLOCKS */
+.blocks{
+    display:flex;
+    justify-content:space-between;
+    margin-top:18px;
+}
+.block{
+    display:grid;
+    gap:4px;
+    padding:8px;
+    background:#161a22;
+    border-radius:12px;
+    cursor:pointer;
+}
+.block.selected{
+    outline:2px solid #ff9800;
+}
+.block div{
+    width:18px;
+    height:18px;
+    background:#ff9800;
+    border-radius:4px;
+}
+
+/* BUTTONS */
+.btn{
+    width:100%;
+    margin-top:18px;
+    padding:14px;
+    font-size:16px;
+    font-weight:700;
+    border:none;
+    border-radius:14px;
+    cursor:pointer;
+    color:#fff;
+}
+.btn-restart{background:linear-gradient(90deg,#ff9800,#ff6a00);}
+.btn-back{background:#34495e;}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🧩 Block Blast</h1>
+    <p>Place • Clear • Score</p>
+</div>
+
+<div class="container">
+
+<div class="score">
+    Score: <span id="score">0</span>
+</div>
+
+<div class="board" id="board"></div>
+
+<div class="blocks" id="blocks"></div>
+
+<button class="btn btn-restart" onclick="startGame()">🔁 Restart</button>
+<button class="btn btn-back" onclick="location.href='games.html'">⬅ Back to Games</button>
+
+</div>
+
+<script>
+const boardEl = document.getElementById("board");
+const blocksEl = document.getElementById("blocks");
+const scoreEl = document.getElementById("score");
+
+let board = [];
+let selectedBlock = null;
+let score = 0;
+
+const blockShapes = [
+    [[1,1,1]],
+    [[1,1],[1,1]],
+    [[1],[1],[1]],
+    [[1,1,1],[0,1,0]],
+    [[1,1,0],[0,1,1]]
+];
+
+function startGame(){
+    board = Array(100).fill(0);
+    score = 0;
+    scoreEl.innerText = score;
+    drawBoard();
+    generateBlocks();
+}
+startGame();
+
+function drawBoard(){
+    boardEl.innerHTML = "";
+    board.forEach((v,i)=>{
+        const c = document.createElement("div");
+        c.className = "cell"+(v?" filled":"");
+        c.onclick = ()=>placeBlock(i);
+        boardEl.appendChild(c);
+    });
+}
+
+function generateBlocks(){
+    blocksEl.innerHTML = "";
+    selectedBlock = null;
+
+    for(let i=0;i<3;i++){
+        const shape = blockShapes[Math.floor(Math.random()*blockShapes.length)];
+        const b = document.createElement("div");
+        b.className = "block";
+        b.onclick = ()=>{
+            document.querySelectorAll(".block").forEach(x=>x.classList.remove("selected"));
+            b.classList.add("selected");
+            selectedBlock = shape;
+        };
+
+        shape.forEach(row=>{
+            const r = document.createElement("div");
+            r.style.display="flex";
+            row.forEach(cell=>{
+                const d = document.createElement("div");
+                d.style.visibility = cell?"visible":"hidden";
+                r.appendChild(d);
+            });
+            b.appendChild(r);
+        });
+
+        blocksEl.appendChild(b);
+    }
+}
+
+function placeBlock(index){
+    if(!selectedBlock) return;
+
+    const row = Math.floor(index/10);
+    const col = index%10;
+
+    if(!canPlace(row,col,selectedBlock)) return;
+
+    selectedBlock.forEach((r,y)=>{
+        r.forEach((c,x)=>{
+            if(c){
+                board[(row+y)*10+(col+x)] = 1;
+            }
+        });
+    });
+
+    score += 10;
+    scoreEl.innerText = score;
+
+    clearLines();
+    drawBoard();
+    generateBlocks();
+}
+
+function canPlace(r,c,shape){
+    return shape.every((row,y)=>
+        row.every((cell,x)=>{
+            if(!cell) return true;
+            const nr = r+y, nc = c+x;
+            return nr<10 && nc<10 && board[nr*10+nc]===0;
+        })
+    );
+}
+
+function clearLines(){
+    for(let i=0;i<10;i++){
+        const row = board.slice(i*10,i*10+10);
+        const col = board.filter((_,idx)=>idx%10===i);
+
+        if(row.every(v=>v)){
+            for(let j=0;j<10;j++) board[i*10+j]=0;
+            score+=50;
+        }
+        if(col.every(v=>v)){
+            for(let j=0;j<10;j++) board[j*10+i]=0;
+            score+=50;
+        }
+    }
+    scoreEl.innerText = score;
+}
+</script>
+
+</body>
+</html>
