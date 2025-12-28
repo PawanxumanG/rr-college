@@ -21,36 +21,6 @@ body{
 .header h1{margin:0;font-size:26px;}
 .header p{opacity:.85;margin-top:6px;}
 
-.mode-btn{
-  margin-top:12px;
-  background:rgba(0,0,0,.35);
-  border:none;
-  border-radius:24px;
-  padding:10px 20px;
-  color:#fff;
-  font-size:14px;
-  cursor:pointer;
-}
-
-.ai-levels{
-  display:none;
-  justify-content:center;
-  gap:10px;
-  margin-top:12px;
-}
-.ai-levels button{
-  padding:8px 16px;
-  border:none;
-  border-radius:20px;
-  color:#fff;
-  font-weight:600;
-  opacity:.6;
-  cursor:pointer;
-}
-.ai-levels .active{opacity:1;}
-.medium{background:#f39c12;}
-.hard{background:#e74c3c;}
-
 .status{
   margin:18px 0;
   font-size:18px;
@@ -73,7 +43,6 @@ body{
   align-items:center;
   justify-content:center;
   cursor:pointer;
-  box-shadow:0 6px 18px rgba(0,0,0,.6);
 }
 .cell.X{color:#4fc3f7;}
 .cell.O{color:#ffb74d;}
@@ -99,7 +68,7 @@ body{
 .cheat-overlay{
   position:fixed;
   inset:0;
-  background:rgba(0,0,0,.88);
+  background:rgba(0,0,0,.9);
   display:none;
   align-items:center;
   justify-content:center;
@@ -113,6 +82,7 @@ body{
   max-width:320px;
 }
 .cheat-box h2{color:#ff5252;margin:0 0 10px;}
+.cheat-box p{opacity:.9;}
 .cheat-box button{
   width:100%;
   margin-top:16px;
@@ -132,27 +102,19 @@ body{
 <div class="header">
   <h1>❌ ⭕ Tic Tac Toe</h1>
   <p>Play • Chill • Compete</p>
-
-  <button class="mode-btn" onclick="toggleMode()">
-    <span id="modeText">Friend</span>
-  </button>
-
-  <div class="ai-levels" id="aiLevels">
-    <button id="btnMedium" class="medium" onclick="setLevel('medium')">Medium</button>
-    <button id="btnHard" class="hard active" onclick="setLevel('hard')">Hard</button>
-  </div>
 </div>
 
 <div class="status" id="status">Player X Turn</div>
 <div class="board" id="board"></div>
 
-<button class="btn btn-restart" onclick="restartGame()">Restart</button>
+<button class="btn btn-restart" onclick="restartGame()">Restart Game</button>
 <button class="btn btn-back" onclick="location.href='games.html'">Back</button>
 
+<!-- 🚨 CHEATER POPUP -->
 <div class="cheat-overlay" id="cheat">
   <div class="cheat-box">
     <h2>🚨 Cheater Detected 😂</h2>
-    <p>You can’t beat Hard mode.<br>Play fair and try again.</p>
+    <p>You can’t win as Player X.<br>Play fair and try again.</p>
     <button onclick="restartGame()">Restart Fair</button>
   </div>
 </div>
@@ -160,12 +122,9 @@ body{
 <script>
 const boardEl=document.getElementById("board");
 const statusEl=document.getElementById("status");
-const aiLevels=document.getElementById("aiLevels");
 const cheat=document.getElementById("cheat");
 
-let vsAI=true;
-let aiLevel="hard";
-let board,currentPlayer,gameOver,isAITurn;
+let board,currentPlayer,gameOver;
 
 const wins=[
 [0,1,2],[3,4,5],[6,7,8],
@@ -177,7 +136,6 @@ function init(){
   board=Array(9).fill("");
   currentPlayer="X";
   gameOver=false;
-  isAITurn=false;
   cheat.style.display="none";
   statusEl.innerText="Player X Turn";
   boardEl.innerHTML="";
@@ -187,12 +145,11 @@ function init(){
     c.onclick=()=>move(i);
     boardEl.appendChild(c);
   });
-  aiLevels.style.display=vsAI?"flex":"none";
 }
 init();
 
 function move(i){
-  if(board[i]||gameOver||isAITurn) return;
+  if(board[i]||gameOver) return;
 
   board[i]=currentPlayer;
   render();
@@ -200,15 +157,15 @@ function move(i){
   const winLine=wins.find(w=>w.every(x=>board[x]===currentPlayer));
   if(winLine){
 
-    // 🔒 FINAL RULE
-    if(vsAI && aiLevel==="hard" && currentPlayer==="X"){
+    // 🔒 SIMPLE RULE: X CAN NEVER WIN
+    if(currentPlayer==="X"){
       gameOver=true;
       cheat.style.display="flex";
       return;
     }
 
     winLine.forEach(i=>boardEl.children[i].classList.add("win"));
-    statusEl.innerText=`Player ${currentPlayer} Wins!`;
+    statusEl.innerText="Player O Wins!";
     gameOver=true;
     return;
   }
@@ -221,49 +178,6 @@ function move(i){
 
   currentPlayer=currentPlayer==="X"?"O":"X";
   statusEl.innerText=`Player ${currentPlayer} Turn`;
-
-  if(vsAI && currentPlayer==="O"){
-    isAITurn=true;
-    setTimeout(()=>{
-      move(bestMove());
-      isAITurn=false;
-    },400);
-  }
-}
-
-function bestMove(){
-  let best=-Infinity,move;
-  board.forEach((v,i)=>{
-    if(v===""){
-      board[i]="O";
-      let s=minimax(board,0,false);
-      board[i]="";
-      if(s>best){best=s;move=i;}
-    }
-  });
-  return move;
-}
-
-function minimax(b,d,isMax){
-  const r=check(b);
-  if(r!==null) return r==="O"?10-d:r==="X"?d-10:0;
-  let best=isMax?-Infinity:Infinity;
-  b.forEach((v,i)=>{
-    if(v===""){
-      b[i]=isMax?"O":"X";
-      best=isMax?Math.max(best,minimax(b,d+1,!isMax)):
-                  Math.min(best,minimax(b,d+1,!isMax));
-      b[i]="";
-    }
-  });
-  return best;
-}
-
-function check(b){
-  for(const[w,x,y] of wins){
-    if(b[w]&&b[w]===b[x]&&b[w]===b[y]) return b[w];
-  }
-  return b.includes("")?null:"draw";
 }
 
 function render(){
@@ -274,19 +188,6 @@ function render(){
 }
 
 function restartGame(){init();}
-
-function toggleMode(){
-  vsAI=!vsAI;
-  document.getElementById("modeText").innerText=vsAI?"RR AI Bot":"Friend";
-  restartGame();
-}
-
-function setLevel(lvl){
-  aiLevel=lvl;
-  document.querySelectorAll(".ai-levels button").forEach(b=>b.classList.remove("active"));
-  document.getElementById(lvl==="hard"?"btnHard":"btnMedium").classList.add("active");
-  restartGame();
-}
 </script>
 
 </body>
