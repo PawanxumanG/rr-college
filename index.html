@@ -173,6 +173,40 @@ gtag('event','home_loaded');
     font-size:14px;
     line-height:1.6;
 }
+/* ===== KARMANYA RULES & REGULATIONS ===== */
+.rules-box{
+    background:#161a22;
+    border-radius:14px;
+    padding:12px;
+    margin-bottom:18px;
+    box-shadow:0 0 16px rgba(0,0,0,.6);
+}
+.rules-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    cursor:pointer;
+}
+.rules-header b{
+    color:#ff9800;
+}
+.rules-toggle{
+    font-size:13px;
+    color:#ff9800;
+}
+.rules-content{
+    display:none;
+    margin-top:12px;
+    font-size:14px;
+    line-height:1.6;
+    color:#e0e0e0;
+}
+.rules-content ol{
+    padding-left:18px;
+}
+.rules-content li{
+    margin-bottom:8px;
+}
 </style>
 </head>
 
@@ -234,6 +268,26 @@ gtag('event','home_loaded');
   <div class="countdown-title">⏳ KARMANYA FEST 2025</div>
   <div class="countdown-time" id="countdown">Loading...</div>
   <div class="countdown-sub">Get ready for the biggest celebration 🎉</div>
+</div>
+
+<!-- 📜 RULES & REGULATIONS -->
+<div class="rules-box">
+  <div class="rules-header" onclick="toggleRules()">
+    <b>📜 Rules & Regulations – Karmanya 2025</b>
+    <span class="rules-toggle" id="rulesToggle">Tap to open</span>
+  </div>
+
+  <div class="rules-content" id="rulesContent">
+    <ol>
+      <li>You must carry your valid <b>College ID card</b>.</li>
+      <li>Do not carry valuable items. The management is not responsible for any loss.</li>
+      <li>Maintain the rules, regulations, and decorum of the college.</li>
+      <li>Maintain cleanliness and hygiene in the premises. <b>(Use dustbins)</b></li>
+      <li>No smoking, intoxication, or such activities are allowed. If caught, the student will be <b>restricted</b>.</li>
+      <li>Be responsible for your phones, cameras, purses, money, etc.</li>
+      <li>Students should carry their own water bottles and refill them from the water cooler.</li>
+    </ol>
+  </div>
 </div>
 
 <div class="ai-box">
@@ -312,6 +366,13 @@ function trackAndGo(t){
   if(t==='album')location.href='event_album.html';
   if(t==='events')location.href='events.html';
   if(t==='chairman')location.href='chairman.html';
+}
+
+function toggleRules(){
+  const box = document.getElementById("rulesContent");
+  const t = document.getElementById("rulesToggle");
+  box.style.display = box.style.display === "block" ? "none" : "block";
+  t.innerText = box.style.display === "block" ? "Tap to close" : "Tap to open";
 }
 </script>
 
