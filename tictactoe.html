@@ -5,18 +5,6 @@
 <title>Tic Tac Toe – RR Events App</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- GOOGLE ANALYTICS -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9JW1V42V83"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-9JW1V42V83', {
-  page_title: 'Tic Tac Toe Game',
-  page_path: '/tictactoe_game.html'
-});
-</script>
-
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 body{
@@ -32,6 +20,7 @@ body{
 }
 .header h1{margin:0;font-size:26px;}
 .header p{margin-top:6px;opacity:.85;}
+
 .mode-btn{
     background:rgba(0,0,0,.35);
     border:none;
@@ -45,6 +34,7 @@ body{
     gap:6px;
     align-items:center;
 }
+
 .ai-levels{
     display:none;
     justify-content:center;
@@ -66,11 +56,13 @@ body{
 }
 .medium{background:#f39c12;}
 .hard{background:#e74c3c;}
+
 .status{
     margin:18px 0;
     font-size:18px;
     font-weight:600;
 }
+
 .board{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -95,6 +87,7 @@ body{
     background:linear-gradient(135deg,#ff512f,#dd2476);
     box-shadow:0 0 22px rgba(255,81,47,.9);
 }
+
 .btn{
     width:80%;
     max-width:280px;
@@ -178,7 +171,7 @@ body{
 <div class="cheat-overlay" id="cheatOverlay">
   <div class="cheat-box">
     <h2>🚨 Cheater Detected 😂</h2>
-    <p>You can’t beat me that fast.<br>Play fair and try again 😈</p>
+    <p>You can’t beat me like that.<br>Play fair and try again 😈</p>
     <button onclick="restartGame()">🔄 Restart Fairly</button>
   </div>
 </div>
@@ -198,6 +191,11 @@ let aiLevel="medium";
 let board,currentPlayer,gameOver,isAITurn;
 let matchStartTime=0;
 
+/* 🔥 TAP BURST TRACKING */
+let tapHistory=[];
+const TAP_WINDOW=600; // ms
+const TAP_LIMIT=5;   // taps
+
 const wins=[
 [0,1,2],[3,4,5],[6,7,8],
 [0,3,6],[1,4,7],[2,5,8],
@@ -209,6 +207,7 @@ function init(){
     currentPlayer="X";
     gameOver=false;
     isAITurn=false;
+    tapHistory=[];
     matchStartTime=Date.now();
     cheatOverlay.style.display="none";
     statusEl.innerText="Player X Turn";
@@ -224,7 +223,18 @@ function init(){
 }
 init();
 
+function trackTap(){
+    const now=Date.now();
+    tapHistory.push(now);
+    tapHistory=tapHistory.filter(t=>now-t<=TAP_WINDOW);
+    return tapHistory.length>=TAP_LIMIT;
+}
+
 function move(i){
+    if(trackTap()){
+        cheatOverlay.style.display="flex";
+        return;
+    }
     if(board[i]||gameOver||isAITurn) return;
 
     board[i]=currentPlayer;
@@ -256,23 +266,24 @@ function move(i){
 }
 
 function endGame(text){
-    gameOver = true;
-    const duration = (Date.now() - matchStartTime) / 1000;
+    gameOver=true;
+    const duration=(Date.now()-matchStartTime)/1000;
 
-    // 🚨 IMPOSSIBLE WIN CHECK
-    if (vsAI && aiLevel === "hard" && text.includes("Player X Wins")) {
-        cheatOverlay.style.display = "flex";
+    // 🚨 Hard mode can NEVER be beaten
+    if(vsAI && aiLevel==="hard" && text.includes("Player X Wins")){
+        cheatOverlay.style.display="flex";
         return;
     }
 
-    // ⏱️ SPEED CHEAT CHECK
-    if (vsAI && (aiLevel === "hard" || aiLevel === "medium") && duration < 5.2) {
-        cheatOverlay.style.display = "flex";
+    // ⏱️ Speed cheat (Medium + Hard)
+    if(vsAI && (aiLevel==="hard"||aiLevel==="medium") && duration<3.2){
+        cheatOverlay.style.display="flex";
         return;
     }
 
-    statusEl.innerText = text;
+    statusEl.innerText=text;
 }
+
 function mediumMove(){
     const empty=board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
     if(Math.random()<0.4) return empty[Math.floor(Math.random()*empty.length)];
@@ -308,7 +319,7 @@ function minimax(b,d,isMax){
 }
 
 function checkResult(b){
-    for(const[w,x,y]of wins){
+    for(const[w,x,y] of wins){
         if(b[w]&&b[w]===b[x]&&b[w]===b[y]) return b[w];
     }
     return b.includes("")?null:"draw";
