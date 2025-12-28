@@ -26,16 +26,12 @@ body{
     color:#fff;
     text-align:center;
 }
-
-/* HEADER */
 .header{
     background:linear-gradient(90deg,#6a11cb,#2575fc);
     padding:22px 12px;
 }
 .header h1{margin:0;font-size:26px;}
 .header p{margin-top:6px;opacity:.85;}
-
-/* MODE BUTTON */
 .mode-btn{
     background:rgba(0,0,0,.35);
     border:none;
@@ -49,8 +45,6 @@ body{
     gap:6px;
     align-items:center;
 }
-
-/* AI LEVELS */
 .ai-levels{
     display:none;
     justify-content:center;
@@ -72,15 +66,11 @@ body{
 }
 .medium{background:#f39c12;}
 .hard{background:#e74c3c;}
-
-/* STATUS */
 .status{
     margin:18px 0;
     font-size:18px;
     font-weight:600;
 }
-
-/* BOARD */
 .board{
     display:grid;
     grid-template-columns:repeat(3,1fr);
@@ -105,8 +95,6 @@ body{
     background:linear-gradient(135deg,#ff512f,#dd2476);
     box-shadow:0 0 22px rgba(255,81,47,.9);
 }
-
-/* BUTTONS */
 .btn{
     width:80%;
     max-width:280px;
@@ -130,13 +118,11 @@ body{
     <h1>❌ ⭕ Tic Tac Toe</h1>
     <p>Play • Chill • Compete</p>
 
-    <!-- FRIEND MODE DEFAULT -->
     <button class="mode-btn" onclick="toggleMode()">
         <span id="modeIcon">👥</span>
         <span id="modeText">Friend</span>
     </button>
 
-    <!-- AI LEVELS -->
     <div class="ai-levels" id="aiLevels">
         <button id="btnMedium" class="medium" onclick="setLevel('medium')">Medium</button>
         <button id="btnHard" class="hard" onclick="setLevel('hard')">Hard</button>
@@ -150,18 +136,18 @@ body{
 <button class="btn btn-back" onclick="location.href='games.html'">⬅ Back to Games</button>
 
 <script>
-const boardEl = document.getElementById("board");
-const statusEl = document.getElementById("status");
-const modeIcon = document.getElementById("modeIcon");
-const modeText = document.getElementById("modeText");
-const aiLevels = document.getElementById("aiLevels");
-const btnMedium = document.getElementById("btnMedium");
-const btnHard = document.getElementById("btnHard");
+const boardEl=document.getElementById("board");
+const statusEl=document.getElementById("status");
+const modeIcon=document.getElementById("modeIcon");
+const modeText=document.getElementById("modeText");
+const aiLevels=document.getElementById("aiLevels");
+const btnMedium=document.getElementById("btnMedium");
+const btnHard=document.getElementById("btnHard");
 
-/* DEFAULT SETTINGS */
-let vsAI = false;       // 👥 FRIEND MODE DEFAULT
-let aiLevel = "medium";
-let board, currentPlayer, gameOver;
+let vsAI=false;
+let aiLevel="medium";
+let board,currentPlayer,gameOver;
+let isAITurn=false;
 
 const wins=[
 [0,1,2],[3,4,5],[6,7,8],
@@ -170,61 +156,62 @@ const wins=[
 ];
 
 function init(){
-    board = Array(9).fill("");
-    currentPlayer = "X";
-    gameOver = false;
-    statusEl.innerText = "Player X Turn";
-    boardEl.innerHTML = "";
-
+    board=Array(9).fill("");
+    currentPlayer="X";
+    gameOver=false;
+    isAITurn=false;
+    statusEl.innerText="Player X Turn";
+    boardEl.innerHTML="";
     board.forEach((_,i)=>{
-        const c = document.createElement("div");
-        c.className = "cell";
-        c.onclick = ()=>move(i);
+        const c=document.createElement("div");
+        c.className="cell";
+        c.onclick=()=>move(i);
         boardEl.appendChild(c);
     });
-
-    aiLevels.style.display = vsAI ? "flex" : "none";
+    aiLevels.style.display=vsAI?"flex":"none";
     updateLevelGlow();
 }
 init();
 
 function move(i){
-    if(board[i] || gameOver) return;
+    if(board[i]||gameOver||isAITurn) return;
 
-    board[i] = currentPlayer;
+    board[i]=currentPlayer;
     render();
 
-    let winLine = wins.find(w=>w.every(x=>board[x]===currentPlayer));
+    let winLine=wins.find(w=>w.every(x=>board[x]===currentPlayer));
     if(winLine){
         winLine.forEach(i=>boardEl.children[i].classList.add("win"));
-        statusEl.innerText = `🎉 Player ${currentPlayer} Wins!`;
-        gameOver = true;
+        statusEl.innerText=`🎉 Player ${currentPlayer} Wins!`;
+        gameOver=true;
         return;
     }
 
     if(board.every(v=>v)){
-        statusEl.innerText = "🤝 Match Draw";
-        gameOver = true;
+        statusEl.innerText="🤝 Match Draw";
+        gameOver=true;
         return;
     }
 
-    currentPlayer = currentPlayer==="X"?"O":"X";
-    statusEl.innerText = `Player ${currentPlayer} Turn`;
+    currentPlayer=currentPlayer==="X"?"O":"X";
+    statusEl.innerText=`Player ${currentPlayer} Turn`;
 
     if(vsAI && currentPlayer==="O"){
-        statusEl.innerText = "🤖 AI Thinking...";
-        setTimeout(()=>move(aiLevel==="hard"?bestMove():mediumMove()),400);
+        isAITurn=true;
+        statusEl.innerText="🤖 AI Thinking...";
+        setTimeout(()=>{
+            move(aiLevel==="hard"?bestMove():mediumMove());
+            isAITurn=false;
+        },400);
     }
 }
 
-/* MEDIUM AI */
 function mediumMove(){
-    let empty = board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
+    let empty=board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
     if(Math.random()<0.4) return empty[Math.floor(Math.random()*empty.length)];
     return bestMove();
 }
 
-/* HARD AI – UNBEATABLE */
 function bestMove(){
     let bestScore=-Infinity,move;
     board.forEach((c,i)=>{
@@ -239,16 +226,15 @@ function bestMove(){
 }
 
 function minimax(b,d,isMax){
-    let res = checkResult();
-    if(res!==null) return res==="O"?10-d:res==="X"?d-10:0;
-
-    let best = isMax?-Infinity:Infinity;
+    let r=checkResult();
+    if(r!==null) return r==="O"?10-d:r==="X"?d-10:0;
+    let best=isMax?-Infinity:Infinity;
     b.forEach((v,i)=>{
         if(v===""){
             b[i]=isMax?"O":"X";
-            let s=minimax(b,d+1,!isMax);
+            best=isMax?Math.max(best,minimax(b,d+1,!isMax)):
+                          Math.min(best,minimax(b,d+1,!isMax));
             b[i]="";
-            best=isMax?Math.max(best,s):Math.min(best,s);
         }
     });
     return best;
@@ -264,22 +250,22 @@ function checkResult(){
 
 function render(){
     [...boardEl.children].forEach((c,i)=>{
-        c.innerText = board[i];
-        c.className = "cell "+board[i];
+        c.innerText=board[i];
+        c.className="cell "+board[i];
     });
 }
 
 function restartGame(){ init(); }
 
 function toggleMode(){
-    vsAI = !vsAI;
-    modeIcon.innerText = vsAI ? "🤖" : "👥";
-    modeText.innerText = vsAI ? "RR Ai Bot" : "Friend";
+    vsAI=!vsAI;
+    modeIcon.innerText=vsAI?"🤖":"👥";
+    modeText.innerText=vsAI?"RR AI Bot":"Friend";
     restartGame();
 }
 
 function setLevel(lvl){
-    aiLevel = lvl;
+    aiLevel=lvl;
     updateLevelGlow();
     restartGame();
 }
