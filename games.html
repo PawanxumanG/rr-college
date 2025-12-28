@@ -108,6 +108,7 @@ body{
 .btn-reaction{background:linear-gradient(90deg,#2ecc71,#27ae60);}
 .btn-emoji{background:linear-gradient(90deg,#9b59b6,#6c3483);}
 .btn-snake{background:linear-gradient(90deg,#16a085,#27ae60);}
+.btn-memory{background:linear-gradient(90deg,#3498db,#1f618d);}
 
 /* FOOTER BUTTON */
 .back-btn{
@@ -167,6 +168,22 @@ body{
     <button class="play-btn btn-2048"
         onclick="gtag('event','play_2048'); location.href='2048.html'">
         ▶ Play 2048
+    </button>
+</div>
+
+<!-- 🧠 MEMORY GAME -->
+<div class="game-card">
+    <h2>🧠 Memory Game</h2>
+    <p>
+        Test your memory by matching cards.  
+        Fewer moves means a sharper mind.
+    </p>
+    <span class="badge badge-brain">🧠 Focus</span>
+    <span class="badge badge-fun">🎯 Match</span>
+
+    <button class="play-btn btn-memory"
+        onclick="gtag('event','play_memory_game'); location.href='memory.html'">
+        ▶ Play Memory Game
     </button>
 </div>
 

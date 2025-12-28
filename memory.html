@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Memory Game – RR Games Zone</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{
+    margin:0;
+    background:#0f1117;
+    color:#fff;
+    font-family:system-ui,Arial;
+}
+
+.header{
+    background:linear-gradient(90deg,#6a11cb,#2575fc);
+    padding:22px 12px;
+    text-align:center;
+}
+.header h1{margin:0;font-size:26px;}
+.header p{margin-top:6px;opacity:.85;}
+
+.container{
+    padding:16px;
+    max-width:420px;
+    margin:auto;
+}
+
+.stats{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:14px;
+    font-weight:600;
+    color:#ff9800;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.card{
+    background:#161a22;
+    border-radius:14px;
+    height:70px;
+    font-size:32px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 0 14px rgba(0,0,0,.6);
+}
+
+.card.flipped{
+    background:#222838;
+}
+
+.card.matched{
+    background:#2ecc71;
+    cursor:default;
+}
+
+.btn{
+    width:100%;
+    margin-top:18px;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    color:#fff;
+}
+.btn-restart{background:linear-gradient(90deg,#ff9800,#ff6a00);}
+.btn-back{background:#34495e;}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>🧠 Memory Game</h1>
+    <p>Flip • Match • Remember</p>
+</div>
+
+<div class="container">
+
+<div class="stats">
+    <div>Moves: <span id="moves">0</span></div>
+    <div>Matches: <span id="matches">0</span>/8</div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<button class="btn btn-restart" onclick="startGame()">🔁 Restart Game</button>
+<button class="btn btn-back" onclick="location.href='games.html'">⬅ Back to Games</button>
+
+</div>
+
+<script>
+const emojis = ["🍎","🍌","🍇","🍉","🍓","🍍","🥝","🍒"];
+let cards = [];
+let first = null;
+let second = null;
+let lock = false;
+let moves = 0;
+let matches = 0;
+
+function startGame(){
+    const grid = document.getElementById("grid");
+    grid.innerHTML = "";
+    cards = [...emojis, ...emojis].sort(()=>0.5-Math.random());
+    first = second = null;
+    lock = false;
+    moves = 0;
+    matches = 0;
+    document.getElementById("moves").innerText = moves;
+    document.getElementById("matches").innerText = matches;
+
+    cards.forEach((emoji,i)=>{
+        const card = document.createElement("div");
+        card.className = "card";
+        card.dataset.emoji = emoji;
+        card.onclick = ()=>flip(card);
+        grid.appendChild(card);
+    });
+}
+startGame();
+
+function flip(card){
+    if(lock || card.classList.contains("flipped") || card.classList.contains("matched")) return;
+
+    card.classList.add("flipped");
+    card.innerText = card.dataset.emoji;
+
+    if(!first){
+        first = card;
+        return;
+    }
+
+    second = card;
+    moves++;
+    document.getElementById("moves").innerText = moves;
+
+    if(first.dataset.emoji === second.dataset.emoji){
+        first.classList.add("matched");
+        second.classList.add("matched");
+        matches++;
+        document.getElementById("matches").innerText = matches;
+        first = second = null;
+
+        if(matches === 8){
+            setTimeout(()=>{
+                alert("🎉 You Won!\nMoves: " + moves);
+            },300);
+        }
+    }else{
+        lock = true;
+        setTimeout(()=>{
+            first.classList.remove("flipped");
+            second.classList.remove("flipped");
+            first.innerText = "";
+            second.innerText = "";
+            first = second = null;
+            lock = false;
+        },700);
+    }
+}
+</script>
+
+</body>
+</html>
