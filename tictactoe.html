@@ -256,17 +256,23 @@ function move(i){
 }
 
 function endGame(text){
-    gameOver=true;
-    const duration=(Date.now()-matchStartTime)/1000;
+    gameOver = true;
+    const duration = (Date.now() - matchStartTime) / 1000;
 
-    if(vsAI && (aiLevel==="hard"||aiLevel==="medium") && duration<2.5){
-        cheatOverlay.style.display="flex";
+    // 🚨 IMPOSSIBLE WIN CHECK
+    if (vsAI && aiLevel === "hard" && text.includes("Player X Wins")) {
+        cheatOverlay.style.display = "flex";
         return;
     }
 
-    statusEl.innerText=text;
-}
+    // ⏱️ SPEED CHEAT CHECK
+    if (vsAI && (aiLevel === "hard" || aiLevel === "medium") && duration < 5.2) {
+        cheatOverlay.style.display = "flex";
+        return;
+    }
 
+    statusEl.innerText = text;
+}
 function mediumMove(){
     const empty=board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
     if(Math.random()<0.4) return empty[Math.floor(Math.random()*empty.length)];
