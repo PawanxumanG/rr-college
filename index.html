@@ -41,12 +41,12 @@ gtag('event','home_loaded');
 }
 .streak-mini b{color:#ff9800}
 
-/* 🔥 ENHANCED COUNTDOWN */
+/* 🔥 ENHANCED KARMANYA COUNTDOWN */
 .countdown-box{
     background:linear-gradient(135deg,#6a11cb,#2575fc);
     border-radius:18px;
     padding:18px 14px;
-    margin-bottom:14px;
+    margin-bottom:18px;
     text-align:center;
     color:#fff;
     box-shadow:0 0 25px rgba(123,44,255,.8);
@@ -56,6 +56,7 @@ gtag('event','home_loaded');
     font-size:14px;
     font-weight:700;
     letter-spacing:1px;
+    opacity:.9;
 }
 .countdown-time{
     font-size:22px;
@@ -77,40 +78,7 @@ gtag('event','home_loaded');
     to{box-shadow:0 0 30px rgba(37,117,252,.9);}
 }
 
-/* 📜 RULES BOX */
-.rules-box{
-    background:#161a22;
-    border-radius:14px;
-    padding:12px;
-    margin-bottom:18px;
-    box-shadow:0 0 16px rgba(0,0,0,.6);
-}
-.rules-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    cursor:pointer;
-}
-.rules-header b{color:#ff9800}
-.rules-header span{
-    font-size:13px;
-    color:#ff9800;
-}
-.rules-content{
-    display:none;
-    margin-top:12px;
-    font-size:14px;
-    line-height:1.6;
-    color:#e0e0e0;
-}
-.rules-content ol{
-    padding-left:18px;
-}
-.rules-content li{
-    margin-bottom:8px;
-}
-
-/* STUDENT HELPER */
+/* ===== STUDENT HELPER ===== */
 .ai-box{
     background:#161a22;
     border-radius:14px;
@@ -143,6 +111,7 @@ gtag('event','home_loaded');
     margin-top:10px;
     font-size:14px;
     color:#ffcc80;
+    white-space:pre-line;
 }
 
 .grid{
@@ -176,7 +145,9 @@ gtag('event','home_loaded');
     font-size:16px;
     font-weight:700;
     cursor:pointer;
+    box-shadow:0 0 16px rgba(255,152,0,.45);
 }
+.share-app-btn:active{transform:scale(.98)}
 
 .app-footer{
     margin-top:12px;
@@ -186,6 +157,22 @@ gtag('event','home_loaded');
 }
 .powered-text{font-size:13px;color:#9aa0a6}
 .powered-brand{font-size:13px;color:#e6e6e6;font-weight:600}
+
+.update-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+    cursor:pointer;
+}
+.update-header b{color:#ff9800}
+.update-toggle{font-size:13px;color:#ff9800}
+.update-content{
+    display:none;
+    margin-top:10px;
+    font-size:14px;
+    line-height:1.6;
+}
 </style>
 </head>
 
@@ -201,35 +188,71 @@ gtag('event','home_loaded');
 
 <div class="container">
 
+<button onclick="trackAndGo('chairman')" class="nav-btn">
+👨‍🏫 OUR CHAIRMAN – Shri R. R. Pardeshi
+</button>
+
+<div class="event">
+  <h2>📢 IMPORTANT NOTICE</h2>
+
+  <p>
+    All students are instructed to <b>open this app daily</b> for official notices,
+    event updates, and important announcements.
+  </p>
+
+  <p class="text-muted">
+    📌 All updates will be published only in this app.
+  </p>
+
+  <p class="text-muted">
+    📸 All <b>Karmanya Fest</b> photos will be shared in the <b>Album</b> section.
+    Students can view and download photos directly from the Album page.
+  </p>
+
+  <div class="update-header" onclick="toggleUpdates()">
+    <b>🆕 New App Updates v2.1</b>
+    <span class="update-toggle" id="updateToggle">Tap to open</span>
+  </div>
+
+  <div class="update-content" id="updateContent">
+    <p>
+      🚀 <b>What’s New:</b><br>
+      • Image & other download support ⬇️<br>
+      • Improved Event Album 📸<br>
+      • Faster loading & improved stability ✨
+    </p>
+  </div>
+</div>
+
 <div class="streak-mini">
 🔥 Daily Streak
 <b><span id="streakCount">1</span> Day</b>
 </div>
 
+<!-- 🔥 UPDATED COUNTDOWN -->
 <div class="countdown-box">
   <div class="countdown-title">⏳ KARMANYA FEST 2025</div>
   <div class="countdown-time" id="countdown">Loading...</div>
   <div class="countdown-sub">Get ready for the biggest celebration 🎉</div>
 </div>
 
-<!-- 📜 RULES -->
-<div class="rules-box">
-  <div class="rules-header" onclick="toggleRules()">
-    <b>📜 Rules & Regulations – Karmanya 2025</b>
-    <span id="rulesToggle">Tap to open</span>
-  </div>
+<div class="ai-box">
+<div class="ai-header" onclick="toggleAI()">
+  <h2>🤖 Student Helper</h2>
+  <span class="ai-toggle" id="aiToggle">Tap to open</span>
+</div>
+<div class="ai-content" id="aiContent">
+  <button class="ai-btn ai-pay" onclick="aiReply('payment')">💳 How to pay for Karmanya?</button>
+  <button class="ai-btn ai-game" onclick="aiReply('ai_game')">🎮 How to play with RR AI Bot?</button>
+  <div class="ai-answer" id="aiAnswer"></div>
+</div>
+</div>
 
-  <div class="rules-content" id="rulesContent">
-    <ol>
-      <li>All students must carry their valid College ID cards.</li>
-      <li>Do not carry valuable items. Management is not responsible for any loss.</li>
-      <li>Maintain discipline, decorum, and college rules.</li>
-      <li>Maintain cleanliness and hygiene. (Use dustbins)</li>
-      <li>No smoking, intoxication, or prohibited activities. Violators will be restricted.</li>
-      <li>Students are responsible for their phones, cameras, purses, and money.</li>
-      <li>Carry your own water bottles. Refill from college water coolers.</li>
-    </ol>
-  </div>
+<div class="grid">
+  <button class="btn-karmanya" onclick="trackAndGo('karmanya')">🎟️ Karmanya</button>
+  <button class="btn-promo" onclick="trackAndGo('promo')">🎬 Promo</button>
+  <button class="btn-album" onclick="trackAndGo('album')">📸 Album</button>
+  <button class="btn-events" onclick="trackAndGo('events')">📅 Events</button>
 </div>
 
 <button class="share-app-btn" onclick="location.href='shareapp.html'">
@@ -257,16 +280,38 @@ document.getElementById("streakCount").innerText=streak;
 const eventDate=new Date("2025-12-30T23:59:59").getTime();
 setInterval(()=>{
   const diff=eventDate-Date.now();
-  document.getElementById("countdown").innerText =
+  document.getElementById("countdown").innerText=
   diff<=0 ? "🎉 Countdown Ended!" :
   `${Math.floor(diff/86400000)}d : ${Math.floor(diff%86400000/3600000)}h : ${Math.floor(diff%3600000/60000)}m : ${Math.floor(diff%60000/1000)}s`;
 },1000);
 
-function toggleRules(){
-  const box=document.getElementById("rulesContent");
-  const t=document.getElementById("rulesToggle");
+function toggleAI(){
+  const box=document.getElementById("aiContent");
+  const t=document.getElementById("aiToggle");
   box.style.display=box.style.display==="block"?"none":"block";
   t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
+}
+
+function toggleUpdates(){
+  const box=document.getElementById("updateContent");
+  const t=document.getElementById("updateToggle");
+  box.style.display=box.style.display==="block"?"none":"block";
+  t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
+}
+
+function aiReply(type){
+  document.getElementById("aiAnswer").innerText =
+  type==="payment"
+  ? "Open Karmanya → Scan QR → Pay ₹500"
+  : "Open Games Zone → Tic Tac Toe → Hard Mode 🔥";
+}
+
+function trackAndGo(t){
+  if(t==='karmanya')location.href='karmanya.html';
+  if(t==='promo')location.href='promo.html';
+  if(t==='album')location.href='event_album.html';
+  if(t==='events')location.href='events.html';
+  if(t==='chairman')location.href='chairman.html';
 }
 </script>
 
