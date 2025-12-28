@@ -136,136 +136,151 @@ body{
 <button class="btn btn-back" onclick="location.href='games.html'">⬅ Back to Games</button>
 
 <script>
-const boardEl=document.getElementById("board");
-const statusEl=document.getElementById("status");
-const modeIcon=document.getElementById("modeIcon");
-const modeText=document.getElementById("modeText");
-const aiLevels=document.getElementById("aiLevels");
-const btnMedium=document.getElementById("btnMedium");
-const btnHard=document.getElementById("btnHard");
+const boardEl = document.getElementById("board");
+const statusEl = document.getElementById("status");
+const modeIcon = document.getElementById("modeIcon");
+const modeText = document.getElementById("modeText");
+const aiLevels = document.getElementById("aiLevels");
+const btnMedium = document.getElementById("btnMedium");
+const btnHard = document.getElementById("btnHard");
 
-let vsAI=false;
-let aiLevel="medium";
-let board,currentPlayer,gameOver;
-let isAITurn=false;
+let vsAI = false;
+let aiLevel = "medium";
+let board, currentPlayer, gameOver;
+let isAITurn = false;
 
-const wins=[
-[0,1,2],[3,4,5],[6,7,8],
-[0,3,6],[1,4,7],[2,5,8],
-[0,4,8],[2,4,6]
+const wins = [
+ [0,1,2],[3,4,5],[6,7,8],
+ [0,3,6],[1,4,7],[2,5,8],
+ [0,4,8],[2,4,6]
 ];
 
 function init(){
-    board=Array(9).fill("");
-    currentPlayer="X";
-    gameOver=false;
-    isAITurn=false;
-    statusEl.innerText="Player X Turn";
-    boardEl.innerHTML="";
+    board = Array(9).fill("");
+    currentPlayer = "X";
+    gameOver = false;
+    isAITurn = false;
+    statusEl.innerText = "Player X Turn";
+    boardEl.innerHTML = "";
+
     board.forEach((_,i)=>{
-        const c=document.createElement("div");
-        c.className="cell";
-        c.onclick=()=>move(i);
+        const c = document.createElement("div");
+        c.className = "cell";
+        c.onclick = ()=>move(i);
         boardEl.appendChild(c);
     });
-    aiLevels.style.display=vsAI?"flex":"none";
+
+    aiLevels.style.display = vsAI ? "flex" : "none";
     updateLevelGlow();
 }
 init();
 
 function move(i){
-    if(board[i]||gameOver||isAITurn) return;
+    if(board[i] || gameOver || isAITurn) return;
 
-    board[i]=currentPlayer;
+    board[i] = currentPlayer;
     render();
 
-    let winLine=wins.find(w=>w.every(x=>board[x]===currentPlayer));
+    const winLine = wins.find(w => w.every(x => board[x] === currentPlayer));
     if(winLine){
-        winLine.forEach(i=>boardEl.children[i].classList.add("win"));
-        statusEl.innerText=`🎉 Player ${currentPlayer} Wins!`;
-        gameOver=true;
+        winLine.forEach(i => boardEl.children[i].classList.add("win"));
+        statusEl.innerText = `🎉 Player ${currentPlayer} Wins!`;
+        gameOver = true;
         return;
     }
 
-    if(board.every(v=>v)){
-        statusEl.innerText="🤝 Match Draw";
-        gameOver=true;
+    if(board.every(v => v)){
+        statusEl.innerText = "🤝 Match Draw";
+        gameOver = true;
         return;
     }
 
-    currentPlayer=currentPlayer==="X"?"O":"X";
-    statusEl.innerText=`Player ${currentPlayer} Turn`;
+    currentPlayer = currentPlayer === "X" ? "O" : "X";
+    statusEl.innerText = `Player ${currentPlayer} Turn`;
 
-    if(vsAI && currentPlayer==="O"){
-        isAITurn=true;
-        statusEl.innerText="🤖 AI Thinking...";
+    if(vsAI && currentPlayer === "O"){
+        isAITurn = true;
+        statusEl.innerText = "🤖 AI Thinking...";
         setTimeout(()=>{
-            move(aiLevel==="hard"?bestMove():mediumMove());
-            isAITurn=false;
-        },400);
+            move(aiLevel === "hard" ? bestMove() : mediumMove());
+            isAITurn = false;
+        }, 400);
     }
 }
 
+/* MEDIUM AI */
 function mediumMove(){
-    let empty=board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
-    if(Math.random()<0.4) return empty[Math.floor(Math.random()*empty.length)];
+    const empty = board.map((v,i)=>v===""?i:null).filter(v=>v!==null);
+    if(Math.random() < 0.4) return empty[Math.floor(Math.random()*empty.length)];
     return bestMove();
 }
 
+/* HARD AI – TRUE UNBEATABLE */
 function bestMove(){
-    let bestScore=-Infinity,move;
-    board.forEach((c,i)=>{
-        if(c===""){
-            board[i]="O";
-            let score=minimax(board,0,false);
-            board[i]="";
-            if(score>bestScore){bestScore=score;move=i;}
+    let bestScore = -Infinity;
+    let move;
+    board.forEach((v,i)=>{
+        if(v === ""){
+            board[i] = "O";
+            let score = minimax(board, 0, false);
+            board[i] = "";
+            if(score > bestScore){
+                bestScore = score;
+                move = i;
+            }
         }
     });
     return move;
 }
 
-function minimax(b,d,isMax){
-    let r=checkResult();
-    if(r!==null) return r==="O"?10-d:r==="X"?d-10:0;
-    let best=isMax?-Infinity:Infinity;
+function minimax(b, depth, isMax){
+    const result = checkResult(b);
+    if(result !== null){
+        if(result === "O") return 10 - depth;
+        if(result === "X") return depth - 10;
+        return 0;
+    }
+
+    let best = isMax ? -Infinity : Infinity;
+
     b.forEach((v,i)=>{
-        if(v===""){
-            b[i]=isMax?"O":"X";
-            best=isMax?Math.max(best,minimax(b,d+1,!isMax)):
-                          Math.min(best,minimax(b,d+1,!isMax));
-            b[i]="";
+        if(v === ""){
+            b[i] = isMax ? "O" : "X";
+            const score = minimax(b, depth + 1, !isMax);
+            b[i] = "";
+            best = isMax ? Math.max(best, score) : Math.min(best, score);
         }
     });
+
     return best;
 }
 
-function checkResult(){
-    for(let w of wins){
-        let[a,b,c]=w;
-        if(board[a]&&board[a]===board[b]&&board[a]===board[c]) return board[a];
+function checkResult(b){
+    for(const w of wins){
+        const [a,c,d] = w;
+        if(b[a] && b[a] === b[c] && b[a] === b[d]) return b[a];
     }
-    return board.includes("")?null:"draw";
+    return b.includes("") ? null : "draw";
 }
 
 function render(){
     [...boardEl.children].forEach((c,i)=>{
-        c.innerText=board[i];
-        c.className="cell "+board[i];
+        c.innerText = board[i];
+        c.className = "cell " + board[i];
     });
 }
 
 function restartGame(){ init(); }
 
 function toggleMode(){
-    vsAI=!vsAI;
-    modeIcon.innerText=vsAI?"🤖":"👥";
-    modeText.innerText=vsAI?"RR AI Bot":"Friend";
+    vsAI = !vsAI;
+    modeIcon.innerText = vsAI ? "🤖" : "👥";
+    modeText.innerText = vsAI ? "RR AI Bot" : "Friend";
     restartGame();
 }
 
 function setLevel(lvl){
-    aiLevel=lvl;
+    aiLevel = lvl;
     updateLevelGlow();
     restartGame();
 }
@@ -273,8 +288,8 @@ function setLevel(lvl){
 function updateLevelGlow(){
     btnMedium.classList.remove("active");
     btnHard.classList.remove("active");
-    if(aiLevel==="medium") btnMedium.classList.add("active");
-    if(aiLevel==="hard") btnHard.classList.add("active");
+    if(aiLevel === "medium") btnMedium.classList.add("active");
+    if(aiLevel === "hard") btnHard.classList.add("active");
 }
 </script>
 
