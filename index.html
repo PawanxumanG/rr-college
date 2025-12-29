@@ -314,7 +314,7 @@ if(last!==today){
 }
 document.getElementById("streakCount").innerText=streak;
 
-const eventDate=new Date("2025-12-30T23:59:59").getTime();
+const eventDate=new Date("2025-12-30T00:00:00").getTime();
 setInterval(()=>{
   const diff = eventDate - Date.now();
   const sub = document.getElementById("countdownSub");
