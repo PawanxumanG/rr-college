@@ -41,7 +41,7 @@ gtag('event','home_loaded');
 }
 .streak-mini b{color:#ff9800}
 
-/* 🔥 ENHANCED COUNTDOWN (ONLY THIS PART) */
+/* 🔥 ENHANCED COUNTDOWN */
 .countdown-box{
     background:linear-gradient(135deg,#6a11cb,#2575fc);
     border-radius:18px;
@@ -72,6 +72,20 @@ gtag('event','home_loaded');
     0%{transform:scale(1);}
     50%{transform:scale(1.04);}
     100%{transform:scale(1);}
+}
+
+/* ===== POSTER (ONLY NEW CSS) ===== */
+.poster-box{
+    background:#161a22;
+    border-radius:16px;
+    padding:12px;
+    margin:16px 0;
+    box-shadow:0 0 18px rgba(0,0,0,.6);
+}
+.poster-box img{
+    width:100%;
+    border-radius:12px;
+    display:block;
 }
 
 /* ===== STUDENT HELPER ===== */
@@ -188,7 +202,7 @@ gtag('event','home_loaded');
 👨‍🏫 OUR CHAIRMAN – Shri R. R. Pardeshi
 </button>
 
-<!-- ✅ NOTICE SECTION (UNCHANGED) -->
+<!-- NOTICE -->
 <div class="event">
   <h2>📢 IMPORTANT NOTICE</h2>
 
@@ -197,13 +211,10 @@ gtag('event','home_loaded');
     event updates, and important announcements.
   </p>
 
-  <p class="text-muted">
-    📌 All updates will be published only in this app.
-  </p>
+  <p class="text-muted">📌 All updates will be published only in this app.</p>
 
   <p class="text-muted">
     📸 All <b>Karmanya Fest</b> photos will be shared in the <b>Album</b> section.
-    Students can view and download photos directly from the Album page.
   </p>
 
   <div class="update-header" onclick="toggleUpdates()">
@@ -221,12 +232,17 @@ gtag('event','home_loaded');
   </div>
 </div>
 
+<!-- ✅ POSTER (ONLY ADDITION) -->
+<div class="poster-box">
+  <img src="karmanya_poster.jpg" alt="Karmanya Fest Poster">
+</div>
+
 <div class="streak-mini">
 🔥 Daily Streak
 <b><span id="streakCount">1</span> Day</b>
 </div>
 
-<!-- 🔥 COUNTDOWN -->
+<!-- COUNTDOWN -->
 <div class="countdown-box">
   <div class="countdown-title">⏳ KARMANYA FEST 2025</div>
   <div class="countdown-time" id="countdown">Loading...</div>
