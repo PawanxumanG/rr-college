@@ -304,169 +304,161 @@ gtag('event','home_loaded');
 </div>
 
 <script>
-/* ================= DAILY STREAK (UNCHANGED) ================= */
-let today = new Date().toDateString();
-let last = localStorage.getItem("lastOpenDate");
-let streak = parseInt(localStorage.getItem("dailyStreak") || "0");
-if (last !== today) {
-  streak = last ? streak + 1 : 1;
-  localStorage.setItem("dailyStreak", streak);
-  localStorage.setItem("lastOpenDate", today);
-}
-document.getElementById("streakCount").innerText = streak;
+window.onload = function () {
 
-/* ================= FIREWORKS ENGINE (NO SOUND) ================= */
-
-const canvas = document.getElementById("fireworksCanvas");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas(){
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-let particles = [];
-let running = false;
-let fireInterval = null;
-
-function randomColor(){
-  return `hsl(${Math.random()*360},100%,60%)`;
-}
-
-function createFirework(){
-  const x = Math.random() * canvas.width;
-  const y = Math.random() * canvas.height * 0.6;
-
-  for(let i=0;i<90;i++){
-    particles.push({
-      x,y,
-      angle:Math.random()*Math.PI*2,
-      speed:Math.random()*6+2,
-      alpha:1,
-      color:randomColor()
-    });
+  /* ================= DAILY STREAK ================= */
+  let today = new Date().toDateString();
+  let last = localStorage.getItem("lastOpenDate");
+  let streak = parseInt(localStorage.getItem("dailyStreak") || "0");
+  if (last !== today) {
+    streak = last ? streak + 1 : 1;
+    localStorage.setItem("dailyStreak", streak);
+    localStorage.setItem("lastOpenDate", today);
   }
-}
+  document.getElementById("streakCount").innerText = streak;
 
-function animateFireworks(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  /* ================= COUNTDOWN ================= */
+  const countdownEl = document.getElementById("countdown");
+  const subEl = document.getElementById("countdownSub");
 
-  particles.forEach((p,i)=>{
-    p.x += Math.cos(p.angle)*p.speed;
-    p.y += Math.sin(p.angle)*p.speed;
-    p.alpha -= 0.015;
+  // Countdown till 12:00 AM (Fest Day start)
+  const eventDate = new Date("2025-12-30T00:00:00").getTime();
 
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,2,0,Math.PI*2);
-    ctx.fillStyle = p.color;
-    ctx.globalAlpha = p.alpha;
-    ctx.fill();
+  setInterval(() => {
+    const now = new Date();
+    const diff = eventDate - now.getTime();
 
-    if(p.alpha <= 0) particles.splice(i,1);
-  });
-
-  ctx.globalAlpha = 1;
-
-  if(running) requestAnimationFrame(animateFireworks);
-}
-
-function startFireworks(){
-  if(running) return;
-
-  running = true;
-  canvas.style.display = "block";
-
-  fireInterval = setInterval(createFirework, 600);
-  animateFireworks();
-
-  // 🧹 AUTO STOP AFTER 30 MIN
-  setTimeout(stopFireworks, 30 * 60 * 1000);
-}
-
-function stopFireworks(){
-  running = false;
-  clearInterval(fireInterval);
-  canvas.style.display = "none";
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-}
-
-/* ================= COUNTDOWN + TIME TRIGGERS ================= */
-
-const eventStart = new Date("2025-12-30T00:00:00").getTime();
-
-setInterval(()=>{
-  const now = new Date();
-  const diff = eventStart - now.getTime();
-  const sub = document.getElementById("countdownSub");
-
-  if(diff <= 0){
-    document.getElementById("countdown").innerText = "🎉 TODAY IS THE DAY!";
-    sub.innerText = "Karmanya Fest is LIVE 🔥";
-
-    // 🎆 FIREWORKS AT 12:00 AM & 2:00 PM
-    if(
-      (now.getHours() === 0 && now.getMinutes() === 0) ||
-      (now.getHours() === 14 && now.getMinutes() === 0)
-    ){
-      startFireworks();
+    if (diff <= 0) {
+      countdownEl.innerText = "🎉 TODAY IS THE DAY!";
+      subEl.innerText = "Karmanya Fest is LIVE 🔥";
+      return;
     }
-    return;
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    countdownEl.innerText = `${d}d : ${h}h : ${m}m : ${s}s`;
+
+    if (d === 0) {
+      subEl.innerText = "🚨 Karmanya starts TODAY!";
+    } else {
+      subEl.innerText = "Get ready for the biggest celebration 🎉";
+    }
+  }, 1000);
+
+  /* ================= FIREWORKS ================= */
+  function startFireworks(durationMinutes) {
+    const canvas = document.createElement("canvas");
+    canvas.id = "fireworksCanvas";
+    canvas.style.position = "fixed";
+    canvas.style.top = 0;
+    canvas.style.left = 0;
+    canvas.style.width = "100%";
+    canvas.style.height = "100%";
+    canvas.style.zIndex = 9999;
+    canvas.style.pointerEvents = "none";
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    let particles = [];
+
+    function randomColor() {
+      return `hsl(${Math.random() * 360},100%,60%)`;
+    }
+
+    function createFirework() {
+      const x = Math.random() * canvas.width;
+      const y = Math.random() * canvas.height * 0.5;
+      for (let i = 0; i < 80; i++) {
+        particles.push({
+          x,
+          y,
+          vx: (Math.random() - 0.5) * 6,
+          vy: (Math.random() - 0.5) * 6,
+          life: 100,
+          color: randomColor()
+        });
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life--;
+        ctx.fillStyle = p.color;
+        ctx.fillRect(p.x, p.y, 2, 2);
+        if (p.life <= 0) particles.splice(i, 1);
+      });
+      requestAnimationFrame(animate);
+    }
+
+    setInterval(createFirework, 800);
+    animate();
+
+    // Auto stop after given minutes
+    setTimeout(() => {
+      canvas.remove();
+    }, durationMinutes * 60 * 1000);
   }
 
-  const d=Math.floor(diff/86400000);
-  const h=Math.floor(diff%86400000/3600000);
-  const m=Math.floor(diff%3600000/60000);
-  const s=Math.floor(diff%60000/1000);
+  /* ================= FIREWORKS TIMING ================= */
+  function checkFireworksTime() {
+    const now = new Date();
+    const hours = now.getHours();
+    const minutes = now.getMinutes();
 
-  document.getElementById("countdown").innerText =
-    `${d}d : ${h}h : ${m}m : ${s}s`;
+    // 12:00 AM trigger
+    if (hours === 0 && minutes === 0) {
+      startFireworks(30);
+    }
 
-  if(d === 0){
-    sub.innerText = "🚨 Karmanya starts TODAY!";
+    // 2:00 PM trigger
+    if (hours === 14 && minutes === 0) {
+      startFireworks(30);
+    }
   }
-},1000);
 
-function toggleAI(){
-  const box=document.getElementById("aiContent");
-  const t=document.getElementById("aiToggle");
-  box.style.display=box.style.display==="block"?"none":"block";
-  t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
-}
+  setInterval(checkFireworksTime, 60000);
 
-function toggleUpdates(){
-  const box=document.getElementById("updateContent");
-  const t=document.getElementById("updateToggle");
-  box.style.display=box.style.display==="block"?"none":"block";
-  t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
-}
+  /* ================= UI FUNCTIONS ================= */
+  window.toggleAI = function () {
+    const box = document.getElementById("aiContent");
+    const t = document.getElementById("aiToggle");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+    t.innerText = box.style.display === "block" ? "Tap to close" : "Tap to open";
+  };
 
-function aiReply(type){
-  document.getElementById("aiAnswer").innerText =
-  type==="payment"
-  ? "Open Karmanya → Scan QR → Pay ₹500"
-  : "Open Games Zone → Tic Tac Toe → Hard Mode 🔥";
-}
+  window.toggleUpdates = function () {
+    const box = document.getElementById("updateContent");
+    const t = document.getElementById("updateToggle");
+    box.style.display = box.style.display === "block" ? "none" : "block";
+    t.innerText = box.style.display === "block" ? "Tap to close" : "Tap to open";
+  };
 
-function trackAndGo(t){
-  if(t==='karmanya')location.href='karmanya.html';
-  if(t==='promo')location.href='promo.html';
-  if(t==='album')location.href='event_album.html';
-  if(t==='events')location.href='events.html';
-  if(t==='chairman')location.href='chairman.html';
-}
+  window.aiReply = function (type) {
+    document.getElementById("aiAnswer").innerText =
+      type === "payment"
+        ? "Open Karmanya → Scan QR → Pay ₹500"
+        : "Open Games Zone → Tic Tac Toe → Hard Mode 🔥";
+  };
+
+  window.trackAndGo = function (t) {
+    if (t === "karmanya") location.href = "karmanya.html";
+    if (t === "promo") location.href = "promo.html";
+    if (t === "album") location.href = "event_album.html";
+    if (t === "events") location.href = "events.html";
+    if (t === "chairman") location.href = "chairman.html";
+  };
+
+};
 </script>
-<canvas id="fireworksCanvas"
-style="
-position:fixed;
-top:0;
-left:0;
-width:100vw;
-height:100vh;
-pointer-events:none;
-z-index:9999;
-display:none;
-"></canvas>
+
 </body>
 </html>
