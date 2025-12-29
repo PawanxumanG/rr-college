@@ -41,41 +41,36 @@ gtag('event','home_loaded');
 }
 .streak-mini b{color:#ff9800}
 
-/* 🔥 ENHANCED KARMANYA COUNTDOWN */
+/* 🔥 FINAL DAY COUNTDOWN (ONLY THIS IS CHANGED) */
 .countdown-box{
-    background:linear-gradient(135deg,#6a11cb,#2575fc);
-    border-radius:18px;
-    padding:18px 14px;
+    background:linear-gradient(135deg,#5f2cff,#2b6cff);
+    border-radius:20px;
+    padding:20px 14px;
     margin-bottom:18px;
     text-align:center;
     color:#fff;
-    box-shadow:0 0 25px rgba(123,44,255,.8);
-    animation:pulseGlow 2s infinite alternate;
+    box-shadow:0 0 30px rgba(80,120,255,.9);
+    animation:pulseFinal 1.3s infinite;
 }
 .countdown-title{
     font-size:14px;
-    font-weight:700;
+    font-weight:800;
     letter-spacing:1px;
-    opacity:.9;
 }
 .countdown-time{
-    font-size:22px;
+    font-size:26px;
     font-weight:900;
-    margin:8px 0;
-    animation:blinkText 1s infinite;
+    margin:10px 0;
 }
 .countdown-sub{
-    font-size:13px;
-    opacity:.85;
+    font-size:14px;
+    opacity:.95;
 }
 
-@keyframes blinkText{
-    0%,100%{opacity:1;}
-    50%{opacity:.5;}
-}
-@keyframes pulseGlow{
-    from{box-shadow:0 0 16px rgba(106,17,203,.6);}
-    to{box-shadow:0 0 30px rgba(37,117,252,.9);}
+@keyframes pulseFinal{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.04);}
+    100%{transform:scale(1);}
 }
 
 /* ===== STUDENT HELPER ===== */
@@ -157,22 +152,6 @@ gtag('event','home_loaded');
 }
 .powered-text{font-size:13px;color:#9aa0a6}
 .powered-brand{font-size:13px;color:#e6e6e6;font-weight:600}
-
-.update-header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-top:12px;
-    cursor:pointer;
-}
-.update-header b{color:#ff9800}
-.update-toggle{font-size:13px;color:#ff9800}
-.update-content{
-    display:none;
-    margin-top:10px;
-    font-size:14px;
-    line-height:1.6;
-}
 </style>
 </head>
 
@@ -192,48 +171,18 @@ gtag('event','home_loaded');
 👨‍🏫 OUR CHAIRMAN – Shri R. R. Pardeshi
 </button>
 
-<div class="event">
-  <h2>📢 IMPORTANT NOTICE</h2>
-
-  <p>
-    All students are instructed to <b>open this app daily</b> for official notices,
-    event updates, and important announcements.
-  </p>
-
-  <p class="text-muted">
-    📌 All updates will be published only in this app.
-  </p>
-
-  <p class="text-muted">
-    📸 All <b>Karmanya Fest</b> photos will be shared in the <b>Album</b> section.
-    Students can view and download photos directly from the Album page.
-  </p>
-
-  <div class="update-header" onclick="toggleUpdates()">
-    <b>🆕 New App Updates v2.1</b>
-    <span class="update-toggle" id="updateToggle">Tap to open</span>
-  </div>
-
-  <div class="update-content" id="updateContent">
-    <p>
-      🚀 <b>What’s New:</b><br>
-      • Image & other download support ⬇️<br>
-      • Improved Event Album 📸<br>
-      • Faster loading & improved stability ✨
-    </p>
-  </div>
-</div>
-
 <div class="streak-mini">
 🔥 Daily Streak
 <b><span id="streakCount">1</span> Day</b>
 </div>
 
-<!-- 🔥 UPDATED COUNTDOWN -->
+<!-- 🔥 COUNTDOWN -->
 <div class="countdown-box">
   <div class="countdown-title">⏳ KARMANYA FEST 2025</div>
   <div class="countdown-time" id="countdown">Loading...</div>
-  <div class="countdown-sub">Get ready for the biggest celebration 🎉</div>
+  <div class="countdown-sub" id="countdownSub">
+    Get ready for the biggest celebration 🎉
+  </div>
 </div>
 
 <div class="ai-box">
@@ -279,22 +228,31 @@ document.getElementById("streakCount").innerText=streak;
 
 const eventDate=new Date("2025-12-30T23:59:59").getTime();
 setInterval(()=>{
-  const diff=eventDate-Date.now();
-  document.getElementById("countdown").innerText=
-  diff<=0 ? "🎉 Countdown Ended!" :
-  `${Math.floor(diff/86400000)}d : ${Math.floor(diff%86400000/3600000)}h : ${Math.floor(diff%3600000/60000)}m : ${Math.floor(diff%60000/1000)}s`;
+  const diff = eventDate - Date.now();
+  const sub = document.getElementById("countdownSub");
+
+  if(diff <= 0){
+    document.getElementById("countdown").innerText = "🎉 TODAY IS THE DAY!";
+    sub.innerText = "Karmanya Fest is LIVE 🔥";
+    return;
+  }
+
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff%86400000/3600000);
+  const m=Math.floor(diff%3600000/60000);
+  const s=Math.floor(diff%60000/1000);
+
+  document.getElementById("countdown").innerText =
+    `${d}d : ${h}h : ${m}m : ${s}s`;
+
+  if(d === 0){
+    sub.innerText = "🚨 Tomorrow is Karmanya Fest!";
+  }
 },1000);
 
 function toggleAI(){
   const box=document.getElementById("aiContent");
   const t=document.getElementById("aiToggle");
-  box.style.display=box.style.display==="block"?"none":"block";
-  t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
-}
-
-function toggleUpdates(){
-  const box=document.getElementById("updateContent");
-  const t=document.getElementById("updateToggle");
   box.style.display=box.style.display==="block"?"none":"block";
   t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
 }
