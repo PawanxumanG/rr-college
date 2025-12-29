@@ -41,7 +41,7 @@ gtag('event','home_loaded');
 }
 .streak-mini b{color:#ff9800}
 
-/* 🔥 ENHANCED KARMANYA COUNTDOWN */
+/* 🔥 ENHANCED COUNTDOWN (ONLY THIS PART) */
 .countdown-box{
     background:linear-gradient(135deg,#6a11cb,#2575fc);
     border-radius:18px;
@@ -49,33 +49,29 @@ gtag('event','home_loaded');
     margin-bottom:18px;
     text-align:center;
     color:#fff;
-    box-shadow:0 0 25px rgba(123,44,255,.8);
-    animation:pulseGlow 2s infinite alternate;
+    box-shadow:0 0 30px rgba(123,44,255,.9);
+    animation:festPulse 1.6s infinite;
 }
 .countdown-title{
     font-size:14px;
     font-weight:700;
     letter-spacing:1px;
-    opacity:.9;
+    opacity:.95;
 }
 .countdown-time{
-    font-size:22px;
+    font-size:24px;
     font-weight:900;
     margin:8px 0;
-    animation:blinkText 1s infinite;
 }
 .countdown-sub{
-    font-size:13px;
-    opacity:.85;
+    font-size:14px;
+    opacity:.9;
 }
 
-@keyframes blinkText{
-    0%,100%{opacity:1;}
-    50%{opacity:.5;}
-}
-@keyframes pulseGlow{
-    from{box-shadow:0 0 16px rgba(106,17,203,.6);}
-    to{box-shadow:0 0 30px rgba(37,117,252,.9);}
+@keyframes festPulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.04);}
+    100%{transform:scale(1);}
 }
 
 /* ===== STUDENT HELPER ===== */
@@ -192,6 +188,7 @@ gtag('event','home_loaded');
 👨‍🏫 OUR CHAIRMAN – Shri R. R. Pardeshi
 </button>
 
+<!-- ✅ NOTICE SECTION (UNCHANGED) -->
 <div class="event">
   <h2>📢 IMPORTANT NOTICE</h2>
 
@@ -229,11 +226,13 @@ gtag('event','home_loaded');
 <b><span id="streakCount">1</span> Day</b>
 </div>
 
-<!-- 🔥 UPDATED COUNTDOWN -->
+<!-- 🔥 COUNTDOWN -->
 <div class="countdown-box">
   <div class="countdown-title">⏳ KARMANYA FEST 2025</div>
   <div class="countdown-time" id="countdown">Loading...</div>
-  <div class="countdown-sub">Get ready for the biggest celebration 🎉</div>
+  <div class="countdown-sub" id="countdownSub">
+    Get ready for the biggest celebration 🎉
+  </div>
 </div>
 
 <div class="ai-box">
@@ -279,10 +278,26 @@ document.getElementById("streakCount").innerText=streak;
 
 const eventDate=new Date("2025-12-30T23:59:59").getTime();
 setInterval(()=>{
-  const diff=eventDate-Date.now();
-  document.getElementById("countdown").innerText=
-  diff<=0 ? "🎉 Countdown Ended!" :
-  `${Math.floor(diff/86400000)}d : ${Math.floor(diff%86400000/3600000)}h : ${Math.floor(diff%3600000/60000)}m : ${Math.floor(diff%60000/1000)}s`;
+  const diff = eventDate - Date.now();
+  const sub = document.getElementById("countdownSub");
+
+  if(diff <= 0){
+    document.getElementById("countdown").innerText = "🎉 TODAY IS THE DAY!";
+    sub.innerText = "Karmanya Fest is LIVE 🔥";
+    return;
+  }
+
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor(diff%86400000/3600000);
+  const m=Math.floor(diff%3600000/60000);
+  const s=Math.floor(diff%60000/1000);
+
+  document.getElementById("countdown").innerText =
+    `${d}d : ${h}h : ${m}m : ${s}s`;
+
+  if(d === 0){
+    sub.innerText = "🚨 Tomorrow is Karmanya Fest!";
+  }
 },1000);
 
 function toggleAI(){
