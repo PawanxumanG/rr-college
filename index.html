@@ -317,58 +317,39 @@ if (last !== today) {
 document.getElementById("streakCount").innerText = streak;
 
 
-/* ================= KARMANYA COUNTDOWN ================= */
-/*
-Event timeline:
-- Countdown runs till 12:00 AM, 30 Dec 2025
-- 12:00 AM → "Karmanya starts TODAY!"
-- 2:00 PM → "Karmanya Fest 2025 has STARTED!"
-*/
-
-// Times (local device time)
-const countdownEnd = new Date("2025-12-30T00:00:00").getTime();
-const festStartTime = new Date("2025-12-30T14:00:00").getTime();
+/* ================= 4PM COUNTDOWN ================= */
 
 const countdownEl = document.getElementById("countdown");
 const subTextEl = document.getElementById("countdownSub");
 
+const now = new Date();
+const festTime = new Date(
+  now.getFullYear(),
+  now.getMonth(),
+  now.getDate(),
+  16, 0, 0
+).getTime();
+
 setInterval(() => {
-  const now = Date.now();
-  const diff = countdownEnd - now;
+  const diff = festTime - Date.now();
 
-  // 🔵 BEFORE 12:00 AM (29th Dec)
   if (diff > 0) {
-    const totalHours = Math.floor(diff / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    const seconds = Math.floor((diff % 60000) / 1000);
+    const total = Math.floor(diff / 1000);
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
 
-    countdownEl.innerText = `${totalHours}h : ${minutes}m : ${seconds}s`;
-    subTextEl.innerText = "Get ready for the biggest celebration 🎉";
+    countdownEl.innerText = `${h}h : ${m}m : ${s}s`;
+    subTextEl.innerText =
+      total <= 60
+        ? "⚠️ FINAL MOMENT!"
+        : "Get ready for the biggest celebration 🎉";
     return;
   }
 
-  // 🟠 BETWEEN 12:00 AM AND 2:00 PM (30th Dec)
-  if (now >= countdownEnd && now < festStartTime) {
-    countdownEl.innerText = "🎉 TODAY IS THE DAY!";
-    subTextEl.innerText = "🚨 Karmanya starts TODAY!";
-    
-    // 🔥 Fireworks trigger point (12:00 AM)
-    // startFireworks();  // (can be added later)
-    return;
-  }
-
-  // 🔴 AFTER 2:00 PM (Fest Started)
-  if (now >= festStartTime) {
-    countdownEl.innerText = "🔥 FEST LIVE";
-    subTextEl.innerText = "Karmanya Fest 2025 has STARTED! 🎊";
-
-    // 🔥 Fireworks trigger point (2:00 PM)
-    // startFireworks();  // (can be added later)
-    return;
-  }
-
+  countdownEl.innerText = "🎉 FEST STARTED!";
+  subTextEl.innerText = "Karmanya Fest is LIVE 🔥";
 }, 1000);
-
 
 /* ================= STUDENT HELPER ================= */
 function toggleAI() {
@@ -424,6 +405,81 @@ fetch('announcement.json?t=' + Date.now())
     document.querySelector('.container').prepend(ann);
   })
   .catch(err => console.log('Announcement error:', err));
+  
+  /* ================= FIREWORKS ================= */
+
+let fireworksStarted = false;
+
+function startFireworks() {
+  if (fireworksStarted) return;
+  fireworksStarted = true;
+
+  const canvas = document.createElement("canvas");
+  canvas.style.position = "fixed";
+  canvas.style.inset = "0";
+  canvas.style.zIndex = "9999";
+  canvas.style.pointerEvents = "none";
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext("2d");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const fireworks = [];
+
+  class Firework {
+    constructor() {
+      this.x = Math.random() * canvas.width;
+      this.y = canvas.height;
+      this.t = Math.random() * canvas.height * 0.5;
+      this.exploded = false;
+      this.p = [];
+    }
+    update() {
+      if (!this.exploded) {
+        this.y -= 6;
+        if (this.y < this.t) {
+          this.exploded = true;
+          for (let i = 0; i < 40; i++) {
+            this.p.push({
+              x: this.x,
+              y: this.y,
+              vx: Math.random() * 6 - 3,
+              vy: Math.random() * 6 - 3,
+              a: 1
+            });
+          }
+        }
+      } else {
+        this.p.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.a -= 0.02;
+        });
+      }
+    }
+    draw() {
+      this.p.forEach(p => {
+        ctx.fillStyle = `rgba(255,255,255,${p.a})`;
+        ctx.fillRect(p.x, p.y, 3, 3);
+      });
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (Math.random() < 0.05) fireworks.push(new Firework());
+    fireworks.forEach(f => {
+      f.update();
+      f.draw();
+    });
+    requestAnimationFrame(animate);
+  }
+
+  animate();
+
+  setTimeout(() => canvas.remove(), 20 * 60 * 1000);
+}
 </script>
 
 </body>
