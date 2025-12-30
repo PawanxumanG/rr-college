@@ -401,6 +401,29 @@ function trackAndGo(t) {
   if (t === "events") location.href = "events.html";
   if (t === "chairman") location.href = "chairman.html";
 }
+/* ================= ANNOUNCEMENT FETCH ================= */
+fetch('announcement.json?t=' + Date.now())
+  .then(res => res.json())
+  .then(data => {
+    if (!data.show) return;
+
+    const ann = document.createElement('div');
+    ann.style.background = 'linear-gradient(135deg,#ff9800,#ff5722)';
+    ann.style.padding = '14px';
+    ann.style.borderRadius = '14px';
+    ann.style.marginBottom = '16px';
+    ann.style.boxShadow = '0 0 20px rgba(255,152,0,.45)';
+    ann.innerHTML = `
+      <div style="font-weight:700;font-size:15px;">${data.title}</div>
+      <div style="margin-top:6px;font-size:14px;line-height:1.5;">
+        ${data.message.replace(/\n/g,'<br>')}
+      </div>
+    `;
+
+    // Insert announcement at TOP of page content
+    document.querySelector('.container').prepend(ann);
+  })
+  .catch(err => console.log('Announcement error:', err));
 </script>
 
 </body>
