@@ -21,6 +21,16 @@ gtag('event','home_loaded');
 </script>
 
 <style>
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
 .header-logo{
     width:42px;
     height:42px;
@@ -513,15 +523,17 @@ fetch("announcement.json?t=" + Date.now())
   z-index:10000;
 ">
   <div style="
-    background:linear-gradient(135deg,#ff9800,#ff5722);
-    padding:20px;
-    border-radius:18px;
-    width:90%;
-    max-width:360px;
-    box-shadow:0 0 30px rgba(255,152,0,.6);
-    text-align:center;
-    color:#fff;
-  ">
+  background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
+  background-size:400% 400%;
+  animation:gradientShift 6s ease infinite, popIn 0.6s ease;
+  padding:20px;
+  border-radius:18px;
+  width:90%;
+  max-width:360px;
+  box-shadow:0 0 35px rgba(255,152,0,.7);
+  text-align:center;
+  color:#fff;
+">
     <h2 id="annTitle" style="margin:0 0 10px;">📢 Announcement</h2>
     <p id="annMsg" style="font-size:15px;line-height:1.5;"></p>
     <button onclick="closeAnnouncement()" style="
