@@ -1,7 +1,7 @@
 {
-  "show": true,
+  "show": false,
   "title": "UPDATE",
   "message": "📍 Welcome To RR Events App",
-  "type": "Normal",
+  "type": "important",
   "updated": "2025-12-30T14:00:00"
 }
