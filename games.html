@@ -107,8 +107,8 @@ body{
 .btn-2048{background:linear-gradient(90deg,#00c6ff,#0072ff);}
 .btn-reaction{background:linear-gradient(90deg,#2ecc71,#27ae60);}
 .btn-emoji{background:linear-gradient(90deg,#9b59b6,#6c3483);}
-.btn-snake{background:linear-gradient(90deg,#16a085,#27ae60);}
 .btn-memory{background:linear-gradient(90deg,#3498db,#1f618d);}
+.btn-number{background:linear-gradient(90deg,#7b2cff,#2575fc);}
 
 /* FOOTER BUTTON */
 .back-btn{
@@ -171,7 +171,21 @@ body{
     </button>
 </div>
 
-<!-- 🧠 MEMORY GAME -->
+<div class="game-card">
+    <h2>🔢 Number Connect</h2>
+    <p>
+        Connect matching numbers strategically.  
+        Simple rules, addictive gameplay.
+    </p>
+    <span class="badge badge-classic">⭐ Classic</span>
+    <span class="badge badge-brain">🧠 Logic</span>
+
+    <button class="play-btn btn-number"
+        onclick="gtag('event','play_number_connect'); location.href='number_connect.html'">
+        ▶ Play Number Connect
+    </button>
+</div>
+
 <div class="game-card">
     <h2>🧠 Memory Game</h2>
     <p>
@@ -196,7 +210,7 @@ body{
         Blink and you lose.  
         Tap fast when it turns green.
     </p>
-    <span class="badge badge-quick">⏱ Ego Game</span>
+    <span class="badge badge-quick">⏱ Speed</span>
 
     <button class="play-btn btn-reaction"
         onclick="gtag('event','play_reaction_time'); location.href='reaction.html'">
@@ -204,16 +218,13 @@ body{
     </button>
 </div>
 
-
-
-<!-- EMOJI QUIZ -->
 <div class="game-card">
     <h2>😄 Emoji Quiz</h2>
     <p>
-        Can you guess the word using emojis only?  
-        Sounds easy… until it’s not 😏
+        Guess the word using emojis only.  
+        Easy at first… then tricky 😏
     </p>
-    <span class="badge badge-fun">🎉 Fun Game</span>
+    <span class="badge badge-fun">🎉 Fun</span>
 
     <button class="play-btn btn-emoji"
         onclick="gtag('event','play_emoji_quiz'); location.href='emoji_quiz.html'">
@@ -221,7 +232,6 @@ body{
     </button>
 </div>
 
-<!-- BACK -->
 <button class="back-btn"
     onclick="gtag('event','back_to_notices'); location.href='index.html'">
     ⬅ Back to Notices
