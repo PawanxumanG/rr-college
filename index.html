@@ -385,8 +385,7 @@ function startFireworks() {
 
   setTimeout(() => canvas.remove(), 20 * 60 * 1000);
 }
-
-function closeAnnouncement(){
+function closeAnnouncement() {
   document.getElementById("announcementPopup").style.display = "none";
 }
 
@@ -395,20 +394,23 @@ fetch("announcement.json?t=" + Date.now())
   .then(data => {
     if (!data.show) return;
 
+    // ✅ ONE KEY — FINAL
     const lastSeenId = localStorage.getItem("announcementLastSeen");
 
-    // 🔥 Show popup only if NEW announcement
+    // ✅ Show only if NEW announcement
     if (lastSeenId === data.id) return;
 
+    // Inject content
     document.getElementById("annTitle").innerText =
       data.title || "Announcement";
 
     document.getElementById("annMsg").innerHTML =
       (data.message || "").replace(/\n/g, "<br>");
 
+    // Show popup
     document.getElementById("announcementPopup").style.display = "flex";
 
-    // Save current announcement id
+    // Save seen announcement
     localStorage.setItem("announcementLastSeen", data.id);
   })
   .catch(err => console.log("Announcement error:", err));
