@@ -43,7 +43,21 @@ gtag('event','home_loaded');
 }
 .streak-mini b{color:#ff9800}
 
-
+/* ===== COUNTDOWN ===== */
+.countdown-box{
+    background:linear-gradient(135deg,#7b2cff,#2575fc);
+    border-radius:14px;
+    padding:14px;
+    margin-bottom:18px;
+    text-align:center;
+    color:#fff;
+    box-shadow:0 0 18px rgba(123,44,255,.6);
+}
+.countdown-time{
+    font-size:18px;
+    font-weight:700;
+    margin-top:6px;
+}
 
 /* ===== STUDENT HELPER ===== */
 .ai-box{
@@ -87,7 +101,7 @@ gtag('event','home_loaded');
     display:grid;
     grid-template-columns:1fr 1fr;
     gap:12px;
-    margin-bottom:22px;
+    margin-bottom:18px;
 }
 .grid button{
     padding:14px;
@@ -103,9 +117,27 @@ gtag('event','home_loaded');
 .btn-album{background:linear-gradient(135deg,#ff9800,#ff2e63)}
 .btn-events{background:linear-gradient(135deg,#00b09b,#96c93d)}
 
+/* ===== SHARE APP BUTTON ===== */
+.share-app-btn{
+    margin:10px 0 6px;
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(135deg,#ff9800,#ff5722);
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    cursor:pointer;
+    box-shadow:0 0 16px rgba(255,152,0,.45);
+}
+.share-app-btn:active{
+    transform:scale(.98);
+}
+
 /* ===== POWERED BY ===== */
 .app-footer{
-    margin-top:18px;
+    margin-top:12px;
     padding-top:14px;
     text-align:center;
     border-top:1px solid rgba(255,255,255,0.08);
@@ -118,6 +150,26 @@ gtag('event','home_loaded');
     font-size:13px;
     color:#e6e6e6;
     font-weight:600;
+}
+
+/* ===== NOTICE UPDATE TOGGLE ===== */
+.update-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:12px;
+    cursor:pointer;
+}
+.update-header b{color:#ff9800}
+.update-toggle{
+    font-size:13px;
+    color:#ff9800;
+}
+.update-content{
+    display:none;
+    margin-top:10px;
+    font-size:14px;
+    line-height:1.6;
 }
 </style>
 </head>
@@ -136,10 +188,10 @@ gtag('event','home_loaded');
 <div class="container">
 
 <button onclick="trackAndGo('chairman')" class="nav-btn">
- OUR CHAIRMAN – Shri R. R. Pardeshi
+👨‍🏫 OUR CHAIRMAN – Shri R. R. Pardeshi
 </button>
 
-<!-- NOTICE -->
+<!-- ================= NOTICE SECTION ================= -->
 <div class="event">
   <h2>📢 IMPORTANT NOTICE</h2>
 
@@ -148,32 +200,40 @@ gtag('event','home_loaded');
     event updates, and important announcements.
   </p>
 
-  <p class="text-muted">📌 All updates will be published only in this app.</p>
-
   <p class="text-muted">
-    📸 All <b>Karmanya Fest</b> photos will be shared in the <b>Album</b> section.
+    📌 All updates will be published only in this app.
   </p>
 
-
   <div class="update-header" onclick="toggleUpdates()">
-    <b>🆕 New App Updates v2.1</b>
+    <b>🆕 New App Updates (v2.1)</b>
     <span class="update-toggle" id="updateToggle">Tap to open</span>
   </div>
 
   <div class="update-content" id="updateContent">
     <p>
+      We have upgraded the <b>RR Events App</b> with better performance
+      and future-ready systems.
+    </p>
+
+    <p>
       🚀 <b>What’s New:</b><br>
-      • Image & other download support ⬇️<br>
+      • Force update system added 🔐<br>
+      • Image & PDF download support ⬇️<br>
       • Improved Event Album 📸<br>
-      • Faster loading & improved stability ✨
+      • Faster loading & stability ✨
     </p>
   </div>
 </div>
+
 <div class="streak-mini">
 🔥 Daily Streak
 <b><span id="streakCount">1</span> Day</b>
 </div>
 
+<div class="countdown-box">
+⏳ KARMANYA 2025 COUNTDOWN
+<div class="countdown-time" id="countdown">Loading...</div>
+</div>
 
 <div class="ai-box">
 <div class="ai-header" onclick="toggleAI()">
@@ -182,20 +242,24 @@ gtag('event','home_loaded');
 </div>
 
 <div class="ai-content" id="aiContent">
-  <button class="ai-btn ai-pay" onclick="aiReply('payment')">New Update Soon</button>
+  <button class="ai-btn ai-pay" onclick="aiReply('payment')">💳 How to pay for Karmanya?</button>
   <button class="ai-btn ai-game" onclick="aiReply('ai_game')">🎮 How to play with RR AI Bot?</button>
   <div class="ai-answer" id="aiAnswer"></div>
 </div>
 </div>
 
 <div class="grid">
-  <button class="btn-payment" onclick="trackAndGo('payment')">🎟️ Payments</button>
+  <button class="btn-payment" onclick="trackAndGo('payment')">🎟️ payment</button>
   <button class="btn-promo" onclick="trackAndGo('promo')">🎬 Promo</button>
   <button class="btn-album" onclick="trackAndGo('album')">📸 Album</button>
   <button class="btn-events" onclick="trackAndGo('events')">📅 Events</button>
 </div>
 
-<!-- 🔻 POWERED BY -->
+<!-- ✅ SHARE APP BUTTON (EXACT MARKED PLACE) -->
+<button class="share-app-btn" onclick="location.href='shareapp.html'">
+📤 Share RR Events App
+</button>
+
 <div class="app-footer">
   <span class="powered-text">Powered by </span>
   <span class="powered-brand">RR International College</span>
@@ -222,24 +286,24 @@ setInterval(()=>{
   `${Math.floor(diff/86400000)}d : ${Math.floor(diff%86400000/3600000)}h : ${Math.floor(diff%3600000/60000)}m : ${Math.floor(diff%60000/1000)}s`;
 },1000);
 
+function toggleAI(){
+  const box=document.getElementById("aiContent");
+  const t=document.getElementById("aiToggle");
+  box.style.display=box.style.display==="block"?"none":"block";
+  t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
+}
 
 function toggleUpdates(){
-  const box = document.getElementById("updateContent");
-  const t = document.getElementById("updateToggle");
-
-  if(box.style.display === "block"){
-    box.style.display = "none";
-    t.innerText = "Tap to open";
-  } else {
-    box.style.display = "block";
-    t.innerText = "Tap to close";
-  }
+  const box=document.getElementById("updateContent");
+  const t=document.getElementById("updateToggle");
+  box.style.display=box.style.display==="block"?"none":"block";
+  t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
 }
 
 function aiReply(type){
   document.getElementById("aiAnswer").innerText =
   type==="payment"
-  ? "Not Available"
+  ? "Open Karmanya → Scan QR → Pay ₹500"
   : "Open Games Zone → Tic Tac Toe → Hard Mode 🔥";
 }
 function trackAndGo(t){
