@@ -221,12 +221,20 @@ setInterval(()=>{
   `${Math.floor(diff/86400000)}d : ${Math.floor(diff%86400000/3600000)}h : ${Math.floor(diff%3600000/60000)}m : ${Math.floor(diff%60000/1000)}s`;
 },1000);
 
-function toggleAI(){
-  const box=document.getElementById("aiContent");
-  const t=document.getElementById("aiToggle");
-  box.style.display=box.style.display==="block"?"none":"block";
-  t.innerText=box.style.display==="block"?"Tap to close":"Tap to open";
+
+function toggleUpdates(){
+  const box = document.getElementById("updateContent");
+  const t = document.getElementById("updateToggle");
+
+  if(box.style.display === "block"){
+    box.style.display = "none";
+    t.innerText = "Tap to open";
+  } else {
+    box.style.display = "block";
+    t.innerText = "Tap to close";
+  }
 }
+
 function aiReply(type){
   document.getElementById("aiAnswer").innerText =
   type==="payment"
