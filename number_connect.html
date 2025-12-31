@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Number Connect</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+/* ===== GLOBAL ===== */
+body{
+  margin:0;
+  font-family:system-ui,Segoe UI,Arial;
+  background:#0f1117;
+  color:#fff;
+  text-align:center;
+}
+
+/* ===== HEADER ===== */
+.header{
+  background:linear-gradient(90deg,#ff6a00,#ff9800);
+  padding:14px;
+  font-weight:700;
+  font-size:18px;
+}
+
+/* ===== GAME BOX ===== */
+.game-box{
+  padding:16px;
+}
+
+/* ===== GRID ===== */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:6px;
+  max-width:320px;
+  margin:18px auto;
+}
+
+.cell{
+  aspect-ratio:1;
+  background:#1c1f26;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:18px;
+  font-weight:700;
+  cursor:pointer;
+  user-select:none;
+}
+
+.cell.active{
+  background:#ff9800;
+  color:#000;
+}
+
+.cell.filled{
+  background:#00e5ff;
+  color:#000;
+}
+
+/* ===== BUTTON ===== */
+.btn{
+  margin-top:14px;
+  padding:12px;
+  width:90%;
+  max-width:300px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(90deg,#2196f3,#00bcd4);
+  color:#fff;
+  font-size:15px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.level{
+  margin-top:10px;
+  font-size:14px;
+  opacity:.9;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🔢 Number Connect</div>
+
+<div class="game-box">
+
+<div class="level">Level <span id="levelNum">1</span></div>
+
+<div class="grid" id="grid"></div>
+
+<button class="btn" onclick="nextLevel()">Next Level ▶</button>
+
+</div>
+
+<script>
+/* ===== LEVEL DATA ===== */
+const levels = [
+  // LEVEL 1 (Easy)
+  [
+    [1,0,0,0,1],
+    [0,0,0,0,0],
+    [0,2,0,2,0],
+    [0,0,0,0,0],
+    [3,0,0,0,3]
+  ],
+  // LEVEL 2
+  [
+    [1,0,0,2,0],
+    [0,0,0,0,0],
+    [0,1,0,0,2],
+    [0,0,0,0,0],
+    [3,0,0,0,3]
+  ],
+  // LEVEL 3 (Hard)
+  [
+    [1,0,2,0,3],
+    [0,0,0,0,0],
+    [0,1,0,2,0],
+    [0,0,0,0,0],
+    [3,0,0,0,0]
+  ]
+];
+
+let currentLevel = parseInt(localStorage.getItem("nc_level") || "0");
+let selected = null;
+
+const grid = document.getElementById("grid");
+const levelNum = document.getElementById("levelNum");
+
+function loadLevel(){
+  grid.innerHTML="";
+  selected=null;
+  levelNum.innerText=currentLevel+1;
+
+  levels[currentLevel].forEach((row,r)=>{
+    row.forEach((val,c)=>{
+      const cell=document.createElement("div");
+      cell.className="cell";
+      if(val!==0) cell.innerText=val;
+      cell.onclick=()=>selectCell(cell,val);
+      grid.appendChild(cell);
+    });
+  });
+}
+
+function selectCell(cell,val){
+  if(val===0) return;
+
+  if(!selected){
+    selected={cell,val};
+    cell.classList.add("active");
+  }else{
+    if(selected.val===val && selected.cell!==cell){
+      selected.cell.classList.remove("active");
+      selected.cell.classList.add("filled");
+      cell.classList.add("filled");
+    }else{
+      selected.cell.classList.remove("active");
+    }
+    selected=null;
+  }
+}
+
+function nextLevel(){
+  if(currentLevel < levels.length-1){
+    currentLevel++;
+    localStorage.setItem("nc_level",currentLevel);
+    loadLevel();
+  }else{
+    alert("🎉 All Levels Completed!");
+  }
+}
+
+loadLevel();
+</script>
+
+</body>
+</html>
