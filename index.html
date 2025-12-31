@@ -512,7 +512,7 @@ document.addEventListener("DOMContentLoaded", function () {
     text-align:center;
     color:#fff;
   ">
-    <h2 id="annTitle" style="margin:0 0 10px;">📢 Announcement</h2>
+    <h2 id="annTitle">📢 Announcement</h2>
     <p id="annMsg" style="font-size:15px;line-height:1.5;"></p>
     <button onclick="closeAnnouncement()" style="
       margin-top:14px;
@@ -530,6 +530,35 @@ document.addEventListener("DOMContentLoaded", function () {
     </button>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  window.closeAnnouncement = function () {
+    document.getElementById("announcementPopup").style.display = "none";
+  };
+
+  fetch("announcement.json?t=" + Date.now())
+    .then(res => res.json())
+    .then(data => {
+      if (!data.show) return;
+
+      const lastSeen = localStorage.getItem("announcementLastSeen");
+
+      // ✅ Show only if new announcement
+      if (lastSeen === data.id) return;
+
+      document.getElementById("annTitle").innerText =
+        data.title || "Announcement";
+
+      document.getElementById("annMsg").innerHTML =
+        (data.message || "").replace(/\n/g, "<br>");
+
+      document.getElementById("announcementPopup").style.display = "flex";
+
+      localStorage.setItem("announcementLastSeen", data.id);
+    })
+    .catch(err => console.log("Announcement error:", err));
+});
 </script>
 </body>
 </html>
