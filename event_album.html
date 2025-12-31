@@ -20,109 +20,67 @@ gtag('config','G-9JW1V42V83',{
 <!-- =================================================== -->
 
 <style>
-.poster-box{
-    background:#161a22;
-    border-radius:14px;
-    padding:14px;
-    margin-bottom:16px;
-    text-align:center;
-    box-shadow:0 0 18px rgba(0,0,0,.6);
+@keyframes gradientFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
 }
-.poster-box img{
-    width:100%;
-    border-radius:12px;
-    margin-top:8px;
+@keyframes popFade{
+  from{opacity:0; transform:translateY(20px) scale(.96)}
+  to{opacity:1; transform:none}
 }
 
-.download-btn{
-    margin-top:12px;
-    display:inline-block;
-    padding:10px 18px;
-    background:linear-gradient(135deg,#f36b21,#ff8c42);
-    color:#fff;
-    border-radius:999px;
-    font-size:14px;
-    font-weight:600;
-    cursor:pointer;
-    text-decoration:none;
-    box-shadow:0 0 12px rgba(243,107,33,.6);
-}
-.download-btn:active{transform:scale(.97);}
-
-/* ===== KEY POPUP ===== */
-.key-overlay{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.7);
-    z-index:9999;
-    justify-content:center;
-    align-items:center;
-}
-.key-box{
-    background:#161a22;
-    padding:22px;
-    border-radius:16px;
-    width:85%;
-    max-width:320px;
-    text-align:center;
-    box-shadow:0 0 30px rgba(0,0,0,.8);
-}
-.key-box h3{color:#f36b21;}
-.key-box input{
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:none;
-    margin-top:10px;
-    font-size:14px;
-}
-.key-box button{
-    margin-top:12px;
-    padding:12px;
-    width:100%;
-    border:none;
-    border-radius:12px;
-    background:#f36b21;
-    color:#fff;
-    font-weight:600;
-    cursor:pointer;
-}
-.key-msg{
-    margin-top:8px;
-    font-size:13px;
-    color:#ff6b6b;
+.album-box{
+  margin:18px;
+  padding:22px;
+  border-radius:20px;
+  text-align:center;
+  color:#fff;
+  background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
+  background-size:400% 400%;
+  animation:gradientFlow 7s ease infinite, popFade .7s ease;
+  box-shadow:0 0 35px rgba(255,152,0,.6);
 }
 
-/* ===== DOWNLOAD DIALOG ===== */
-.dialog-overlay{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    z-index:999;
-    justify-content:center;
-    align-items:center;
+.album-box h2{
+  margin-top:0;
+  font-size:22px;
+  letter-spacing:.5px;
 }
-.dialog-box{
-    background:#161a22;
-    padding:22px;
-    border-radius:16px;
-    text-align:center;
-    width:85%;
-    max-width:320px;
-    box-shadow:0 0 30px rgba(0,0,0,.8);
+
+.album-box p{
+  font-size:15px;
+  line-height:1.7;
+  opacity:.95;
 }
-.dialog-box h3{color:#f36b21;}
-.dialog-box p{color:#cfcfcf;font-size:14px;}
-.dialog-box button{
-    margin-top:14px;
-    padding:10px 22px;
-    border:none;
-    background:#f36b21;
-    color:#fff;
-    border-radius:999px;
-    cursor:pointer;
+
+.album-note{
+  margin-top:14px;
+  font-size:14px;
+  opacity:.9;
+}
+
+.back-btn{
+  width:90%;
+  max-width:320px;
+  margin:26px auto;
+  padding:14px;
+  font-size:16px;
+  font-weight:700;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 0 18px rgba(0,198,255,.6);
+}
+.back-btn:active{transform:scale(.97)}
+
+.footer{
+  text-align:center;
+  font-size:13px;
+  color:#aaa;
+  margin-bottom:20px;
 }
 </style>
 </head>
@@ -130,106 +88,43 @@ gtag('config','G-9JW1V42V83',{
 <body>
 
 <div class="header">
-    <h1>EVENT ALBUM</h1>
-    <p>Password- KARMANYA2025</p>
+  <h1>RR INTERNATIONAL COLLEGE</h1>
+  <p>Event Album</p>
 </div>
 
 <div class="container">
 
-<div class="event">
-<h2>👔 Formal Day</h2>
+  <div class="album-box">
+    <h2>📸 KARMANYA FEST 2025</h2>
 
-<div class="poster-box">
-<h3>👨 Boys Formal</h3>
-<img src="boys_formal.jpg">
-<div class="download-btn" onclick="openKey('boys_formal.jpg','Formal_Day_Boys.jpg')">
-⬇ Download Image
-</div>
-</div>
+    <p>
+      The official <b>Karmanya Fest 2025</b> photos will be uploaded here very soon.
+    </p>
 
-<div class="poster-box">
-<h3>👩 Girls Formal</h3>
-<img src="girls_formal.jpg">
-<div class="download-btn" onclick="openKey('girls_formal.jpg','Formal_Day_Girls.jpg')">
-⬇ Download Image
-</div>
-</div>
-</div>
+    <p>
+      Every moment, performance, and memory captured during the fest
+      will be available in this album section.
+    </p>
 
-<div class="event">
-<h2>👖 Denim Day</h2>
-<div class="poster-box">
-<h3>💙 Denim Group</h3>
-<img src="denim.png">
-<div class="download-btn" onclick="openKey('denim.png','Denim_Day.jpg')">
-⬇ Download Image
-</div>
-</div>
+    <p>
+      Please stay connected with the app and check back regularly
+      for the complete photo collection.
+    </p>
+
+    <div class="album-note">
+      ✨ Albums will be updated officially by RR International College
+    </div>
+  </div>
+
+  <button class="back-btn" onclick="location.href='index.html'">
+    ← Back to Home
+  </button>
+
 </div>
 
-<button onclick="history.back()" class="nav-btn">⬅ Back to Home</button>
+<div class="footer">
+  Powered by RR International College
 </div>
-
-<!-- 🔐 KEY POPUP -->
-<div class="key-overlay" id="keyGate">
-<div class="key-box">
-<h3>🔐 Enter Download Key</h3>
-<input id="keyInput" placeholder="Enter key">
-<button onclick="verifyKey()">Submit</button>
-<div class="key-msg" id="keyMsg"></div>
-<button onclick="closeKey()" style="background:none;color:#aaa;">Cancel</button>
-</div>
-</div>
-
-<!-- ✅ DOWNLOAD CONFIRM -->
-<div class="dialog-overlay" id="downloadDialog">
-<div class="dialog-box">
-<h3>Download Started</h3>
-<p>Please check your <b>Downloads</b> folder.</p>
-<button onclick="closeDialog()">OK</button>
-</div>
-</div>
-
-<script>
-const DOWNLOAD_KEY="KARMANYA2025";
-let fileUrl="",fileName="";
-
-function openKey(url,name){
-fileUrl=url; fileName=name;
-document.getElementById("keyGate").style.display="flex";
-}
-
-function closeKey(){
-document.getElementById("keyGate").style.display="none";
-document.getElementById("keyInput").value="";
-document.getElementById("keyMsg").innerText="";
-}
-
-function verifyKey(){
-const k=document.getElementById("keyInput").value.trim();
-if(k===DOWNLOAD_KEY){
-closeKey();
-downloadFile();
-}else{
-document.getElementById("keyMsg").innerText="❌ Invalid key";
-}
-}
-
-function downloadFile(){
-const a=document.createElement("a");
-a.href=fileUrl; a.download=fileName;
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-
-gtag('event','image_download',{event_label:fileName});
-document.getElementById("downloadDialog").style.display="flex";
-}
-
-function closeDialog(){
-document.getElementById("downloadDialog").style.display="none";
-}
-</script>
 
 </body>
 </html>
