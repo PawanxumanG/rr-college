@@ -474,31 +474,34 @@ function startFireworks() {
 }
 
 function closeAnnouncement(){
-  document.getElementById("announcementPopup").style.display = "none";
-}
+  
+document.addEventListener("DOMContentLoaded", function () {
 
-fetch("announcement.json?t=" + Date.now())
-  .then(res => res.json())
-  .then(data => {
-    if (!data.show) return;
+  fetch("announcement.json?t=" + Date.now())
+    .then(res => res.json())
+    .then(data => {
+      if (!data.show) return;
 
-    const lastSeenId = localStorage.getItem("announcementLastSeen");
+      const lastSeenId = localStorage.getItem("announcementLastSeen");
 
-    // 🔥 Show popup only if NEW announcement
-    if (lastSeenId === data.id) return;
+      // ✅ SHOW ONLY IF USER HAS NOT CONFIRMED IT
+      if (lastSeenId === data.id) return;
 
-    document.getElementById("annTitle").innerText =
-      data.title || "Announcement";
+      document.getElementById("annTitle").innerText =
+        data.title || "Announcement";
 
-    document.getElementById("annMsg").innerHTML =
-      (data.message || "").replace(/\n/g, "<br>");
+      document.getElementById("annMsg").innerHTML =
+        (data.message || "").replace(/\n/g, "<br>");
 
-    document.getElementById("announcementPopup").style.display = "flex";
+      const popup = document.getElementById("announcementPopup");
+      popup.style.display = "flex";
 
-    // Save current announcement id
-    localStorage.setItem("announcementLastSeen", data.id);
-  })
-  .catch(err => console.log("Announcement error:", err));
+      // 🔥 Store ID TEMPORARILY on popup (not in localStorage yet)
+      popup.setAttribute("data-ann-id", data.id);
+    })
+    .catch(err => console.log("Announcement error:", err));
+
+});
 </script>
 <!-- 🔔 ANNOUNCEMENT POPUP -->
 <div id="announcementPopup" style="
@@ -523,6 +526,7 @@ fetch("announcement.json?t=" + Date.now())
   ">
     <h2 id="annTitle">📢 Announcement</h2>
     <p id="annMsg" style="font-size:15px;line-height:1.5;"></p>
+
     <button onclick="closeAnnouncement()" style="
       margin-top:14px;
       width:100%;
@@ -533,6 +537,7 @@ fetch("announcement.json?t=" + Date.now())
       color:#fff;
       font-weight:700;
       font-size:15px;
+      cursor:pointer;
     ">
       OK, GOT IT 👍
     </button>
@@ -541,20 +546,43 @@ fetch("announcement.json?t=" + Date.now())
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-  function closeAnnouncement(){
-    document.getElementById("announcementPopup").style.display = "none";
-  }
-  window.closeAnnouncement = closeAnnouncement;
+ <script>
+function closeAnnouncement() {
+  const popup = document.getElementById("announcementPopup");
+  popup.style.display = "none";
 
+  // ✅ Mark announcement as seen ONLY on user action
+  const currentId = popup.getAttribute("data-ann-id");
+  if (currentId) {
+    localStorage.setItem("announcementLastSeen", currentId);
+  }
+}
+</script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // 🔔 CLOSE POPUP (called by button)
+  window.closeAnnouncement = function () {
+    const popup = document.getElementById("announcementPopup");
+    popup.style.display = "none";
+
+    // ✅ Save announcement ONLY when user clicks OK
+    const annId = popup.getAttribute("data-ann-id");
+    if (annId) {
+      localStorage.setItem("announcementLastSeen", annId);
+    }
+  };
+
+  // 🔔 FETCH ANNOUNCEMENT
   fetch("announcement.json?t=" + Date.now())
     .then(res => res.json())
     .then(data => {
       if (!data.show) return;
 
-      const lastSeenId = localStorage.getItem("announcementLastSeen");
+      const lastSeen = localStorage.getItem("announcementLastSeen");
 
-      // ✅ SHOW ONLY ONCE PER USER
-      if (lastSeenId === data.id) return;
+      // ✅ SHOW ONLY ONCE PER ANNOUNCEMENT
+      if (lastSeen === data.id) return;
 
       document.getElementById("annTitle").innerText =
         data.title || "Announcement";
@@ -562,9 +590,11 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById("annMsg").innerHTML =
         (data.message || "").replace(/\n/g, "<br>");
 
-      document.getElementById("announcementPopup").style.display = "flex";
+      const popup = document.getElementById("announcementPopup");
+      popup.style.display = "flex";
 
-      localStorage.setItem("announcementLastSeen", data.id);
+      // 🔥 Store ID TEMPORARILY (not saved yet)
+      popup.setAttribute("data-ann-id", data.id);
     })
     .catch(err => console.log("Announcement error:", err));
 
