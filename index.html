@@ -455,5 +455,81 @@ fetch("announcement.json?t=" + Date.now())
     </button>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  // Close popup
+  window.closeAnnouncement = function () {
+    document.getElementById("announcementPopup").style.display = "none";
+  };
+
+  // Fetch announcement
+  fetch("announcement.json?t=" + Date.now())
+    .then(res => res.json())
+    .then(data => {
+      if (!data.show) return;
+
+      // Get last seen announcement id
+      const lastSeenId = localStorage.getItem("announcementLastSeen");
+
+      // 🔥 Show ONLY if new announcement
+      if (lastSeenId === data.id) return;
+
+      // Inject content
+      document.getElementById("annTitle").innerText =
+        data.title || "Announcement";
+
+      document.getElementById("annMsg").innerHTML =
+        (data.message || "").replace(/\n/g, "<br>");
+
+      // Show popup
+      document.getElementById("announcementPopup").style.display = "flex";
+
+      // Save this announcement as seen
+      localStorage.setItem("announcementLastSeen", data.id);
+    })
+    .catch(err => console.log("Announcement error:", err));
+});
+<!-- 🔔 ANNOUNCEMENT POPUP -->
+<div id="announcementPopup" style="
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  z-index:10000;
+">
+  <div style="
+    background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
+    background-size:400% 400%;
+    animation:gradientShift 6s ease infinite, popIn 0.6s ease;
+    padding:20px;
+    border-radius:18px;
+    width:90%;
+    max-width:360px;
+    box-shadow:0 0 35px rgba(255,152,0,.7);
+    text-align:center;
+    color:#fff;
+  ">
+    <h2 id="annTitle" style="margin:0 0 10px;">📢 Announcement</h2>
+    <p id="annMsg" style="font-size:15px;line-height:1.5;"></p>
+    <button onclick="closeAnnouncement()" style="
+      margin-top:14px;
+      width:100%;
+      padding:12px;
+      border:none;
+      border-radius:12px;
+      background:#000;
+      color:#fff;
+      font-weight:700;
+      font-size:15px;
+      cursor:pointer;
+    ">
+      Continue To App 🔥
+    </button>
+  </div>
+</div>
+</script>
 </body>
 </html>
