@@ -271,7 +271,7 @@ gtag('event','home_loaded');
   <span class="ai-toggle" id="aiToggle">Tap to open</span>
 </div>
 <div class="ai-content" id="aiContent">
-  <button class="ai-btn ai-pay" onclick="aiReply('payment')">💳 How to pay for Karmanya?</button>
+  <button class="ai-btn ai-pay" onclick="aiReply('payment')">Nothing</button>
   <button class="ai-btn ai-game" onclick="aiReply('ai_game')">🎮 How to play with RR AI Bot?</button>
   <div class="ai-answer" id="aiAnswer"></div>
 </div>
@@ -361,7 +361,7 @@ function toggleUpdates() {
 function aiReply(type) {
   document.getElementById("aiAnswer").innerText =
     type === "payment"
-      ? "Open Karmanya → Scan QR → Pay ₹500"
+      ? "Nothing "
       : "Open Games Zone → Tic Tac Toe → Hard Mode 🔥";
 }
 
@@ -474,31 +474,34 @@ function startFireworks() {
 }
 
 function closeAnnouncement(){
-  document.getElementById("announcementPopup").style.display = "none";
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-fetch("announcement.json?t=" + Date.now())
-  .then(res => res.json())
-  .then(data => {
-    if (!data.show) return;
+  window.closeAnnouncement = function () {
+    document.getElementById("announcementPopup").style.display = "none";
+  };
 
-    const lastSeenId = localStorage.getItem("announcementLastSeen");
+  fetch("announcement.json?t=" + Date.now())
+    .then(res => res.json())
+    .then(data => {
+      if (!data.show) return;
 
-    // 🔥 Show popup only if NEW announcement
-    if (lastSeenId === data.id) return;
+      const lastSeen = localStorage.getItem("announcementLastSeen");
 
-    document.getElementById("annTitle").innerText =
-      data.title || "Announcement";
+      // ✅ Show only once per announcement
+      if (lastSeen === data.id) return;
 
-    document.getElementById("annMsg").innerHTML =
-      (data.message || "").replace(/\n/g, "<br>");
+      document.getElementById("annTitle").innerText =
+        data.title || "Announcement";
 
-    document.getElementById("announcementPopup").style.display = "flex";
+      document.getElementById("annMsg").innerHTML =
+        (data.message || "").replace(/\n/g, "<br>");
 
-    // Save current announcement id
-    localStorage.setItem("announcementLastSeen", data.id);
-  })
-  .catch(err => console.log("Announcement error:", err));
+      document.getElementById("announcementPopup").style.display = "flex";
+
+      localStorage.setItem("announcementLastSeen", data.id);
+    })
+    .catch(err => console.log("Announcement error:", err));
+});
 </script>
 <!-- 🔔 ANNOUNCEMENT POPUP -->
 <div id="announcementPopup" style="
@@ -511,19 +514,20 @@ fetch("announcement.json?t=" + Date.now())
   z-index:10000;
 ">
   <div style="
-  background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
-  background-size:400% 400%;
-  animation:gradientShift 6s ease infinite, popIn 0.6s ease;
-  padding:20px;
-  border-radius:18px;
-  width:90%;
-  max-width:360px;
-  box-shadow:0 0 35px rgba(255,152,0,.7);
-  text-align:center;
-  color:#fff;
-">
+    background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
+    background-size:400% 400%;
+    animation:gradientShift 6s ease infinite, popIn 0.6s ease;
+    padding:20px;
+    border-radius:18px;
+    width:90%;
+    max-width:360px;
+    box-shadow:0 0 35px rgba(255,152,0,.7);
+    text-align:center;
+    color:#fff;
+  ">
     <h2 id="annTitle" style="margin:0 0 10px;">📢 Announcement</h2>
     <p id="annMsg" style="font-size:15px;line-height:1.5;"></p>
+
     <button onclick="closeAnnouncement()" style="
       margin-top:14px;
       width:100%;
