@@ -139,28 +139,35 @@ gtag('event','home_loaded');
  OUR CHAIRMAN – Shri R. R. Pardeshi
 </button>
 
+<!-- NOTICE -->
 <div class="event">
   <h2>📢 IMPORTANT NOTICE</h2>
 
-  <p>All students are instructed to <b>open this app daily</b> for official notices, event updates, and important announcements.</p>
+  <p>
+    All students are instructed to <b>open this app daily</b> for official notices,
+    event updates, and important announcements.
+  </p>
 
- <div class="update-header" onclick="toggleUpdates()">
+  <p class="text-muted">📌 All updates will be published only in this app.</p>
+
+  <p class="text-muted">
+    📸 All <b>Karmanya Fest</b> photos will be shared in the <b>Album</b> section.
+  </p>
+
+  <div class="update-header" onclick="toggleUpdates()">
     <b>🆕 New App Updates v2.1</b>
     <span class="update-toggle" id="updateToggle">Tap to open</span>
   </div>
-  We have upgraded the <b>RR Events App</b> with a smoother interface, faster navigation, and improved features.</p>
 
-  <p>🎮 <b>RR Games Zone Updated:</b><br>
-  New brain games like <b>2048</b> have been added.</p>
-
-  <p>🚀 <b>What’s New:</b><br>
-  • Improved Student Helper 🤖<br>
-  
-  • Faster loading ✨</p>
-
-  <p class="text-muted">📌 All updates will be published only in this app.</p>
+  <div class="update-content" id="updateContent">
+    <p>
+      🚀 <b>What’s New:</b><br>
+      • Image & other download support ⬇️<br>
+      • Improved Event Album 📸<br>
+      • Faster loading & improved stability ✨
+    </p>
+  </div>
 </div>
-
 <div class="streak-mini">
 🔥 Daily Streak
 <b><span id="streakCount">1</span> Day</b>
