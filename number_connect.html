@@ -6,79 +6,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== GLOBAL ===== */
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
 body{
   margin:0;
-  font-family:system-ui,Segoe UI,Arial;
+  font-family:'Segoe UI',Arial,sans-serif;
   background:#0f1117;
   color:#fff;
   text-align:center;
 }
 
-/* ===== HEADER ===== */
+/* HEADER */
 .header{
-  background:linear-gradient(90deg,#ff6a00,#ff9800);
-  padding:14px;
-  font-weight:700;
-  font-size:18px;
-}
-
-/* ===== GAME BOX ===== */
-.game-box{
+  background:linear-gradient(90deg,#ff9800,#ff6a00);
   padding:16px;
+  font-size:20px;
+  font-weight:700;
 }
 
-/* ===== GRID ===== */
+/* LEVEL TEXT */
+.level{
+  margin:16px 0;
+  font-size:18px;
+  opacity:.9;
+}
+
+/* GRID */
 .grid{
   display:grid;
-  grid-template-columns:repeat(5,1fr);
-  gap:6px;
-  max-width:320px;
-  margin:18px auto;
+  gap:12px;
+  justify-content:center;
+  margin:20px auto;
 }
 
+/* CELL */
 .cell{
-  aspect-ratio:1;
-  background:#1c1f26;
+  width:58px;
+  height:58px;
   border-radius:12px;
+  background:#1c1f26;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:18px;
   font-weight:700;
   cursor:pointer;
-  user-select:none;
 }
 
-.cell.active{
-  background:#ff9800;
-  color:#000;
-}
-
-.cell.filled{
+/* NUMBER CELL */
+.cell.number{
   background:#00e5ff;
   color:#000;
 }
 
-/* ===== BUTTON ===== */
-.btn{
-  margin-top:14px;
-  padding:12px;
-  width:90%;
-  max-width:300px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(90deg,#2196f3,#00bcd4);
-  color:#fff;
-  font-size:15px;
-  font-weight:600;
-  cursor:pointer;
+/* COMPLETED */
+.cell.done{
+  background:#2ecc71;
+  color:#000;
 }
 
-.level{
-  margin-top:10px;
-  font-size:14px;
-  opacity:.9;
+/* BUTTON */
+.btn{
+  margin:22px auto;
+  width:90%;
+  max-width:320px;
+  padding:14px;
+  border:none;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+  color:#fff;
+  background:linear-gradient(90deg,#00c6ff,#0072ff);
+  display:none;
 }
 </style>
 </head>
@@ -86,96 +88,105 @@ body{
 <body>
 
 <div class="header">🔢 Number Connect</div>
-
-<div class="game-box">
-
-<div class="level">Level <span id="levelNum">1</span></div>
+<div class="level" id="levelText"></div>
 
 <div class="grid" id="grid"></div>
 
-<button class="btn" onclick="nextLevel()">Next Level ▶</button>
-
-</div>
+<button class="btn" id="nextBtn" onclick="nextLevel()">Next Level ▶</button>
 
 <script>
-/* ===== LEVEL DATA ===== */
+/* ================= LEVEL DATA ================= */
 const levels = [
-  // LEVEL 1 (Easy)
-  [
-    [1,0,0,0,1],
-    [0,0,0,0,0],
-    [0,2,0,2,0],
-    [0,0,0,0,0],
-    [3,0,0,0,3]
-  ],
-  // LEVEL 2
-  [
-    [1,0,0,2,0],
-    [0,0,0,0,0],
-    [0,1,0,0,2],
-    [0,0,0,0,0],
-    [3,0,0,0,3]
-  ],
-  // LEVEL 3 (Hard)
-  [
-    [1,0,2,0,3],
-    [0,0,0,0,0],
-    [0,1,0,2,0],
-    [0,0,0,0,0],
-    [3,0,0,0,0]
-  ]
+  { size:3, numbers:[1,2] },
+  { size:4, numbers:[1,2,3] },
+  { size:5, numbers:[1,2,3] },
+  { size:5, numbers:[1,2,3,4] },
+  { size:6, numbers:[1,2,3,4] }
 ];
 
-let currentLevel = parseInt(localStorage.getItem("nc_level") || "0");
-let selected = null;
+let currentLevel = parseInt(localStorage.getItem("numberConnectLevel")) || 1;
+let activeNumber = null;
+let completed = new Set();
 
-const grid = document.getElementById("grid");
-const levelNum = document.getElementById("levelNum");
-
+/* ================= INIT ================= */
 function loadLevel(){
-  grid.innerHTML="";
-  selected=null;
-  levelNum.innerText=currentLevel+1;
+  const levelIndex = currentLevel - 1;
+  const data = levels[levelIndex] || levels[levels.length-1];
 
-  levels[currentLevel].forEach((row,r)=>{
-    row.forEach((val,c)=>{
-      const cell=document.createElement("div");
-      cell.className="cell";
-      if(val!==0) cell.innerText=val;
-      cell.onclick=()=>selectCell(cell,val);
-      grid.appendChild(cell);
-    });
+  document.getElementById("levelText").innerText =
+    "Level " + currentLevel;
+
+  completed.clear();
+  activeNumber = null;
+
+  const grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  grid.style.gridTemplateColumns = `repeat(${data.size}, 1fr)`;
+
+  const total = data.size * data.size;
+  let placed = {};
+
+  data.numbers.forEach(n=>{
+    placed[n] = 0;
   });
-}
 
-function selectCell(cell,val){
-  if(val===0) return;
+  for(let i=0;i<total;i++){
+    const cell = document.createElement("div");
+    cell.className = "cell";
 
-  if(!selected){
-    selected={cell,val};
-    cell.classList.add("active");
-  }else{
-    if(selected.val===val && selected.cell!==cell){
-      selected.cell.classList.remove("active");
-      selected.cell.classList.add("filled");
-      cell.classList.add("filled");
-    }else{
-      selected.cell.classList.remove("active");
+    const nums = Object.keys(placed).filter(n=>placed[n]<2);
+    if(nums.length && Math.random()<0.25){
+      const num = nums[Math.floor(Math.random()*nums.length)];
+      placed[num]++;
+      cell.innerText = num;
+      cell.classList.add("number");
+      cell.dataset.num = num;
     }
-    selected=null;
+
+    cell.onclick = ()=>tap(cell);
+    grid.appendChild(cell);
+  }
+
+  document.getElementById("nextBtn").style.display="none";
+}
+
+/* ================= TAP LOGIC ================= */
+function tap(cell){
+  if(!cell.dataset.num) return;
+
+  const num = cell.dataset.num;
+
+  if(activeNumber===null){
+    activeNumber = num;
+    cell.classList.add("done");
+    completed.add(cell);
+  }else if(activeNumber===num){
+    cell.classList.add("done");
+    completed.add(cell);
+    activeNumber = null;
+  }
+
+  checkComplete();
+}
+
+/* ================= COMPLETE CHECK ================= */
+function checkComplete(){
+  const totalNumbers =
+    document.querySelectorAll(".cell.number").length;
+
+  if(completed.size === totalNumbers){
+    document.getElementById("nextBtn").style.display="block";
+    localStorage.setItem("numberConnectLevel", currentLevel+1);
   }
 }
 
+/* ================= NEXT ================= */
 function nextLevel(){
-  if(currentLevel < levels.length-1){
-    currentLevel++;
-    localStorage.setItem("nc_level",currentLevel);
-    loadLevel();
-  }else{
-    alert("🎉 All Levels Completed!");
-  }
+  currentLevel++;
+  loadLevel();
 }
 
+/* ================= START ================= */
 loadLevel();
 </script>
 
