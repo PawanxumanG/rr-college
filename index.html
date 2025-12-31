@@ -511,18 +511,17 @@ fetch("announcement.json?t=" + Date.now())
   z-index:10000;
 ">
   <div style="
-  background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
-  background-size:400% 400%;
-  animation:gradientShift 6s ease infinite, popIn 0.6s ease;
-  padding:20px;
-  border-radius:18px;
-  width:90%;
-  max-width:360px;
-  box-shadow:0 0 35px rgba(255,152,0,.7);
-  text-align:center;
-  color:#fff;
-">
-    <h2 id="annTitle" style="margin:0 0 10px;">📢 Announcement</h2>
+    background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
+    background-size:400% 400%;
+    padding:20px;
+    border-radius:18px;
+    width:90%;
+    max-width:360px;
+    box-shadow:0 0 35px rgba(255,152,0,.7);
+    text-align:center;
+    color:#fff;
+  ">
+    <h2 id="annTitle">📢 Announcement</h2>
     <p id="annMsg" style="font-size:15px;line-height:1.5;"></p>
     <button onclick="closeAnnouncement()" style="
       margin-top:14px;
@@ -534,11 +533,42 @@ fetch("announcement.json?t=" + Date.now())
       color:#fff;
       font-weight:700;
       font-size:15px;
-      cursor:pointer;
     ">
       OK, GOT IT 👍
     </button>
   </div>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  function closeAnnouncement(){
+    document.getElementById("announcementPopup").style.display = "none";
+  }
+  window.closeAnnouncement = closeAnnouncement;
+
+  fetch("announcement.json?t=" + Date.now())
+    .then(res => res.json())
+    .then(data => {
+      if (!data.show) return;
+
+      const lastSeenId = localStorage.getItem("announcementLastSeen");
+
+      // ✅ SHOW ONLY ONCE PER USER
+      if (lastSeenId === data.id) return;
+
+      document.getElementById("annTitle").innerText =
+        data.title || "Announcement";
+
+      document.getElementById("annMsg").innerHTML =
+        (data.message || "").replace(/\n/g, "<br>");
+
+      document.getElementById("announcementPopup").style.display = "flex";
+
+      localStorage.setItem("announcementLastSeen", data.id);
+    })
+    .catch(err => console.log("Announcement error:", err));
+
+});
+</script>
 </body>
 </html>
