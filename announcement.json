@@ -1,5 +1,5 @@
 {
-  "show": true,
+  "show": false,
   "title": "UPDATE",
   "message": "Happy New Year 🎊🔥🎉, this popup will automatically close at 12pm",
   "type": "important",
