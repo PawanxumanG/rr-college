@@ -1,25 +1,12 @@
 {
   "keys": [
     {
-      "id": "98b2a416-89ea-4e12-b195-8435adb93f53",
-      "key": "RR-V5OGFP",
-      "owner": "Omkar Ponnam",
+      "id": "2691bc96-4d20-4fcd-8b11-7db99948f483",
+      "key": "RR-LATA",
+      "owner": "Lata Ponnam",
       "isActive": true,
-      "expiresAt": "2026-01-03"
-    },
-    {
-      "id": "bac516a5-c329-4818-967c-61ba534b9baa",
-      "key": "RR-FLQQCD",
-      "owner": "New Admin",
-      "isActive": true,
-      "expiresAt": "2026-01-09"
-    },
-    {
-      "id": "d53605f3-f271-455e-84ef-6e590d1e4fae",
-      "key": "RR-YHQFMT",
-      "owner": "Pawan",
-      "isActive": true,
-      "expiresAt": "2026-01-10"
+      "expiresAt": "2026-01-03",
+      "deviceId": null
     },
     {
       "id": "initial-admin",
