@@ -71,7 +71,7 @@
     font-size: 14.5px;
     line-height: 1.75;
     opacity: .95;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 
 /* ===== BUTTON ===== */
@@ -106,25 +106,11 @@
 
 <!-- EVENTS CARD -->
 <div class="event-card">
-
-    <h2>📅 Upcoming College Events</h2>
-
-    <p>
-        RR International College will soon announce upcoming official
-        events, including <b>Sports Day</b> and an
-        <b>Esports Tournament (Free Fire MAX)</b>.
-        These activities are part of the college’s co-curricular
-        initiatives aimed at encouraging student participation and engagement.
-    </p>
-
-    <p>
-        Participation in these events will be considered for
-        <b>internal marks and academic engagement</b> as per college guidelines.
-        Detailed schedules and further instructions will be
-        announced shortly through this app.
-        Students are advised to stay tuned for updates.
-    </p>
-
+    <!-- 🔥 CONTENT WILL LOAD FROM events.json -->
+    <div id="eventContent">
+        <h2>Loading Events...</h2>
+        <p>Please wait</p>
+    </div>
 </div>
 
 </div>
@@ -133,6 +119,27 @@
 <button onclick="location.href='index.html'" class="nav-btn">
     ⬅ Back to Home
 </button>
+
+<!-- ================= EVENTS JSON FETCH ================= -->
+<script>
+fetch("events.json?t=" + Date.now())
+  .then(res => res.json())
+  .then(data => {
+    if (!data.show) return;
+
+    const box = document.getElementById("eventContent");
+
+    box.innerHTML = `
+      <h2>${data.title}</h2>
+      ${data.content.map(line => `<p>${line}</p>`).join("")}
+    `;
+  })
+  .catch(err => {
+    document.getElementById("eventContent").innerHTML =
+      "<p>⚠️ Unable to load events.</p>";
+    console.log("Events JSON error:", err);
+  });
+</script>
 
 </body>
 </html>
