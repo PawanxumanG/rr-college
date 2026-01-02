@@ -2,19 +2,6 @@
   "show": true,
   "events": [
     {
-      "title": "Testing ",
-      "content": [
-        "Testing "
-      ],
-      "theme": {
-        "gradient": [
-          "#ffff00",
-          "#00ffff"
-        ],
-        "glow": "rgba(255,152,0,.5)"
-      }
-    },
-    {
       "id": "event_001",
       "title": "📅 Upcoming College Events",
       "theme": {
