@@ -1,8 +1,8 @@
 {
-  "show": true,
+  "show": false,
   "title": "Testing Admin ",
   "message": "TESTING admin panel",
   "type": "important",
   "updated": "2025-12-30T14:00:00",
-  "id": "notice-1767332189829"
+  "id": "notice-1767332230329"
 }
