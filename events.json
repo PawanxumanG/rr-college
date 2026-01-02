@@ -2,19 +2,6 @@
   "show": true,
   "events": [
     {
-      "title": "Karmanya Photos Update ",
-      "content": [
-        "Tommorow will be announced about karmanya photos,🔥❤️"
-      ],
-      "theme": {
-        "gradient": [
-          "#0000ff",
-          "#ffffff"
-        ],
-        "glow": "rgba(255,152,0,0.5)"
-      }
-    },
-    {
       "id": "event_001",
       "title": "📅 Upcoming College Events",
       "theme": {
