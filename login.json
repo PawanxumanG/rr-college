@@ -11,7 +11,7 @@
       "id": "initial-admin",
       "key": "RR-ADMIN",
       "owner": "System Admin",
-      "isActive": true,
+      "isActive": false,
       "expiresAt": "2030-12-31"
     }
   ]
