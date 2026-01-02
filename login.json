@@ -1,6 +1,13 @@
 {
   "keys": [
     {
+      "id": "d53605f3-f271-455e-84ef-6e590d1e4fae",
+      "key": "RR-YHQFMT",
+      "owner": "Pawan",
+      "isActive": true,
+      "expiresAt": "2026-01-01"
+    },
+    {
       "id": "initial-admin",
       "key": "RR-ADMIN",
       "owner": "System Admin",
