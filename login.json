@@ -22,7 +22,8 @@
       "owner": "Lata Ponnam",
       "isActive": true,
       "expiresAt": "2026-01-03",
-      "deviceId": null
+      "deviceId": "DEV-R6D7T-0275",
+      "deviceName": "Linux System (Chrome)"
     },
     {
       "id": "initial-admin",
