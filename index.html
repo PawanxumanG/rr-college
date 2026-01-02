@@ -227,35 +227,8 @@ gtag('event','home_loaded');
 👨‍🏫 OUR CHAIRMAN – Shri R. R. Pardeshi
 </button>
 
-<!-- NOTICE -->
-<div class="event">
-  <h2>📢 IMPORTANT NOTICE</h2>
-
-  <p>
-    All students are instructed to <b>open this app daily</b> for official notices,
-    event updates, and important announcements.
-  </p>
-
-  <p class="text-muted">📌 All updates will be published only in this app.</p>
-
-  <p class="text-muted">
-    📸 All <b>Karmanya Fest</b> photos will be shared in the <b>Album</b> section.
-  </p>
-
-  <div class="update-header" onclick="toggleUpdates()">
-    <b>🆕 New App Updates v2.1</b>
-    <span class="update-toggle" id="updateToggle">Tap to open</span>
-  </div>
-
-  <div class="update-content" id="updateContent">
-    <p>
-      🚀 <b>What’s New:</b><br>
-      • Image & other download support ⬇️<br>
-      • Improved Event Album 📸<br>
-      • Faster loading & improved stability ✨
-    </p>
-  </div>
-</div>
+<!-- 🔔 NOTICE FROM notice.json -->
+<div id="noticeBox"></div>
 
 
 <div class="streak-mini">
@@ -294,8 +267,44 @@ gtag('event','home_loaded');
 </div>
 
 </div>
-
 <script>
+/* ================= NOTICE FETCH ================= */
+fetch('notice.json?t=' + Date.now())
+  .then(res => res.json())
+  .then(data => {
+    if (!data.show) return;
+
+    let messagesHTML = '';
+    data.message.forEach(line => {
+      messagesHTML += `<p class="text-muted">${line}</p>`;
+    });
+
+    let updatesHTML = '';
+    if (data.updates && data.updates.items.length > 0) {
+      updatesHTML = `
+        <div class="update-header" onclick="toggleUpdates()">
+          <b>🆕 ${data.updates.version}</b>
+          <span class="update-toggle" id="updateToggle">Tap to open</span>
+        </div>
+
+        <div class="update-content" id="updateContent">
+          <p><b>🚀 What’s New:</b><br>
+            ${data.updates.items.map(i => `• ${i}`).join('<br>')}
+          </p>
+        </div>
+      `;
+    }
+
+    document.getElementById("noticeBox").innerHTML = `
+      <div class="event">
+        <h2>${data.title}</h2>
+        ${messagesHTML}
+        ${updatesHTML}
+      </div>
+    `;
+  })
+  .catch(err => console.log('Notice error:', err));
+
 /* ================= DAILY STREAK ================= */
 let today = new Date().toDateString();
 let last = localStorage.getItem("lastOpenDate");

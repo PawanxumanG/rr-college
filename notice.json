@@ -1,0 +1,18 @@
+{
+  "show": true,
+  "title": "📢 IMPORTANT NOTICE",
+  "message": [
+    "All students are instructed to open this app daily for official notices, event updates, and important announcements.",
+    "📌 All updates will be published only in this app.",
+    "📸 All Karmanya Fest photos will be shared in the Album section."
+  ],
+  "updates": {
+    "version": "New App Updates v2.1",
+    "items": [
+      "Image & other download support ⬇️",
+      "Improved Event Album 📸",
+      "Faster loading & improved stability ✨"
+    ]
+  },
+  "updated": "2026-01-02T11:10:00"
+}
