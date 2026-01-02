@@ -8,136 +8,108 @@
 <link rel="stylesheet" href="style.css">
 
 <style>
-/* ===== HEADER ===== */
-.header {
-    background: linear-gradient(90deg, #ff6a00, #ff9800);
-    color: #ffffff;
-    text-align: center;
-    padding: 16px 10px;
-}
-.header h1 {
-    margin: 0;
-    font-size: 18px;
-    letter-spacing: 0.5px;
-}
-.header p {
-    margin: 4px 0 0;
-    font-size: 13px;
-    opacity: 0.9;
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Arial;
+  background:#0f1117;
+  color:#fff;
 }
 
-/* ===== CONTAINER ===== */
-.container {
-    padding: 16px;
+/* HEADER */
+.header{
+  background:linear-gradient(90deg,#ff6a00,#ff9800);
+  text-align:center;
+  padding:18px 12px;
+}
+.header h1{margin:0;font-size:18px}
+.header p{margin:6px 0 0;font-size:13px;opacity:.9}
+
+/* CONTAINER */
+.container{padding:16px}
+
+/* EVENT CARD */
+.event-card{
+  background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
+  background-size:400% 400%;
+  animation:gradient 8s ease infinite;
+  border-radius:20px;
+  padding:22px;
+  margin-bottom:18px;
+  box-shadow:0 0 30px rgba(255,152,0,.55);
+}
+.event-card h2{margin-top:0;font-size:18px}
+.event-card p{font-size:14.5px;line-height:1.7;margin-bottom:10px}
+
+/* ERROR */
+.error-box{
+  background:linear-gradient(135deg,#ff9800,#9b59b6);
+  padding:18px;
+  border-radius:16px;
+  text-align:center;
+  font-weight:600;
 }
 
-/* ===== ANIMATIONS ===== */
-@keyframes gradientFlow {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px) scale(.97); }
-    to { opacity: 1; transform: none; }
-}
-
-/* ===== EVENT CARD ===== */
-.event-card {
-    background: linear-gradient(
-        135deg,
-        #ff9800,
-        #ff5722,
-        #7b2cff,
-        #2575fc
-    );
-    background-size: 400% 400%;
-    animation: gradientFlow 8s ease infinite, fadeUp .7s ease;
-    border-radius: 20px;
-    padding: 22px;
-    margin-bottom: 18px;
-    box-shadow: 0 0 30px rgba(255,152,0,.55);
-    color: #ffffff;
-}
-
-.event-card h2 {
-    margin-top: 0;
-    font-size: 19px;
-    letter-spacing: .4px;
-}
-
-.event-card p {
-    font-size: 14.5px;
-    line-height: 1.75;
-    opacity: .95;
-    margin-bottom: 12px;
-}
-
-/* ===== BUTTON ===== */
-.nav-btn {
-    width: calc(100% - 32px);
-    padding: 14px;
-    font-size: 15px;
-    font-weight: 700;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    margin: 16px;
-    color: #ffffff;
-    background: linear-gradient(135deg, #00c6ff, #0072ff);
-    box-shadow: 0 0 18px rgba(0,198,255,.6);
-}
-.nav-btn:active {
-    transform: scale(0.97);
+/* BACK BTN */
+.back-btn{
+  width:100%;
+  padding:14px;
+  margin:24px 0 80px;
+  border:none;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:700;
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  color:#fff;
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-    <h1>RR INTERNATIONAL COLLEGE</h1>
-    <p>Events & Upcoming Activities</p>
+  <h1>RR INTERNATIONAL COLLEGE</h1>
+  <p>Events & Upcoming Activities</p>
 </div>
 
-<div class="container">
-
-<!-- EVENTS CARD -->
-<div class="event-card">
-    <!-- 🔥 CONTENT WILL LOAD FROM events.json -->
-    <div id="eventContent">
-        <h2>Loading Events...</h2>
-        <p>Please wait</p>
-    </div>
+<div class="container" id="eventsContainer">
+  <div class="error-box">⏳ Loading events…</div>
 </div>
 
-</div>
-
-<!-- BACK TO HOME -->
-<button onclick="location.href='index.html'" class="nav-btn">
-    ⬅ Back to Home
+<button class="back-btn" onclick="location.href='index.html'">
+⬅ Back to Home
 </button>
 
-<!-- ================= EVENTS JSON FETCH ================= -->
 <script>
-fetch("events.json?t=" + Date.now())
-  .then(res => res.json())
+fetch('events.json?t=' + Date.now())
+  .then(res => {
+    if(!res.ok) throw new Error('Fetch failed');
+    return res.json();
+  })
   .then(data => {
-    if (!data.show) return;
+    if(!data.show || !data.events || data.events.length === 0){
+      throw new Error('No events');
+    }
 
-    const box = document.getElementById("eventContent");
+    const container = document.getElementById('eventsContainer');
+    container.innerHTML = '';
 
-    box.innerHTML = `
-      <h2>${data.title}</h2>
-      ${data.content.map(line => `<p>${line}</p>`).join("")}
-    `;
+    data.events.forEach(ev => {
+      let html = `
+        <div class="event-card">
+          <h2>${ev.title}</h2>
+      `;
+      ev.content.forEach(line => {
+        html += `<p>${line}</p>`;
+      });
+      html += `</div>`;
+      container.innerHTML += html;
+    });
   })
   .catch(err => {
-    document.getElementById("eventContent").innerHTML =
-      "<p>⚠️ Unable to load events.</p>";
-    console.log("Events JSON error:", err);
+    document.getElementById('eventsContainer').innerHTML = `
+      <div class="error-box">⚠️ Unable to load events.</div>
+    `;
+    console.log(err);
   });
 </script>
 
