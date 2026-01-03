@@ -30,7 +30,9 @@
       "key": "RR-ADMIN",
       "owner": "System Admin",
       "isActive": true,
-      "expiresAt": "2030-12-31"
+      "expiresAt": "2030-12-31",
+      "deviceId": "DEV-R6D7T-0275",
+      "deviceName": "Android Phone (Chrome)"
     }
   ]
 }
