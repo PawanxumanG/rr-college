@@ -54,10 +54,25 @@ gtag('config','G-9JW1V42V83',{
   opacity:.95;
 }
 
-/* OPEN ALBUM BUTTON */
+/* IMPORTANT INSTRUCTIONS */
+.instructions{
+  margin-top:18px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,0,0,.15);
+  border:2px solid #ff3b3b;
+  color:#ffeaea;
+  font-size:14px;
+  line-height:1.6;
+}
+.instructions b{
+  color:#ff3b3b;
+}
+
+/* OPEN BUTTON */
 .open-album-btn{
   width:100%;
-  margin-top:18px;
+  margin-top:20px;
   padding:15px;
   font-size:16px;
   font-weight:800;
@@ -68,24 +83,12 @@ gtag('config','G-9JW1V42V83',{
   cursor:pointer;
   box-shadow:0 0 22px rgba(0,198,255,.6);
 }
-.open-album-btn:active{
-  transform:scale(.97);
-}
+.open-album-btn:active{transform:scale(.97)}
 
-/* 🔴 IMPORTANT INSTRUCTION BOX */
-.instruction-box{
-  margin-top:18px;
-  padding:14px;
-  border-radius:14px;
-  background:rgba(255,0,0,0.15);
-  border:2px solid rgba(255,80,80,0.9);
-  color:#fff;
+.album-note{
+  margin-top:14px;
   font-size:14px;
-  line-height:1.6;
-  box-shadow:0 0 18px rgba(255,0,0,.45);
-}
-.instruction-box b{
-  color:#ffeb3b;
+  opacity:.9;
 }
 
 /* BACK BUTTON */
@@ -115,7 +118,6 @@ gtag('config','G-9JW1V42V83',{
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
   <h1>RR INTERNATIONAL COLLEGE</h1>
   <p>Event Album</p>
@@ -137,24 +139,17 @@ gtag('config','G-9JW1V42V83',{
       hosted securely on Google Photos.
     </p>
 
-    <button class="open-album-btn"
-      onclick="
-        gtag('event','open_google_photos_album',{
-          event_category:'Event Album',
-          event_label:'Karmanya Fest 2025'
-        });
-        window.location.href='https://photos.app.goo.gl/wiu7kyUbJoxdMnud9';
-      ">
+    <!-- 🔴 IMPORTANT INSTRUCTIONS -->
+    <div class="instructions">
+      ⏳ <b>Please wait 3 seconds</b> after clicking the album button.<br>
+      📥 <b>Let the photo load clearly</b> before downloading for best quality.
+    </div>
+
+    <button class="open-album-btn" onclick="openAlbum()">
       📸 Open Karmanya Photo Album
     </button>
 
-    <!-- 🔴 INSTRUCTIONS -->
-    <div class="instruction-box">
-      ⏳ <b>Please wait 2–3 seconds</b> after opening the album for Google Photos to load properly.<br>
-      📥 <b>For best quality:</b> let the photo load clearly first, then download.
-    </div>
-
-    <div class="album-note" style="margin-top:14px;font-size:14px;opacity:.9;">
+    <div class="album-note">
       ✨ Best viewed in Google Photos app<br>
       🔒 Official upload by RR International College
     </div>
@@ -169,6 +164,73 @@ gtag('config','G-9JW1V42V83',{
 <div class="footer">
   Powered by RR International College
 </div>
+
+<!-- ================= DEEP GOOGLE ANALYTICS ================= -->
+<script>
+/* PAGE LOAD */
+gtag('event','album_page_loaded',{
+  event_category:'Event Album',
+  event_label:'Karmanya Fest 2025'
+});
+
+const pageStartTime = Date.now();
+let albumOpened = false;
+
+/* OPEN ALBUM */
+function openAlbum(){
+  albumOpened = true;
+  const timeSpent = Math.round((Date.now() - pageStartTime)/1000);
+
+  gtag('event','open_google_photos_album',{
+    event_category:'Event Album',
+    event_label:'Karmanya Fest 2025',
+    value: timeSpent
+  });
+
+  setTimeout(()=>{
+    gtag('event','wait_3_seconds_completed',{
+      event_category:'Event Album',
+      event_label:'Instruction followed'
+    });
+  },3000);
+
+  window.location.href='https://photos.app.goo.gl/wiu7kyUbJoxdMnud9';
+}
+
+/* SCROLL DEPTH */
+let scrollMarks={25:false,50:false,75:false,100:false};
+window.addEventListener('scroll',()=>{
+  const percent=Math.round(
+    (window.scrollY+window.innerHeight)/
+    document.documentElement.scrollHeight*100
+  );
+  [25,50,75,100].forEach(p=>{
+    if(percent>=p && !scrollMarks[p]){
+      scrollMarks[p]=true;
+      gtag('event','scroll_depth',{
+        event_category:'Event Album',
+        event_label:`Scrolled ${p}%`
+      });
+    }
+  });
+});
+
+/* EXIT WITHOUT OPEN */
+window.addEventListener('beforeunload',()=>{
+  if(!albumOpened){
+    gtag('event','exit_without_open',{
+      event_category:'Event Album',
+      event_label:'User left without opening album'
+    });
+  }
+});
+
+/* INSTRUCTION VIEW */
+gtag('event','quality_instruction_shown',{
+  event_category:'Event Album',
+  event_label:'Quality download instruction'
+});
+</script>
 
 </body>
 </html>
