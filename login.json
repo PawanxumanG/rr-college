@@ -27,23 +27,6 @@
       "deviceName": null
     },
     {
-      "id": "64793d43-1289-42fb-82ab-82049ea2b437",
-      "key": "RR-VC0ANE",
-      "owner": "New Admin",
-      "isActive": true,
-      "deviceId": null,
-      "deviceName": null
-    },
-    {
-      "id": "2691bc96-4d20-4fcd-8b11-7db99948f483",
-      "key": "RR-LATA",
-      "owner": "Lata Ponnam",
-      "isActive": true,
-      "expiresAt": "2026-01-03",
-      "deviceId": "DEV-R6D7T-0275",
-      "deviceName": "Linux System (Chrome)"
-    },
-    {
       "id": "initial-admin",
       "key": "RR-ADMIN",
       "owner": "System Admin",
