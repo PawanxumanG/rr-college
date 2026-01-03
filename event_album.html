@@ -54,12 +54,6 @@ gtag('config','G-9JW1V42V83',{
   opacity:.95;
 }
 
-.album-note{
-  margin-top:14px;
-  font-size:14px;
-  opacity:.9;
-}
-
 /* OPEN ALBUM BUTTON */
 .open-album-btn{
   width:100%;
@@ -76,6 +70,22 @@ gtag('config','G-9JW1V42V83',{
 }
 .open-album-btn:active{
   transform:scale(.97);
+}
+
+/* 🔴 IMPORTANT INSTRUCTION BOX */
+.instruction-box{
+  margin-top:18px;
+  padding:14px;
+  border-radius:14px;
+  background:rgba(255,0,0,0.15);
+  border:2px solid rgba(255,80,80,0.9);
+  color:#fff;
+  font-size:14px;
+  line-height:1.6;
+  box-shadow:0 0 18px rgba(255,0,0,.45);
+}
+.instruction-box b{
+  color:#ffeb3b;
 }
 
 /* BACK BUTTON */
@@ -138,7 +148,13 @@ gtag('config','G-9JW1V42V83',{
       📸 Open Karmanya Photo Album
     </button>
 
-    <div class="album-note">
+    <!-- 🔴 INSTRUCTIONS -->
+    <div class="instruction-box">
+      ⏳ <b>Please wait 2–3 seconds</b> after opening the album for Google Photos to load properly.<br>
+      📥 <b>For best quality:</b> let the photo load clearly first, then download.
+    </div>
+
+    <div class="album-note" style="margin-top:14px;font-size:14px;opacity:.9;">
       ✨ Best viewed in Google Photos app<br>
       🔒 Official upload by RR International College
     </div>
