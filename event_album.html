@@ -32,25 +32,25 @@ gtag('config','G-9JW1V42V83',{
 
 .album-box{
   margin:18px;
-  padding:22px;
-  border-radius:20px;
+  padding:24px;
+  border-radius:22px;
   text-align:center;
   color:#fff;
   background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
   background-size:400% 400%;
-  animation:gradientFlow 7s ease infinite, popFade .7s ease;
-  box-shadow:0 0 35px rgba(255,152,0,.6);
+  animation:gradientFlow 8s ease infinite, popFade .7s ease;
+  box-shadow:0 0 38px rgba(255,152,0,.65);
 }
 
 .album-box h2{
   margin-top:0;
-  font-size:22px;
+  font-size:23px;
   letter-spacing:.5px;
 }
 
 .album-box p{
   font-size:15px;
-  line-height:1.7;
+  line-height:1.75;
   opacity:.95;
 }
 
@@ -60,19 +60,37 @@ gtag('config','G-9JW1V42V83',{
   opacity:.9;
 }
 
+/* OPEN ALBUM BUTTON */
+.open-album-btn{
+  width:100%;
+  margin-top:18px;
+  padding:15px;
+  font-size:16px;
+  font-weight:800;
+  border:none;
+  border-radius:16px;
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 0 22px rgba(0,198,255,.6);
+}
+.open-album-btn:active{
+  transform:scale(.97);
+}
+
+/* BACK BUTTON */
 .back-btn{
   width:90%;
   max-width:320px;
-  margin:26px auto;
+  margin:28px auto;
   padding:14px;
   font-size:16px;
   font-weight:700;
   border:none;
   border-radius:14px;
-  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  background:#2c3e50;
   color:#fff;
   cursor:pointer;
-  box-shadow:0 0 18px rgba(0,198,255,.6);
 }
 .back-btn:active{transform:scale(.97)}
 
@@ -87,6 +105,7 @@ gtag('config','G-9JW1V42V83',{
 
 <body>
 
+<!-- HEADER -->
 <div class="header">
   <h1>RR INTERNATIONAL COLLEGE</h1>
   <p>Event Album</p>
@@ -98,21 +117,30 @@ gtag('config','G-9JW1V42V83',{
     <h2>📸 KARMANYA FEST 2025</h2>
 
     <p>
-      The official <b>Karmanya Fest 2025</b> photos will be uploaded here very soon.
+      Relive the unforgettable moments of <b>Karmanya Fest 2025</b>.
+      Every performance, celebration, and memory has been captured
+      and uploaded officially.
     </p>
 
     <p>
-      Every moment, performance, and memory captured during the fest
-      will be available in this album section.
+      Tap the button below to open the complete photo album
+      hosted securely on Google Photos.
     </p>
 
-    <p>
-      Please stay connected with the app and check back regularly
-      for the complete photo collection.
-    </p>
+    <button class="open-album-btn"
+      onclick="
+        gtag('event','open_google_photos_album',{
+          event_category:'Event Album',
+          event_label:'Karmanya Fest 2025'
+        });
+        window.location.href='https://photos.app.goo.gl/wiu7kyUbJoxdMnud9';
+      ">
+      📸 Open Karmanya Photo Album
+    </button>
 
     <div class="album-note">
-      ✨ Albums will be updated officially by RR International College
+      ✨ Best viewed in Google Photos app<br>
+      🔒 Official upload by RR International College
     </div>
   </div>
 
