@@ -20,13 +20,9 @@ gtag('config','G-9JW1V42V83',{
 <!-- =================================================== -->
 
 <style>
-@keyframes gradientFlow{
-  0%{background-position:0% 50%}
-  50%{background-position:100% 50%}
-  100%{background-position:0% 50%}
-}
+/* Fade only (no color animation) */
 @keyframes popFade{
-  from{opacity:0; transform:translateY(20px) scale(.96)}
+  from{opacity:0; transform:translateY(18px) scale(.97)}
   to{opacity:1; transform:none}
 }
 
@@ -35,23 +31,22 @@ gtag('config','G-9JW1V42V83',{
   padding:24px;
   border-radius:22px;
   text-align:center;
-  color:#fff;
-  background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
-  background-size:400% 400%;
-  animation:gradientFlow 8s ease infinite, popFade .7s ease;
-  box-shadow:0 0 38px rgba(255,152,0,.65);
+  color:#ffffff;
+  background:linear-gradient(135deg,#d84a6a,#8e44ad);
+  animation:popFade .6s ease;
+  box-shadow:0 0 30px rgba(216,74,106,.55);
 }
 
 .album-box h2{
   margin-top:0;
   font-size:23px;
-  letter-spacing:.5px;
+  letter-spacing:.4px;
 }
 
 .album-box p{
   font-size:15px;
   line-height:1.75;
-  opacity:.95;
+  opacity:.96;
 }
 
 /* IMPORTANT INSTRUCTIONS */
@@ -59,11 +54,15 @@ gtag('config','G-9JW1V42V83',{
   margin-top:18px;
   padding:14px;
   border-radius:14px;
-  background:rgba(255,0,0,.15);
+  background:#2b1c1f;
   border:2px solid #ff3b3b;
-  color:#ffeaea;
+  color:#ffffff;
   font-size:14px;
   line-height:1.6;
+}
+.instructions span{
+  display:block;
+  margin:6px 0;
 }
 .instructions b{
   color:#ff3b3b;
@@ -79,12 +78,15 @@ gtag('config','G-9JW1V42V83',{
   border:none;
   border-radius:16px;
   background:linear-gradient(135deg,#00c6ff,#0072ff);
-  color:#fff;
+  color:#ffffff;
   cursor:pointer;
-  box-shadow:0 0 22px rgba(0,198,255,.6);
+  box-shadow:0 0 20px rgba(0,198,255,.55);
 }
-.open-album-btn:active{transform:scale(.97)}
+.open-album-btn:active{
+  transform:scale(.97);
+}
 
+/* NOTE */
 .album-note{
   margin-top:14px;
   font-size:14px;
@@ -102,7 +104,7 @@ gtag('config','G-9JW1V42V83',{
   border:none;
   border-radius:14px;
   background:#2c3e50;
-  color:#fff;
+  color:#ffffff;
   cursor:pointer;
 }
 .back-btn:active{transform:scale(.97)}
@@ -139,10 +141,10 @@ gtag('config','G-9JW1V42V83',{
       hosted securely on Google Photos.
     </p>
 
-    <!-- 🔴 IMPORTANT INSTRUCTIONS -->
+    <!-- 🔴 CLEAR INSTRUCTIONS -->
     <div class="instructions">
-      ⏳ <b>Please wait 3 seconds</b> after clicking the album button.<br>
-      📥 <b>Let the photo load clearly</b> before downloading for best quality.
+      <span>⏳ <b>Please wait 3 seconds</b> after clicking the album button.</span>
+      <span>📥 <b>Let the photo load clearly</b> before downloading for best quality.</span>
     </div>
 
     <button class="open-album-btn" onclick="openAlbum()">
@@ -165,18 +167,18 @@ gtag('config','G-9JW1V42V83',{
   Powered by RR International College
 </div>
 
-<!-- ================= DEEP GOOGLE ANALYTICS ================= -->
+<!-- ================= ANALYTICS ================= -->
 <script>
-/* PAGE LOAD */
+const pageStartTime = Date.now();
+let albumOpened = false;
+
+/* Page load */
 gtag('event','album_page_loaded',{
   event_category:'Event Album',
   event_label:'Karmanya Fest 2025'
 });
 
-const pageStartTime = Date.now();
-let albumOpened = false;
-
-/* OPEN ALBUM */
+/* Open album */
 function openAlbum(){
   albumOpened = true;
   const timeSpent = Math.round((Date.now() - pageStartTime)/1000);
@@ -188,47 +190,23 @@ function openAlbum(){
   });
 
   setTimeout(()=>{
-    gtag('event','wait_3_seconds_completed',{
+    gtag('event','wait_instruction_followed',{
       event_category:'Event Album',
-      event_label:'Instruction followed'
+      event_label:'3 seconds wait'
     });
   },3000);
 
   window.location.href='https://photos.app.goo.gl/wiu7kyUbJoxdMnud9';
 }
 
-/* SCROLL DEPTH */
-let scrollMarks={25:false,50:false,75:false,100:false};
-window.addEventListener('scroll',()=>{
-  const percent=Math.round(
-    (window.scrollY+window.innerHeight)/
-    document.documentElement.scrollHeight*100
-  );
-  [25,50,75,100].forEach(p=>{
-    if(percent>=p && !scrollMarks[p]){
-      scrollMarks[p]=true;
-      gtag('event','scroll_depth',{
-        event_category:'Event Album',
-        event_label:`Scrolled ${p}%`
-      });
-    }
-  });
-});
-
-/* EXIT WITHOUT OPEN */
+/* Exit tracking */
 window.addEventListener('beforeunload',()=>{
   if(!albumOpened){
     gtag('event','exit_without_open',{
       event_category:'Event Album',
-      event_label:'User left without opening album'
+      event_label:'User exited'
     });
   }
-});
-
-/* INSTRUCTION VIEW */
-gtag('event','quality_instruction_shown',{
-  event_category:'Event Album',
-  event_label:'Quality download instruction'
 });
 </script>
 
