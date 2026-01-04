@@ -1,39 +1,18 @@
 {
-  "show": false,
-  "title": "Hello Everyone!! 🤗",
-  "message": "📸 Karmanya Fest 2025 Photos Are Live! We’re happy to announce that the official photos from Karmanya Fest 2025 are now available in the Album section of the RR Events App📷 Thank you for your patience❤️ ",
-  "type": "important",
-  "updated": "2025-12-30T14:00:00",
-  "id": "ann-1767534303818",
+  "show": true,
+  "title": "",
+  "message": "",
   "theme": {
     "gradient": [
-      "#5e3131",
-      "#000000"
-    ],
-    "alternateGradients": [
-      [
-        "#ff512f",
-        "#dd2476"
-      ],
-      [
-        "#00c6ff",
-        "#0072ff"
-      ],
-      [
-        "#7b2cff",
-        "#2575fc"
-      ],
-      [
-        "#f7971e",
-        "#ffd200"
-      ]
+      "#ff9800",
+      "#ff5722"
     ],
     "glow": {
-      "color": "#ff0000",
-      "blur": 62,
+      "color": "#ff9800",
+      "blur": 30,
       "intensity": 1
     },
     "textColor": "#ffffff",
-    "buttonColor": "#ff0000"
+    "buttonColor": "#000000"
   }
 }
