@@ -6,10 +6,10 @@
       "title": "📅 Upcoming College Events",
       "theme": {
         "gradient": [
-          "#a3ad63",
-          "#2b4035",
-          "#591d1d",
-          "#305578"
+          "#ff00ff",
+          "#0000ff",
+          "#ff00ff",
+          "#0000ff"
         ],
         "alternateGradients": [
           [
@@ -32,7 +32,7 @@
         "glow": {
           "color": "#ff0000",
           "blur": 100,
-          "intensity": 0.77
+          "intensity": 1
         }
       },
       "content": [
