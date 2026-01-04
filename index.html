@@ -519,35 +519,51 @@ fetch("announcement.json?t=" + Date.now())
   justify-content:center;
   z-index:10000;
 ">
-  <div style="
-  background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
-  background-size:400% 400%;
-  animation:gradientShift 6s ease infinite, popIn 0.6s ease;
-  padding:20px;
-  border-radius:18px;
-  width:90%;
-  max-width:360px;
-  box-shadow:0 0 35px rgba(255,152,0,.7);
-  text-align:center;
-  color:#fff;
-">
-    <h2 id="annTitle" style="margin:0 0 10px;">📢 Announcement</h2>
-    <p id="annMsg" style="font-size:15px;line-height:1.5;"></p>
-    <button onclick="closeAnnouncement()" style="
-      margin-top:14px;
-      width:100%;
-      padding:12px;
-      border:none;
-      border-radius:12px;
-      background:#000;
-      color:#fff;
-      font-weight:700;
-      font-size:15px;
-      cursor:pointer;
+
+  <!-- POPUP CARD -->
+  <div id="announcementCard" style="
+    padding:20px;
+    border-radius:18px;
+    width:90%;
+    max-width:360px;
+    text-align:center;
+    color:#ffffff;
+    background:linear-gradient(135deg,#ff9800,#ff5722,#7b2cff,#2575fc);
+    box-shadow:0 0 35px rgba(255,152,0,.7);
+  ">
+
+    <h2 id="annTitle" style="
+      margin:0 0 10px;
+      font-size:20px;
+      font-weight:800;
     ">
+      📢 Announcement
+    </h2>
+
+    <p id="annMsg" style="
+      font-size:15px;
+      line-height:1.6;
+      opacity:.95;
+    "></p>
+
+    <button
+      id="annBtn"
+      onclick="closeAnnouncement()"
+      style="
+        margin-top:14px;
+        width:100%;
+        padding:12px;
+        border:none;
+        border-radius:12px;
+        background:#000;
+        color:#fff;
+        font-weight:700;
+        font-size:15px;
+        cursor:pointer;
+      "
+    >
       OK, GOT IT 👍
     </button>
+
   </div>
 </div>
-</body>
-</html>
