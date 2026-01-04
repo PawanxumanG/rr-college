@@ -4,29 +4,37 @@
     {
       "id": "event_001",
       "title": "📅 Upcoming College Events",
-
       "theme": {
         "gradient": [
-          "#ff9800",
-          "#ff5722",
+          "#ff00ff",
+          "#000000",
           "#7b2cff",
           "#2575fc"
         ],
-
         "alternateGradients": [
-          ["#ff512f", "#dd2476"],
-          ["#00c6ff", "#0072ff"],
-          ["#8e2de2", "#4a00e0"],
-          ["#f7971e", "#ffd200"]
+          [
+            "#ff512f",
+            "#dd2476"
+          ],
+          [
+            "#00c6ff",
+            "#0072ff"
+          ],
+          [
+            "#8e2de2",
+            "#4a00e0"
+          ],
+          [
+            "#f7971e",
+            "#ffd200"
+          ]
         ],
-
         "glow": {
           "color": "rgba(255,152,0,0.55)",
           "blur": 30,
           "intensity": 0.8
         }
       },
-
       "content": [
         "RR International College will soon announce upcoming official events including Sports Day and an Esports Tournament (Free Fire MAX).",
         "These activities are part of the college’s co-curricular initiatives aimed at encouraging student participation and engagement.",
