@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Dr. Driving Mobile Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 16px);
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #050505;
+            font-family: 'Roboto', sans-serif;
+            touch-action: none;
+            user-select: none;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        
+        #game-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: 500px; /* Optional constraint for desktop previews */
+            background: #000;
+            overflow: hidden;
+            box-shadow: 0 0 100px rgba(0,0,0,0.5);
+        }
+
+        #game-canvas {
+            display: block;
+            background: #0a0a0a;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .touch-btn {
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            cursor: pointer;
+        }
+        
+        .hidden { display: none !important; }
+        
+        #overlay-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 50;
+            pointer-events: none;
+        }
+
+        #overlay-layer > * {
+            pointer-events: auto;
+        }
+
+        /* Enhanced Button Styling */
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.1s ease-out;
+        }
+        .glass-btn:active {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(0.92);
+            box-shadow: 0 4px 16px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .steer-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pedal-btn {
+            width: 70px;
+            height: 130px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pedal-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            opacity: 0.5;
+            text-transform: uppercase;
+        }
+
+        .brake-btn { border-color: rgba(239, 68, 68, 0.2); background: rgba(239, 68, 68, 0.05); }
+        .brake-btn:active { background: rgba(239, 68, 68, 0.2); }
+        .brake-btn .pedal-label { color: #ef4444; }
+
+        .gas-btn { border-color: rgba(16, 185, 129, 0.2); background: rgba(16, 185, 129, 0.05); }
+        .gas-btn:active { background: rgba(16, 185, 129, 0.2); }
+        .gas-btn .pedal-label { color: #10b981; }
+
+        #hud {
+            padding-top: calc(1rem + var(--safe-top));
+        }
+        
+        #controls {
+            padding-bottom: var(--safe-bottom);
+        }
+    </style>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body>
+
+    <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+
+        <!-- HUD Layer -->
+        <div id="hud" class="absolute top-0 left-0 right-0 p-4 flex justify-between pointer-events-none z-30 hidden">
+            <div class="glass-btn px-4 py-2 rounded-xl flex flex-col items-center min-w-[80px]">
+                <span class="text-[8px] font-orbitron text-blue-400 uppercase tracking-widest leading-none mb-1">Dist</span>
+                <p id="hud-distance" class="text-xl font-bold text-white tabular-nums leading-none">0m</p>
+            </div>
+            <div class="glass-btn px-4 py-2 rounded-xl flex flex-col items-center min-w-[80px]">
+                <span class="text-[8px] font-orbitron text-emerald-400 uppercase tracking-widest leading-none mb-1">Speed</span>
+                <p id="hud-speed" class="text-xl font-bold text-white tabular-nums leading-none">0</p>
+            </div>
+        </div>
+
+        <!-- Screens Layer -->
+        <div id="overlay-layer">
+            <!-- Menu Screen -->
+            <div id="menu-screen" class="absolute inset-0 bg-black/80 flex flex-col items-center justify-center p-10 text-center backdrop-blur-sm">
+                <div class="mb-10">
+                    <h1 class="text-5xl font-orbitron font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-br from-blue-400 to-emerald-400 tracking-tighter italic">
+                        DR. DRIVING
+                    </h1>
+                    <p class="text-zinc-500 text-[10px] tracking-[0.4em] uppercase font-bold">Pro Mobile</p>
+                </div>
+                <button onclick="showMissionSelect()" class="w-full max-w-[260px] bg-blue-600 hover:bg-blue-500 text-white font-orbitron py-5 rounded-2xl transition-all shadow-xl active:scale-95 text-lg">
+                    START CAREER
+                </button>
+            </div>
+
+            <!-- Mission Select -->
+            <div id="mission-screen" class="absolute inset-0 bg-black/95 flex flex-col items-center pt-20 px-6 hidden">
+                <h2 class="text-2xl font-orbitron mb-10 text-white tracking-widest border-b border-white/10 pb-4 px-10">MISSIONS</h2>
+                <div class="space-y-4 w-full max-w-[320px] overflow-y-auto max-h-[60%]" id="mission-list">
+                    <!-- Missions injected by JS -->
+                </div>
+                <button onclick="showMenu()" class="mt-auto mb-10 text-zinc-600 text-xs font-orbitron uppercase tracking-widest font-bold">Back</button>
+            </div>
+
+            <!-- Result Screen -->
+            <div id="result-screen" class="absolute inset-0 bg-black/95 flex flex-col items-center justify-center p-8 text-center hidden">
+                <h2 id="result-title" class="text-4xl font-orbitron font-bold mb-6 italic tracking-tighter">MISSION DONE</h2>
+                <div class="glass-btn p-6 rounded-3xl w-full max-w-[280px] mb-10 text-left">
+                    <p class="text-zinc-600 text-[9px] font-orbitron uppercase mb-3 tracking-widest">Review</p>
+                    <p id="result-eval" class="text-base italic text-blue-100/90 leading-relaxed font-light">"Good job."</p>
+                </div>
+                <div class="flex flex-col gap-4 w-full max-w-[220px]">
+                    <button onclick="restartMission()" class="bg-blue-600 py-4 rounded-2xl font-bold text-base active:scale-95 font-orbitron text-white">RETRY</button>
+                    <button onclick="showMissionSelect()" class="bg-zinc-800 py-4 rounded-2xl font-bold text-base active:scale-95 font-orbitron text-zinc-400">EXIT</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Mobile Controls Layer -->
+        <div id="controls" class="absolute inset-x-0 bottom-0 pointer-events-none flex flex-col items-center p-6 gap-6 z-20 hidden">
+            <!-- Steering Row -->
+            <div class="flex justify-between items-center w-full px-2 mb-2">
+                <button class="steer-btn glass-btn pointer-events-auto touch-btn" 
+                     ontouchstart="setLeft(true)" ontouchend="setLeft(false)" onmousedown="setLeft(true)" onmouseup="setLeft(false)">
+                    <span class="text-3xl text-zinc-400">←</span>
+                </button>
+                <button class="steer-btn glass-btn pointer-events-auto touch-btn"
+                     ontouchstart="setRight(true)" ontouchend="setRight(false)" onmousedown="setRight(true)" onmouseup="setRight(false)">
+                    <span class="text-3xl text-zinc-400">→</span>
+                </button>
+            </div>
+            <!-- Pedal Row -->
+            <div class="flex justify-between items-end w-full">
+                <button class="pedal-btn brake-btn glass-btn pointer-events-auto touch-btn"
+                     ontouchstart="input.brake=true" ontouchend="input.brake=false" onmousedown="input.brake=true" onmouseup="input.brake=false">
+                    <span class="pedal-label font-orbitron">BRAKE</span>
+                </button>
+                <button class="pedal-btn gas-btn glass-btn pointer-events-auto touch-btn"
+                     ontouchstart="input.gas=true" ontouchend="input.gas=false" onmousedown="input.gas=true" onmouseup="input.gas=false">
+                    <span class="pedal-label font-orbitron">GAS</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Constants
+        const LANE_WIDTH = 80;
+        const PLAYER_WIDTH = 38;
+        const PLAYER_HEIGHT = 72;
+        const INITIAL_SPEED = 4;
+        const MAX_SPEED = 18;
+
+        // Missions Data
+        const missions = [
+            { id: 1, title: 'CITY DRIFT', dist: 800, diff: 'Easy' },
+            { id: 2, title: 'HIGHWAY RUN', dist: 3000, diff: 'Normal' },
+            { id: 3, title: 'PRO ENDURANCE', dist: 8000, diff: 'Hard' }
+        ];
+
+        // Game State
+        let currentMission = null;
+        let isPlaying = false;
+        let stats = { distance: 0, speed: 0 };
+        let player = { lane: 1, x: 0, y: 0, speed: INITIAL_SPEED };
+        let traffic = [];
+        let roadOffset = 0;
+        let input = { left: false, right: false, gas: false, brake: false };
+        let lastLaneChange = 0;
+
+        // Canvas Setup
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        function resize() {
+            const container = document.getElementById('game-container');
+            const rect = container.getBoundingClientRect();
+            canvas.width = LANE_WIDTH * 3;
+            // Maintain aspect ratio logic
+            canvas.height = rect.height * (canvas.width / rect.width);
+            player.y = canvas.height - 250; // Place car above controls
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // UI Management
+        const show = (id) => document.getElementById(id).classList.remove('hidden');
+        const hide = (id) => document.getElementById(id).classList.add('hidden');
+
+        function showMenu() {
+            hide('mission-screen');
+            hide('result-screen');
+            hide('controls');
+            show('menu-screen');
+        }
+
+        function showMissionSelect() {
+            hide('menu-screen');
+            hide('result-screen');
+            hide('hud');
+            hide('controls');
+            show('mission-screen');
+            
+            const list = document.getElementById('mission-list');
+            list.innerHTML = '';
+            missions.forEach(m => {
+                const div = document.createElement('div');
+                div.className = "glass-btn p-5 rounded-3xl cursor-pointer active:bg-blue-600/20 transition-all";
+                div.innerHTML = `
+                    <div class="flex justify-between items-center mb-1">
+                        <h4 class="font-orbitron font-bold text-sm tracking-tight text-white">${m.title}</h4>
+                        <span class="text-[9px] px-2 py-0.5 bg-blue-500/10 text-blue-400 rounded-full font-bold uppercase tracking-widest">${m.diff}</span>
+                    </div>
+                    <p class="text-xs text-zinc-500">${m.dist}m Goal</p>
+                `;
+                div.onclick = () => startMission(m);
+                list.appendChild(div);
+            });
+        }
+
+        function startMission(mission) {
+            currentMission = mission;
+            stats = { distance: 0, speed: 0 };
+            player = { ...player, lane: 1, x: (LANE_WIDTH * 1.5 - PLAYER_WIDTH / 2), speed: INITIAL_SPEED };
+            traffic = [];
+            isPlaying = true;
+            
+            hide('mission-screen');
+            hide('menu-screen');
+            hide('result-screen');
+            show('hud');
+            show('controls');
+            requestAnimationFrame(gameLoop);
+        }
+
+        function restartMission() { if (currentMission) startMission(currentMission); }
+
+        function gameOver(success = false) {
+            isPlaying = false;
+            hide('hud');
+            hide('controls');
+            show('result-screen');
+            
+            const title = document.getElementById('result-title');
+            title.innerText = success ? "MISSION PASS" : "COLLISION";
+            title.className = `text-4xl font-orbitron font-bold mb-6 italic tracking-tighter ${success ? 'text-emerald-400' : 'text-rose-500'}`;
+            
+            const review = success ? 
+                "Clean driving! You reached the destination safely." : 
+                "Watch the traffic! Concentration is the driver's best friend.";
+            document.getElementById('result-eval').innerText = `"${review}"`;
+        }
+
+        function setLeft(val) { input.left = val; }
+        function setRight(val) { input.right = val; }
+
+        // Keyboard support
+        window.addEventListener('keydown', e => {
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') setLeft(true);
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') setRight(true);
+            if (e.code === 'ArrowUp' || e.code === 'KeyW') input.gas = true;
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') input.brake = true;
+        });
+        window.addEventListener('keyup', e => {
+            if (e.code === 'ArrowLeft' || e.code === 'KeyA') setLeft(false);
+            if (e.code === 'ArrowRight' || e.code === 'KeyD') setRight(false);
+            if (e.code === 'ArrowUp' || e.code === 'KeyW') input.gas = false;
+            if (e.code === 'ArrowDown' || e.code === 'KeyS') input.brake = false;
+        });
+
+        // Core Game Loop
+        function gameLoop() {
+            if (!isPlaying) return;
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        function update() {
+            const now = Date.now();
+            
+            if (input.left && now - lastLaneChange > 160) {
+                if (player.lane > 0) { player.lane--; lastLaneChange = now; }
+            }
+            if (input.right && now - lastLaneChange > 160) {
+                if (player.lane < 2) { player.lane++; lastLaneChange = now; }
+            }
+
+            const targetX = player.lane * LANE_WIDTH + (LANE_WIDTH / 2 - PLAYER_WIDTH / 2);
+            player.x += (targetX - player.x) * 0.2;
+
+            if (input.gas) player.speed = Math.min(player.speed + 0.12, MAX_SPEED);
+            else if (input.brake) player.speed = Math.max(player.speed - 0.35, 0);
+            else player.speed = Math.max(player.speed - 0.04, INITIAL_SPEED);
+
+            stats.distance += player.speed / 50;
+            stats.speed = player.speed * 8;
+
+            document.getElementById('hud-distance').innerText = Math.floor(stats.distance) + 'm';
+            document.getElementById('hud-speed').innerText = Math.floor(stats.speed);
+
+            if (stats.distance >= currentMission.dist) gameOver(true);
+
+            roadOffset = (roadOffset + player.speed) % 100;
+            traffic.forEach(t => { t.y += player.speed - t.speed; });
+            traffic = traffic.filter(t => t.y < canvas.height + 200 && t.y > -300);
+
+            if (Math.random() < 0.02) {
+                const lane = Math.floor(Math.random() * 3);
+                if (!traffic.some(t => t.lane === lane && t.y < 300)) {
+                    traffic.push({
+                        lane,
+                        x: lane * LANE_WIDTH + (LANE_WIDTH / 2 - PLAYER_WIDTH / 2),
+                        y: -150,
+                        speed: 1.5 + Math.random() * 4,
+                        color: ['#ef4444', '#f59e0b', '#10b981', '#3b82f6', '#a855f7'][Math.floor(Math.random()*5)]
+                    });
+                }
+            }
+
+            for (let t of traffic) {
+                const p = 8;
+                if (player.x + p < t.x + PLAYER_WIDTH - p && 
+                    player.x + PLAYER_WIDTH - p > t.x + p &&
+                    player.y + p < t.y + PLAYER_HEIGHT - p && 
+                    player.y + PLAYER_HEIGHT - p > t.y + p) {
+                    gameOver(false);
+                }
+            }
+        }
+
+        function draw() {
+            ctx.fillStyle = '#0a0a0a';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Road Lines
+            ctx.strokeStyle = '#222';
+            ctx.setLineDash([40, 60]);
+            ctx.lineDashOffset = -roadOffset;
+            ctx.lineWidth = 3;
+            for (let i = 1; i < 3; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * LANE_WIDTH, 0);
+                ctx.lineTo(i * LANE_WIDTH, canvas.height);
+                ctx.stroke();
+            }
+
+            // Traffic
+            traffic.forEach(t => {
+                ctx.fillStyle = t.color;
+                ctx.fillRect(t.x, t.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+                ctx.fillStyle = 'rgba(0,0,0,0.2)';
+                ctx.fillRect(t.x + 4, t.y + 12, PLAYER_WIDTH - 8, PLAYER_HEIGHT - 24);
+            });
+
+            // Player
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = 'rgba(59, 130, 246, 0.6)';
+            ctx.fillStyle = '#3b82f6';
+            ctx.fillRect(player.x, player.y, PLAYER_WIDTH, PLAYER_HEIGHT);
+            ctx.shadowBlur = 0;
+            
+            ctx.fillStyle = '#93c5fd'; // windshield
+            ctx.fillRect(player.x + 5, player.y + 10, PLAYER_WIDTH - 10, 15);
+            
+            if (input.brake) {
+                ctx.fillStyle = '#ff4444';
+                ctx.fillRect(player.x + 2, player.y + PLAYER_HEIGHT - 6, 8, 4);
+                ctx.fillRect(player.x + PLAYER_WIDTH - 10, player.y + PLAYER_HEIGHT - 6, 8, 4);
+            }
+        }
+    </script>
+<script type="module" src="/index.tsx"></script>
+</body>
+</html>
