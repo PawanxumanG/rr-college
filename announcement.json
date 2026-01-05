@@ -1,19 +1,19 @@
 {
-  "show": false,
-  "title": "Hello Everyone ",
-  "message": "📸 Karmanya Fest 2025 Photos Are Live! We’re happy to announce that the official photos from Karmanya Fest 2025 are now available in the Album section of the RR Events App📷 Thank you for your patience❤️",
+  "show": true,
+  "title": "📢 New Game Added! 🎮🔥",
+  "message": "We’ve added a new driving game to the Games Zone 🚗✨\nEnjoy smooth, relaxing gameplay and explore something new!\n\n⚠️ Note: This game may temporarily use up to 30 MB of device storage for better performance.\n\nHappy gaming & thank you for staying with us ❤️\n",
   "theme": {
     "gradient": [
-      "#ff9800",
-      "#ff5722"
+      "#ff00ff",
+      "#cccccc"
     ],
     "glow": {
-      "color": "#ff9800",
-      "blur": 30,
+      "color": "#00ff00",
+      "blur": 100,
       "intensity": 1
     },
     "textColor": "#ffffff",
     "buttonColor": "#bf6767"
   },
-  "id": "ann-1767546389221"
+  "id": "ann-1767640747305"
 }
