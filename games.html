@@ -5,53 +5,17 @@
 <title>RR Games Zone</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<!-- ================= GOOGLE ANALYTICS (DEEP TRACKING) ================= -->
+<!-- GOOGLE ANALYTICS -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9JW1V42V83"></script>
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
-
-const pageStartTime = Date.now();
-let gameClicked = false;
-
 gtag('js', new Date());
 gtag('config', 'G-9JW1V42V83', {
   page_title: 'RR Games Zone',
   page_path: '/games.html'
 });
-
-// Page opened
-gtag('event','games_page_open');
-
-// Track section views
-function trackSection(name){
-  gtag('event','games_section_view',{
-    section_name: name
-  });
-}
-
-// Track game play
-function playGame(gameName, url){
-  gameClicked = true;
-  gtag('event','game_play',{
-    game_name: gameName
-  });
-  location.href = url;
-}
-
-// Track time spent
-window.addEventListener("beforeunload", function () {
-  const seconds = Math.round((Date.now() - pageStartTime) / 1000);
-  gtag('event','games_time_spent',{
-    duration_seconds: seconds
-  });
-
-  if(!gameClicked){
-    gtag('event','exit_without_playing');
-  }
-});
 </script>
-<!-- =================================================================== -->
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -61,15 +25,37 @@ body{
     background:#0f1117;
     color:#fff;
 }
+
+/* HEADER */
 .header{
     background:linear-gradient(90deg,#6a11cb,#2575fc);
     padding:28px 16px;
     text-align:center;
 }
-.header h1{margin:0;font-size:30px;font-weight:700}
-.header p{margin-top:8px;opacity:.9;font-size:14px}
-.container{padding:16px}
-.section-title{margin:24px 4px 12px;font-size:18px;font-weight:700}
+.header h1{
+    margin:0;
+    font-size:30px;
+    font-weight:700;
+}
+.header p{
+    margin-top:8px;
+    opacity:.9;
+    font-size:14px;
+}
+
+/* CONTAINER */
+.container{
+    padding:16px;
+}
+
+/* SECTION TITLE */
+.section-title{
+    margin:24px 4px 12px;
+    font-size:18px;
+    font-weight:700;
+}
+
+/* GAME CARD */
 .game-card{
     background:#161a22;
     border-radius:18px;
@@ -77,8 +63,17 @@ body{
     margin-bottom:18px;
     box-shadow:0 10px 24px rgba(0,0,0,.6);
 }
-.game-card h2{margin:0;font-size:20px}
-.game-card p{margin:8px 0 0;font-size:14px;opacity:.85}
+.game-card h2{
+    margin:0;
+    font-size:20px;
+}
+.game-card p{
+    margin:8px 0 0;
+    font-size:14px;
+    opacity:.85;
+}
+
+/* BADGE */
 .badge{
     display:inline-block;
     margin-top:8px;
@@ -87,13 +82,43 @@ body{
     font-size:12px;
     font-weight:600;
 }
-.badge-hot{background:#e74c3c}
-.badge-ai{background:#ff9800}
-.badge-brain{background:#3498db}
-.badge-quick{background:#2ecc71}
-.badge-fun{background:#9b59b6}
-.badge-drive{background:#ff5722}
+.badge-hot{background:#e74c3c;}
+.badge-ai{background:#ff9800;}
+.badge-brain{background:#3498db;}
+.badge-quick{background:#2ecc71;}
+.badge-fun{background:#9b59b6;}
+.badge-drive{background:#ff5722;}
 
+/* WARNING */
+.warning{
+    margin-top:10px;
+    font-size:12px;
+    color:#ffb74d;
+    background:rgba(255,183,77,0.08);
+    padding:8px 10px;
+    border-radius:10px;
+}
+
+/* ANALYSIS BOX */
+.analysis-box{
+    margin-top:12px;
+    padding:12px;
+    background:#111827;
+    border-radius:12px;
+    font-size:13px;
+    line-height:1.5;
+    color:#cbd5e1;
+}
+.analysis-box strong{
+    color:#ffffff;
+}
+.analysis-note{
+    margin-top:8px;
+    font-size:12px;
+    color:#94a3b8;
+}
+
+/* PLAY BUTTON */
 .play-btn{
     width:100%;
     margin-top:14px;
@@ -105,13 +130,16 @@ body{
     cursor:pointer;
     color:#fff;
 }
-.btn-ttt{background:linear-gradient(90deg,#ff9800,#ff6a00)}
-.btn-2048{background:linear-gradient(90deg,#00c6ff,#0072ff)}
-.btn-hex{background:linear-gradient(90deg,#00e5ff,#00b0ff)}
-.btn-drive{background:linear-gradient(90deg,#ff5722,#ff3d00)}
-.btn-reaction{background:linear-gradient(90deg,#2ecc71,#27ae60)}
-.btn-emoji{background:linear-gradient(90deg,#9b59b6,#6c3483)}
 
+/* BUTTON COLORS */
+.btn-ttt{background:linear-gradient(90deg,#ff9800,#ff6a00);}
+.btn-2048{background:linear-gradient(90deg,#00c6ff,#0072ff);}
+.btn-hex{background:linear-gradient(90deg,#00e5ff,#00b0ff);}
+.btn-drive{background:linear-gradient(90deg,#ff5722,#ff3d00);}
+.btn-reaction{background:linear-gradient(90deg,#2ecc71,#27ae60);}
+.btn-emoji{background:linear-gradient(90deg,#9b59b6,#6c3483);}
+
+/* FOOTER */
 .back-btn{
     width:100%;
     margin:28px 0 80px;
@@ -136,80 +164,112 @@ body{
 
 <div class="container">
 
-<div class="section-title" onclick="trackSection('Featured')">🔥 Featured Challenge</div>
+<!-- FEATURED -->
+<div class="section-title">🔥 Featured Challenge</div>
 
 <div class="game-card">
     <h2>❌⭕ Tic Tac Toe</h2>
-    <p>Beat the RR AI Bot in hard mode.</p>
+    <p>Defeat the RR AI Bot in hard mode.</p>
     <span class="badge badge-hot">🧠 Power</span>
     <span class="badge badge-ai">🤖 AI</span>
     <button class="play-btn btn-ttt"
-        onclick="playGame('Tic Tac Toe','tictactoe.html')">
+        onclick="location.href='tictactoe.html'">
         ▶ Play Now
     </button>
 </div>
 
-<div class="section-title" onclick="trackSection('Brain Games')">🧠 Brain Games</div>
+<!-- BRAIN GAMES -->
+<div class="section-title">🧠 Brain Games</div>
 
 <div class="game-card">
     <h2>🧩 2048</h2>
-    <p>Simple to play, hard to master.</p>
-    <span class="badge badge-brain">🔥 Trending</span>
+    <p>Classic puzzle. Combine tiles. Reach 2048.</p>
+    <span class="badge badge-brain">🔥 Popular</span>
     <button class="play-btn btn-2048"
-        onclick="playGame('2048','2048.html')">
+        onclick="location.href='2048.html'">
         ▶ Play 2048
     </button>
 </div>
 
 <div class="game-card">
     <h2>🔷 Hextris</h2>
-    <p>Fast puzzle reflex challenge.</p>
+    <p>Fast reflex puzzle with rotating hexagons.</p>
     <span class="badge badge-brain">🧠 Focus</span>
     <button class="play-btn btn-hex"
-        onclick="playGame('Hextris','https://hextris.io/')">
+        onclick="location.href='https://hextris.io/'">
         ▶ Play Hextris
     </button>
 </div>
 
-<div class="section-title" onclick="trackSection('Driving')">🚗 Driving</div>
+<!-- DRIVING GAME -->
+<div class="section-title">🚗 Driving Experience</div>
 
 <div class="game-card">
     <h2>🚘 Slow Roads</h2>
-    <p>Relaxing endless driving experience.</p>
+    <p>
+        Relaxing endless driving game.  
+        No racing. No pressure. Just drive.
+    </p>
     <span class="badge badge-drive">Driving</span>
+    <span class="badge badge-fun">Chill</span>
+
+    <div class="warning">
+        ⚠️ Online game • May temporarily use up to <b>30 MB</b> device storage
+    </div>
+
+    <div class="analysis-box">
+        <strong>ℹ️ Storage & Performance Info</strong>
+        <p>
+            This game runs fully online and does not download permanent files.
+            For smoother graphics, your device may temporarily store visual data
+            (such as road textures).
+        </p>
+        <p>
+            Android counts this as <b>App User Data</b>.  
+            You can safely clear it anytime — the game will still work normally.
+        </p>
+        <div class="analysis-note">
+            ✔ No permanent downloads<br>
+            ✔ No background storage usage<br>
+            ✔ Fully reversible
+        </div>
+    </div>
+
     <button class="play-btn btn-drive"
-        onclick="playGame('Slow Roads','https://slowroads.io/')">
+        onclick="location.href='https://slowroads.io/'">
         ▶ Start Driving
     </button>
 </div>
 
-<div class="section-title" onclick="trackSection('Quick Games')">⚡ Quick Games</div>
+<!-- QUICK GAMES -->
+<div class="section-title">⚡ Quick Games</div>
 
 <div class="game-card">
     <h2>⚡ Reaction Time</h2>
-    <p>Tap fast when it turns green.</p>
+    <p>Tap as fast as you can when the screen turns green.</p>
     <span class="badge badge-quick">Speed</span>
     <button class="play-btn btn-reaction"
-        onclick="playGame('Reaction Time','reaction.html')">
+        onclick="location.href='reaction.html'">
         ▶ Test Speed
     </button>
 </div>
 
 <div class="game-card">
     <h2>😄 Emoji Quiz</h2>
-    <p>Guess the word from emojis.</p>
+    <p>Guess the word using emojis only.</p>
     <span class="badge badge-fun">Fun</span>
     <button class="play-btn btn-emoji"
-        onclick="playGame('Emoji Quiz','emoji_quiz.html')">
-        ▶ Play Emoji Quiz
+        onclick="location.href='emoji_quiz.html'">
+        ▶ Play Quiz
     </button>
 </div>
 
 <button class="back-btn"
-    onclick="gtag('event','back_to_notices'); location.href='index.html'">
+    onclick="location.href='index.html'">
     ⬅ Back to Notices
 </button>
 
 </div>
+
 </body>
 </html>
