@@ -110,44 +110,43 @@ function shuffle(arr){
 
 const allQuiz = [
 
-/* EASY (simple idea recognition) */
-{e:"🌞😎",a:"Summer",o:["Summer","Holiday","Vacation","Weather"]},
-{e:"🌧️☂️",a:"Rain",o:["Rain","Cloud","Storm","Flood"]},
-{e:"📱🔋",a:"Charging",o:["Calling","Charging","Settings","Internet"]},
-{e:"🍔🍟",a:"Junk Food",o:["Dinner","Junk Food","Snack","Meal"]},
-{e:"🎒🏫",a:"Student",o:["Teacher","Student","School","Class"]},
-{e:"🐶🏠",a:"Pet",o:["Pet","Animal","Dog","Home"]},
-{e:"🚦🚗",a:"Traffic",o:["Road","Traffic","Drive","Signal"]},
-{e:"📦🏠",a:"Delivery",o:["Shop","Delivery","Courier","Store"]},
-{e:"💡❌",a:"Power Cut",o:["Light","Electricity","Power Cut","Switch"]},
-{e:"📞📴",a:"No Network",o:["Call","Offline","No Network","Silent"]},
+/* EASY */
+{ e:"🎓📚", a:"College", o:["College","Airport","Hospital","Market"] },
+{ e:"🏏🔥", a:"Cricket", o:["Cricket","Dance","Cooking","Travel"] },
+{ e:"🍕🍔", a:"Fast Food", o:["Fast Food","Exercise","Study","Weather"] },
+{ e:"📱📸", a:"Instagram", o:["Instagram","Calculator","Maps","Alarm"] },
+{ e:"☕🍪", a:"Tea Break", o:["Tea Break","Workout","Meeting","Sleep"] },
+{ e:"🎧🎶", a:"Music", o:["Music","Shopping","Driving","Reading"] },
+{ e:"📖✏️", a:"Study", o:["Study","Cooking","Gaming","Picnic"] },
+{ e:"🍫❤️", a:"Chocolate", o:["Chocolate","Shoes","Mobile","Bus"] },
+{ e:"🚗💨", a:"Car", o:["Car","Plane","Boat","Rocket"] },
+{ e:"📸🤳", a:"Selfie", o:["Selfie","Painting","Cooking","Writing"] },
 
-/* MEDIUM (logic + connection) */
-{e:"🧠💭",a:"Thinking",o:["Thinking","Idea","Memory","Focus"]},
-{e:"⌛⏰",a:"Time Management",o:["Schedule","Deadline","Time Management","Routine"]},
-{e:"🔐🌐",a:"Cyber Security",o:["Internet","Cyber Security","Hacking","Password"]},
-{e:"💰📉",a:"Loss",o:["Loss","Debt","Problem","Failure"]},
-{e:"📈💼",a:"Career Growth",o:["Job","Career Growth","Promotion","Office"]},
-{e:"📚☕",a:"Late Study",o:["Exam","Late Study","Coffee","Stress"]},
-{e:"🎯📊",a:"Goal Setting",o:["Target","Planning","Goal Setting","Focus"]},
-{e:"🤝💼",a:"Team Work",o:["Meeting","Team Work","Office","Group"]},
-{e:"🌍🤝",a:"Global Unity",o:["World","Peace","Global Unity","Nation"]},
-{e:"💻🌙",a:"Night Shift",o:["Sleep","Night Shift","Work","Office"]},
+/* MEDIUM */
+{ e:"🤝💼", a:"Team Work", o:["Team Work","Weather","Music","Festival"] },
+{ e:"🎬❤️", a:"Romantic Movie", o:["Romantic Movie","News","Documentary","Cartoon"] },
+{ e:"👨‍💻🌙", a:"Night Coder", o:["Night Coder","Photographer","Chef","Driver"] },
+{ e:"🧠❓", a:"Quiz", o:["Quiz","Workout","Dance","Meditation"] },
+{ e:"📺🍿", a:"Netflix", o:["Netflix","YouTube Studio","Google Drive","Camera"] },
+{ e:"🎭😂", a:"Comedy", o:["Comedy","Science","Geography","Politics"] },
+{ e:"🏆🏏", a:"IPL", o:["IPL","Olympics","Chess","Badminton"] },
+{ e:"🚆🧳", a:"Travel", o:["Travel","Homework","Gaming","Sleep"] },
+{ e:"📊📈", a:"Business", o:["Business","Weather","Poetry","History"] },
+{ e:"👨‍💼💼", a:"Office Job", o:["Office Job","Farming","Singing","Photography"] },
 
-/* HARD (abstract & conceptual) */
-{e:"🧠🔄",a:"Overthinking",o:["Stress","Overthinking","Confusion","Problem"]},
-{e:"🔥📉",a:"Burnout",o:["Tired","Burnout","Failure","Stress"]},
-{e:"🚀🧠",a:"Innovation",o:["Startup","Innovation","Idea","Technology"]},
-{e:"👁️‍🗨️🧠",a:"Awareness",o:["Knowledge","Awareness","Thinking","Vision"]},
-{e:"🕳️📱",a:"Digital Addiction",o:["Phone","Digital Addiction","Gaming","Social Media"]},
-{e:"⚖️🤔",a:"Decision Making",o:["Choice","Decision Making","Thinking","Judgement"]},
-{e:"🧩🧠",a:"Problem Solving",o:["Math","Puzzle","Problem Solving","Logic"]},
-{e:"⏳🔥",a:"Pressure",o:["Time","Pressure","Stress","Fear"]},
-{e:"🛤️🎯",a:"Life Direction",o:["Journey","Life Direction","Goal","Path"]},
-{e:"🌑🧠",a:"Mental Health",o:["Mind","Mental Health","Stress","Emotion"]}
+/* HARD (Conceptual but fair) */
+{ e:"🧠💡", a:"Innovation", o:["Innovation","Routine","Silence","Delay"] },
+{ e:"🔥🚀", a:"Startup", o:["Startup","Retirement","Vacation","Homework"] },
+{ e:"⏰💣", a:"Deadline", o:["Deadline","Festival","Weather","Holiday"] },
+{ e:"🤯📚", a:"Overthinking", o:["Overthinking","Celebration","Relaxation","Travel"] },
+{ e:"👨‍👩‍👧‍👦❤️", a:"Family", o:["Family","Audience","Team","Crowd"] },
+{ e:"🎯🏆", a:"Winner", o:["Winner","Participant","Audience","Referee"] },
+{ e:"🌍🛰️", a:"Satellite", o:["Satellite","Submarine","Bus","Train"] },
+{ e:"🕉️🙏", a:"Spiritual", o:["Spiritual","Technical","Political","Financial"] },
+{ e:"🚓💥", a:"Police Chase", o:["Police Chase","Cooking","Lecture","Meditation"] },
+{ e:"🎥👑", a:"Bollywood", o:["Bollywood","News","Weather","Education"] }
 
 ];
-
 shuffle(allQuiz);
 
 let i=0,score=0;
