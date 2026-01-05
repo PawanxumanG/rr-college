@@ -13,8 +13,6 @@ body{
     background:#0f1117;
     color:#fff;
 }
-
-/* HEADER */
 .header{
     background:linear-gradient(90deg,#7b2cff,#2575fc);
     padding:22px 16px;
@@ -22,11 +20,7 @@ body{
 }
 .header h1{margin:0;font-size:22px;font-weight:800;}
 .header p{margin-top:6px;font-size:14px;opacity:.9}
-
-/* CONTAINER */
 .container{padding:20px;max-width:420px;margin:auto;}
-
-/* CARD */
 .quiz-card{
     background:#161a22;
     border-radius:18px;
@@ -34,19 +28,9 @@ body{
     text-align:center;
     box-shadow:0 0 30px rgba(0,0,0,.7);
 }
-
-/* LEVEL */
-.level{
-    font-size:13px;
-    color:#ff9800;
-    margin-bottom:10px;
-}
-
-/* EMOJI */
+.level{font-size:13px;color:#ff9800;margin-bottom:10px;}
 .emoji{font-size:48px;margin-bottom:14px;}
 .question{font-size:18px;font-weight:700;margin-bottom:18px;}
-
-/* OPTIONS */
 .option{
     width:100%;
     padding:14px;
@@ -62,11 +46,7 @@ body{
 .option:active{transform:scale(.97)}
 .correct{background:#16a34a}
 .wrong{background:#dc2626}
-
-/* SCORE */
 .score{margin-top:14px;font-size:14px;opacity:.85}
-
-/* NEXT */
 .next-btn{
     margin-top:18px;
     width:100%;
@@ -79,8 +59,6 @@ body{
     color:#fff;
     display:none;
 }
-
-/* BACK */
 .back-btn{
     margin-top:22px;
     width:100%;
@@ -99,14 +77,14 @@ body{
 
 <div class="header">
     <h1>😄 Emoji Quiz</h1>
-    <p>Easy → Medium → Hard</p>
+    <p>Think smart, not fast</p>
 </div>
 
 <div class="container">
 <div class="quiz-card">
 
     <div class="level" id="level">Level: Easy</div>
-    <div class="emoji" id="emoji">🎓📚</div>
+    <div class="emoji" id="emoji">🤔</div>
     <div class="question">Guess the word</div>
 
     <button class="option" onclick="check(this)"></button>
@@ -123,7 +101,6 @@ body{
 </div>
 
 <script>
-// 🔀 SHUFFLE
 function shuffle(arr){
     for(let i=arr.length-1;i>0;i--){
         const j=Math.floor(Math.random()*(i+1));
@@ -131,65 +108,50 @@ function shuffle(arr){
     }
 }
 
-// 🧠 100+ QUESTIONS
 const allQuiz = [
-/* EASY */
-{e:"🎓📚",a:"College",o:["College","School","Library","Exam"]},
-{e:"🏏🇮🇳",a:"Cricket",o:["Football","Cricket","Hockey","Kabaddi"]},
-{e:"🍕🍔",a:"Fast Food",o:["Dinner","Fast Food","Party","Lunch"]},
-{e:"📱📸",a:"Instagram",o:["Facebook","Instagram","WhatsApp","Snapchat"]},
-{e:"☕🍪",a:"Tea Break",o:["Tea Break","Breakfast","Snack","Coffee"]},
-{e:"🎧🎶",a:"Music",o:["Radio","Podcast","Music","DJ"]},
-{e:"📖✏️",a:"Study",o:["Homework","Study","Exam","Notes"]},
-{e:"🍫❤️",a:"Chocolate",o:["Cake","Chocolate","Love","Gift"]},
-{e:"🚗💨",a:"Car",o:["Bike","Bus","Car","Taxi"]},
-{e:"📸🤳",a:"Selfie",o:["Photo","Camera","Selfie","Video"]},
-{e:"🏫🧑‍🏫",a:"School",o:["College","Office","School","Class"]},
-{e:"🍎🍌",a:"Fruits",o:["Vegetables","Fruits","Juice","Salad"]},
-{e:"🛏️😴",a:"Sleep",o:["Sleep","Dream","Bed","Lazy"]},
-{e:"🎮🕹️",a:"Gaming",o:["Gaming","Sports","Coding","Movie"]},
-{e:"📦🚚",a:"Delivery",o:["Shop","Delivery","Courier","Order"]},
 
-/* MEDIUM */
-{e:"🎬❤️",a:"Romantic Movie",o:["Action Movie","Romantic Movie","Drama","Comedy"]},
-{e:"👑🐯",a:"Tiger Zinda Hai",o:["War","Tiger Zinda Hai","Sultan","Pathaan"]},
-{e:"🕺💃🎶",a:"Dance Party",o:["Wedding","Dance Party","Concert","Festival"]},
-{e:"👨‍🎤🎤",a:"Singer",o:["Actor","Rapper","Singer","DJ"]},
-{e:"🏆🏏",a:"IPL",o:["World Cup","Test Match","IPL","Ranji"]},
-{e:"💻⌨️",a:"Coding",o:["Typing","Coding","Gaming","Design"]},
-{e:"🧠❓",a:"Quiz",o:["Puzzle","Math","Quiz","Memory"]},
-{e:"📺🍿",a:"Netflix",o:["TV","Cinema","Netflix","Prime"]},
-{e:"🚆🧳",a:"Travel",o:["Trip","Journey","Travel","Tour"]},
-{e:"🎭😂",a:"Comedy",o:["Drama","Comedy","Horror","Romance"]},
-{e:"💣🔥",a:"Action Movie",o:["Comedy","Thriller","Action Movie","Drama"]},
-{e:"🎓🎉",a:"Graduation",o:["Exam","Party","Graduation","Farewell"]},
-{e:"👨‍💼💼",a:"Office",o:["Office","Meeting","Interview","Work"]},
-{e:"📊📈",a:"Business",o:["Business","Finance","Stock","Market"]},
-{e:"📸🎞️",a:"Photography",o:["Camera","Photography","Movie","Video"]},
+/* EASY (simple idea recognition) */
+{e:"🌞😎",a:"Summer",o:["Summer","Holiday","Vacation","Weather"]},
+{e:"🌧️☂️",a:"Rain",o:["Rain","Cloud","Storm","Flood"]},
+{e:"📱🔋",a:"Charging",o:["Calling","Charging","Settings","Internet"]},
+{e:"🍔🍟",a:"Junk Food",o:["Dinner","Junk Food","Snack","Meal"]},
+{e:"🎒🏫",a:"Student",o:["Teacher","Student","School","Class"]},
+{e:"🐶🏠",a:"Pet",o:["Pet","Animal","Dog","Home"]},
+{e:"🚦🚗",a:"Traffic",o:["Road","Traffic","Drive","Signal"]},
+{e:"📦🏠",a:"Delivery",o:["Shop","Delivery","Courier","Store"]},
+{e:"💡❌",a:"Power Cut",o:["Light","Electricity","Power Cut","Switch"]},
+{e:"📞📴",a:"No Network",o:["Call","Offline","No Network","Silent"]},
 
-/* HARD (Bollywood + tricky) */
-{e:"🕶️🚬",a:"KGF",o:["KGF","Pushpa","Vikram","Don"]},
-{e:"🧔🔥",a:"Animal",o:["Kabir Singh","Animal","Sultan","War"]},
-{e:"👮🔫",a:"Singham",o:["Dabangg","Singham","Sooryavanshi","Police"]},
-{e:"🧠🔍",a:"Detective",o:["Detective","Doctor","Scientist","Lawyer"]},
-{e:"🎥👑",a:"Bollywood",o:["Hollywood","Tollywood","Bollywood","Cinema"]},
-{e:"👨‍👩‍👧‍👦❤️",a:"Family",o:["Friends","Couple","Family","Love"]},
-{e:"🚓💥",a:"Police Chase",o:["Fight","Police Chase","Action","Crime"]},
-{e:"⏰💣",a:"Time Bomb",o:["Deadline","Timer","Time Bomb","Alarm"]},
-{e:"🌍🛰️",a:"Satellite",o:["Rocket","Satellite","Space","NASA"]},
-{e:"🤯📚",a:"Overthinking",o:["Stress","Study","Overthinking","Pressure"]},
-{e:"🎯🏆",a:"Winner",o:["Goal","Winner","Champion","Hero"]},
-{e:"🧑‍💻🌙",a:"Night Coder",o:["Hacker","Developer","Night Coder","Student"]},
-{e:"🧠💡",a:"Innovation",o:["Idea","Innovation","Startup","Brainstorm"]},
-{e:"🔥🚀",a:"Startup",o:["Business","Startup","Growth","Success"]},
-{e:"🕉️🙏",a:"Spiritual",o:["Religious","Meditation","Spiritual","Temple"]}
+/* MEDIUM (logic + connection) */
+{e:"🧠💭",a:"Thinking",o:["Thinking","Idea","Memory","Focus"]},
+{e:"⌛⏰",a:"Time Management",o:["Schedule","Deadline","Time Management","Routine"]},
+{e:"🔐🌐",a:"Cyber Security",o:["Internet","Cyber Security","Hacking","Password"]},
+{e:"💰📉",a:"Loss",o:["Loss","Debt","Problem","Failure"]},
+{e:"📈💼",a:"Career Growth",o:["Job","Career Growth","Promotion","Office"]},
+{e:"📚☕",a:"Late Study",o:["Exam","Late Study","Coffee","Stress"]},
+{e:"🎯📊",a:"Goal Setting",o:["Target","Planning","Goal Setting","Focus"]},
+{e:"🤝💼",a:"Team Work",o:["Meeting","Team Work","Office","Group"]},
+{e:"🌍🤝",a:"Global Unity",o:["World","Peace","Global Unity","Nation"]},
+{e:"💻🌙",a:"Night Shift",o:["Sleep","Night Shift","Work","Office"]},
+
+/* HARD (abstract & conceptual) */
+{e:"🧠🔄",a:"Overthinking",o:["Stress","Overthinking","Confusion","Problem"]},
+{e:"🔥📉",a:"Burnout",o:["Tired","Burnout","Failure","Stress"]},
+{e:"🚀🧠",a:"Innovation",o:["Startup","Innovation","Idea","Technology"]},
+{e:"👁️‍🗨️🧠",a:"Awareness",o:["Knowledge","Awareness","Thinking","Vision"]},
+{e:"🕳️📱",a:"Digital Addiction",o:["Phone","Digital Addiction","Gaming","Social Media"]},
+{e:"⚖️🤔",a:"Decision Making",o:["Choice","Decision Making","Thinking","Judgement"]},
+{e:"🧩🧠",a:"Problem Solving",o:["Math","Puzzle","Problem Solving","Logic"]},
+{e:"⏳🔥",a:"Pressure",o:["Time","Pressure","Stress","Fear"]},
+{e:"🛤️🎯",a:"Life Direction",o:["Journey","Life Direction","Goal","Path"]},
+{e:"🌑🧠",a:"Mental Health",o:["Mind","Mental Health","Stress","Emotion"]}
+
 ];
 
-// 🔀 PREPARE GAME
 shuffle(allQuiz);
 
 let i=0,score=0;
-const easy=15, medium=35;
+const easy=10, medium=20;
 
 function levelName(){
     if(i<easy) return "Easy";
@@ -200,7 +162,6 @@ function levelName(){
 function load(){
     if(i>=allQuiz.length){i=0;score=0;shuffle(allQuiz);}
     document.getElementById("level").innerText="Level: "+levelName();
-
     const q=allQuiz[i];
     document.getElementById("emoji").innerText=q.e;
 
@@ -232,11 +193,7 @@ function check(btn){
     document.getElementById("next").style.display="block";
 }
 
-function next(){
-    i++;
-    load();
-}
-
+function next(){ i++; load(); }
 load();
 </script>
 
