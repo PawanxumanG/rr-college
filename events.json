@@ -30,9 +30,9 @@
           ]
         ],
         "glow": {
-          "color": "#ff00ff",
-          "blur": 86,
-          "intensity": 0
+          "color": "#bd808d",
+          "blur": 100,
+          "intensity": 1
         }
       },
       "content": [
