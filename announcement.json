@@ -1,19 +1,19 @@
 {
   "show": true,
-  "title": "📢 New Game Added! 🎮🔥",
-  "message": "We’ve added a new driving game to the Games Zone 🚗✨\nEnjoy smooth, relaxing gameplay and explore something new!\n\n⚠️ Note: This game may temporarily use up to 30 MB of device storage for better performance.\n\nHappy gaming & thank you for staying with us ❤️\n",
+  "title": "📢 Sports Forms Reminder",
+  "message": "All students are required to fill the sports forms available in the Forms section of the RR Events App. 9th January (Friday) is the last day for form submission. 📝 Annual Sports Day will be held on 10th January (Saturday). ⏰ Event timings will be announced soon.",
   "theme": {
     "gradient": [
-      "#ff00ff",
-      "#cccccc"
+      "#0000ff",
+      "#ff00ff"
     ],
     "glow": {
-      "color": "#00ff00",
+      "color": "#00ffff",
       "blur": 100,
       "intensity": 1
     },
     "textColor": "#ffffff",
     "buttonColor": "#bf6767"
   },
-  "id": "ann-1767640747305"
+  "id": "ann-1767763343613"
 }
