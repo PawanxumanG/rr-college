@@ -5,6 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Forms | RR Events</title>
 
+<!-- ================= GOOGLE ANALYTICS ================= -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-9JW1V42V83"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-9JW1V42V83', {
+    page_title: 'Forms Page',
+    page_path: '/forms.html'
+  });
+</script>
+<!-- ==================================================== -->
+
 <style>
 body{
     margin:0;
@@ -144,7 +158,7 @@ body{
         <span class="tag tag-open">✅ Open for Everyone</span>
 
         <button class="btn btn-open"
-            onclick="openForm('https://docs.google.com/forms/d/e/1FAIpQLSf7EeeOOhvE1DbXm_U92D0vEuKjBz4Qacw8aHPAq2xznnb4qA/viewform')">
+            onclick="openGeneralForm()">
             ▶ Open Form
         </button>
     </div>
@@ -164,7 +178,7 @@ body{
         <span class="tag tag-warning">⚠ Restricted</span>
 
         <button class="btn btn-restricted"
-            onclick="openForm('https://docs.google.com/forms/d/e/1FAIpQLSeQ8TewxD0JXtK7c6PJ7hW0Usuw05crfpVubLICv6liCUhTWA/viewform')">
+            onclick="openCaptainForm()">
             ▶ Open Captain Form
         </button>
     </div>
@@ -179,10 +193,29 @@ body{
 </div>
 
 <script>
-function openForm(url){
-    window.location.href = url;
+function openGeneralForm(){
+    gtag('event', 'open_general_form', {
+        event_category: 'forms',
+        event_label: 'General Participation'
+    });
+    window.location.href =
+    'https://docs.google.com/forms/d/e/1FAIpQLSf7EeeOOhvE1DbXm_U92D0vEuKjBz4Qacw8aHPAq2xznnb4qA/viewform';
 }
+
+function openCaptainForm(){
+    gtag('event', 'open_captain_form', {
+        event_category: 'forms',
+        event_label: 'Captain Only'
+    });
+    window.location.href =
+    'https://docs.google.com/forms/d/e/1FAIpQLSeQ8TewxD0JXtK7c6PJ7hW0Usuw05crfpVubLICv6liCUhTWA/viewform';
+}
+
 function goBack(){
+    gtag('event', 'back_to_options', {
+        event_category: 'navigation',
+        event_label: 'Forms Page'
+    });
     window.history.back();
 }
 </script>
