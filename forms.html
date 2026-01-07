@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Forms</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+body{
+    margin:0;
+    font-family:'Segoe UI', Arial, sans-serif;
+    background:#0f1117;
+    color:#ffffff;
+}
+
+/* HEADER */
+.header{
+    background:linear-gradient(90deg,#ff7a18,#ff9800);
+    padding:22px 16px;
+    text-align:center;
+}
+.header h1{
+    margin:0;
+    font-size:22px;
+    font-weight:700;
+}
+.header p{
+    margin-top:6px;
+    font-size:13px;
+    opacity:.9;
+}
+
+/* CONTAINER */
+.container{
+    padding:16px;
+}
+
+/* FORM CARD */
+.form-card{
+    background:#161a22;
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:16px;
+    box-shadow:0 8px 22px rgba(0,0,0,.55);
+    cursor:pointer;
+}
+.form-title{
+    font-size:16px;
+    font-weight:700;
+}
+.form-desc{
+    font-size:13px;
+    opacity:.85;
+    margin-top:6px;
+}
+.tag{
+    display:inline-block;
+    margin-top:10px;
+    padding:4px 10px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:600;
+}
+.tag-all{background:#2ecc71;}
+.tag-captain{background:#e67e22;}
+.tag-warning{background:#c0392b;}
+
+/* BACK BUTTON */
+.back-btn{
+    margin:28px 0 80px;
+    padding:14px;
+    width:100%;
+    border:none;
+    border-radius:14px;
+    font-size:16px;
+    font-weight:700;
+    background:#2c3440;
+    color:#fff;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>📄 Forms</h1>
+    <p>Official RR Events registrations</p>
+</div>
+
+<div class="container">
+
+<!-- GENERAL FORM -->
+<div class="form-card"
+onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSf7EeeOOhvE1DbXm_U92D0vEuKjBz4Qacw8aHPAq2xznnb4qA/viewform?usp=header'">
+    <div class="form-title">General Participation Form</div>
+    <div class="form-desc">
+        This form must be filled by <b>all students</b> participating in RR Events.
+    </div>
+    <span class="tag tag-all">✅ Open for Everyone</span>
+</div>
+
+<!-- SPORTS CAPTAIN FORM -->
+<div class="form-card"
+onclick="location.href='https://docs.google.com/forms/d/e/1FAIpQLSeQ8TewxD0JXtK7c6PJ7hW0Usuw05crfpVubLICv6liCUhTWA/viewform?usp=header'">
+    <div class="form-title">Cricket & Volleyball Team Form</div>
+    <div class="form-desc">
+        This form must be filled <b>only by team captains</b> for Cricket & Volleyball.
+        <br><br>
+        ❗ <b>Do not fill if you are not a captain.</b>
+    </div>
+    <span class="tag tag-captain">🏏 Captain Only</span>
+    <span class="tag tag-warning">⚠️ Restricted</span>
+</div>
+
+<button class="back-btn" onclick="history.back()">
+    ⬅ Back
+</button>
+
+</div>
+
+</body>
+</html>
