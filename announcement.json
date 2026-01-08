@@ -7,16 +7,15 @@
       "#2bbab3",
       "#ff00ff",
       "#000000",
-      "#00ffff",
-      "#ffffff"
+      "#00ffff"
     ],
     "glow": {
       "color": "#ff0000",
       "blur": 100,
-      "intensity": 1
+      "intensity": 0.93
     },
     "textColor": "#ffffff",
     "buttonColor": "#bf6767"
   },
-  "id": "ann-1767849607822"
+  "id": "ann-1767849686569"
 }
