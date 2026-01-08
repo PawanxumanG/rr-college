@@ -1,21 +1,38 @@
 {
   "show": true,
-  "title": "📢 Sports Forms Reminder",
-  "message": "All students are required to fill the sports forms available in the Forms section of the RR Events App. 9th January (Friday) is the last day for form submission. 📝 Annual Sports Day will be held on 10th January (Saturday). ⏰ Event timings will be announced soon Check Notice For More Details.",
+  "id": "ann-1767495771410",
+  "title": "Hello Everyone!! 🤗",
+  "message": "📸 Karmanya Fest 2025 Photos Are Live!\n\nWe’re happy to announce that the official photos from Karmanya Fest 2025 are now available in the Album section of the RR Events App.\n\nThank you for your patience ❤️",
+  "type": "important",
+  "updated": "2025-12-30T14:00:00",
+
   "theme": {
-    "gradient": [
-      "#ffff00",
-      "#ffffff",
-      "#ffff00",
-      "#ffffff"
-    ],
-    "glow": {
-      "color": "#ff0000",
-      "blur": 100,
-      "intensity": 0.93
+    "mode": "gradient",
+
+    "gradients": {
+      "primary": ["#ff9800", "#ff5722"],
+      "secondary": ["#7b2cff", "#2575fc"],
+      "success": ["#00b09b", "#96c93d"],
+      "info": ["#00c6ff", "#0072ff"],
+      "danger": ["#ff512f", "#dd2476"]
     },
-    "textColor": "#000000",
-    "buttonColor": "#bf6767"
-  },
-  "id": "ann-1767854527583"
+
+    "activeGradient": "primary",
+
+    "glow": {
+      "enabled": true,
+      "color": "rgba(255,152,0,0.65)",
+      "blur": 30
+    },
+
+    "text": {
+      "titleColor": "#ffffff",
+      "messageColor": "#ffffff"
+    },
+
+    "button": {
+      "background": "#000000",
+      "textColor": "#ffffff"
+    }
+  }
 }
