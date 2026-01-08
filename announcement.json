@@ -4,18 +4,18 @@
   "message": "All students are required to fill the sports forms available in the Forms section of the RR Events App. 9th January (Friday) is the last day for form submission. 📝 Annual Sports Day will be held on 10th January (Saturday). ⏰ Event timings will be announced soon Check Notice For More Details.",
   "theme": {
     "gradient": [
-      "#2bbab3",
-      "#ff00ff",
-      "#000000",
-      "#00ffff"
+      "#ffff00",
+      "#ffffff",
+      "#ffff00",
+      "#ffffff"
     ],
     "glow": {
       "color": "#ff0000",
       "blur": 100,
       "intensity": 0.93
     },
-    "textColor": "#ffffff",
+    "textColor": "#000000",
     "buttonColor": "#bf6767"
   },
-  "id": "ann-1767850092790"
+  "id": "ann-1767850138811"
 }
