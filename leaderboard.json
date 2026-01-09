@@ -2,7 +2,11 @@
   "show": true,
   "title": "🏆 Sports Hall of Fame",
   "theme": {
-    "cardGradient": ["#0f2027", "#203a43", "#2c5364"],
+    "cardGradient": [
+      "#0f2027",
+      "#203a43",
+      "#2c5364"
+    ],
     "glowColor": "rgba(0,198,255,0.6)",
     "titleColor": "#ffcc70",
     "gold": "#ffd700",
@@ -11,11 +15,13 @@
   },
   "sports": [
     {
-      "sport": "100m Race",
+      "sport": "Leaderboard",
       "winners": [
-        { "position": 1, "name": "Rahul Patil", "class": "FY BSc" },
-        { "position": 2, "name": "Aman Singh", "class": "SY BCom" },
-        { "position": 3, "name": "Rohit Sharma", "class": "TY BA" }
+        {
+          "position": 1,
+          "name": "All the best ",
+          "class": "Class"
+        }
       ]
     }
   ]
