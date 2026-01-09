@@ -298,7 +298,36 @@ gtag('event','home_loaded');
   <div class="ai-answer" id="aiAnswer"></div>
 </div>
 </div>
+<!-- 🏆 SPORTS LEADERBOARD -->
+<button
+  onclick="location.href='leaderboard.html'"
+  style="
+    width:100%;
+    margin:14px 0;
+    padding:16px;
+    border:none;
+    border-radius:16px;
+    background:linear-gradient(135deg,#ffd700,#ff9800,#ff5722);
+    background-size:300% 300%;
+    color:#000;
+    font-size:16px;
+    font-weight:900;
+    letter-spacing:0.5px;
+    cursor:pointer;
+    box-shadow:0 0 22px rgba(255,215,0,0.7);
+    animation: leaderboardGlow 3s ease infinite;
+  "
+>
+  🏆 Sports Leaderboard • Hall of Fame
+</button>
 
+<style>
+@keyframes leaderboardGlow {
+  0% { background-position: 0% 50%; box-shadow:0 0 18px rgba(255,215,0,.6); }
+  50% { background-position: 100% 50%; box-shadow:0 0 30px rgba(255,152,0,.9); }
+  100% { background-position: 0% 50%; box-shadow:0 0 18px rgba(255,215,0,.6); }
+}
+</style>
 <div class="grid">
   <button class="btn-payment" onclick="trackAndGo('payment')">🎟️ Payment</button>
   <button class="btn-promo" onclick="trackAndGo('promo')">🎬 Promo</button>
