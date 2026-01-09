@@ -1,35 +1,22 @@
 {
   "show": true,
-  "title": "🏆 Sports Annual 2026 – Winners",
-  "subtitle": "Official Results | RR International College",
-  "lastUpdated": "2026-02-01",
+  "title": "🏆 Sports Hall of Fame",
+  "theme": {
+    "cardGradient": ["#0f2027", "#203a43", "#2c5364"],
+    "glowColor": "rgba(0,198,255,0.6)",
+    "titleColor": "#ffcc70",
+    "gold": "#ffd700",
+    "silver": "#c0c0c0",
+    "bronze": "#cd7f32"
+  },
   "sports": [
     {
-      "sport": "Test",
+      "sport": "100m Race",
       "winners": [
-        {
-          "position": 1,
-          "name": "Rahul Patil",
-          "class": "FY BSc"
-        },
-        {
-          "position": 2,
-          "name": "Aman Singh",
-          "class": "SY BCom"
-        },
-        {
-          "position": 3,
-          "name": "Rohit Sharma",
-          "class": "TY BA"
-        }
+        { "position": 1, "name": "Rahul Patil", "class": "FY BSc" },
+        { "position": 2, "name": "Aman Singh", "class": "SY BCom" },
+        { "position": 3, "name": "Rohit Sharma", "class": "TY BA" }
       ]
     }
-  ],
-  "theme": {
-    "gold": "#00ffff",
-    "silver": "#00ffff",
-    "titleColor": "#00ffff",
-    "bronze": "#00ffff",
-    "glowColor": "rgba(0,0,0,0.6)"
-  }
+  ]
 }

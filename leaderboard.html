@@ -2,26 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Sports Annual Leaderboard – RR International College</title>
+<title>Sports Hall of Fame – RR International College</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="style.css">
-
-<!-- ================= GOOGLE ANALYTICS ================= -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-9JW1V42V83"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config','G-9JW1V42V83',{
-  page_title:'Sports Leaderboard',
-  page_path:'/leaderboard.html'
-});
-</script>
-<!-- =================================================== -->
 
 <style>
 body{
+  margin:0;
   background:#0f1117;
+  font-family:Arial, sans-serif;
   color:#fff;
 }
 
@@ -34,39 +22,60 @@ body{
 .header h1{margin:0;font-size:20px;}
 .header p{margin-top:6px;font-size:13px;opacity:.9}
 
-/* CARD */
-.leader-card{
-  margin:16px;
-  padding:18px;
-  border-radius:18px;
-  background:#161a22;
-  box-shadow:0 0 22px rgba(0,0,0,.6);
-  animation:fadeUp .6s ease;
-}
-.leader-card h2{
-  margin-top:0;
-  font-size:18px;
-  color:#ffb347;
+/* 🎨 ANIMATED CARD */
+.card{
+  margin:18px;
+  padding:22px;
+  border-radius:22px;
+  background:linear-gradient(
+    -45deg,
+    #00c6ff,
+    #0072ff,
+    #00b09b,
+    #96c93d
+  );
+  background-size:400% 400%;
+  animation:gradientFlow 10s ease infinite;
+  box-shadow:0 0 45px rgba(0,198,255,.6);
 }
 
-/* WINNERS */
-.winner{
+/* Gradient Animation */
+@keyframes gradientFlow{
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+
+/* TITLE */
+.card h2{
+  margin:0 0 16px;
+  font-size:18px;
+  color:#ffecb3;
   display:flex;
   align-items:center;
-  justify-content:space-between;
-  background:#1c2230;
-  border-radius:12px;
-  padding:10px 14px;
-  margin-top:10px;
-  font-size:14px;
+  gap:8px;
 }
+
+/* ROW */
+.row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(0,0,0,0.25);
+  padding:12px 14px;
+  border-radius:14px;
+  margin-top:10px;
+  backdrop-filter: blur(6px);
+}
+
 .badge{
-  font-weight:700;
+  font-weight:800;
 }
 .gold{color:#ffd700}
 .silver{color:#c0c0c0}
 .bronze{color:#cd7f32}
 
+/* BACK BUTTON */
 .back-btn{
   width:90%;
   max-width:320px;
@@ -79,11 +88,7 @@ body{
   background:linear-gradient(135deg,#00c6ff,#0072ff);
   color:#fff;
   display:block;
-}
-
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(15px)}
-  to{opacity:1;transform:none}
+  box-shadow:0 0 25px rgba(0,198,255,.6);
 }
 </style>
 </head>
@@ -92,44 +97,38 @@ body{
 
 <div class="header">
   <h1>RR INTERNATIONAL COLLEGE</h1>
-  <p>Sports Annual Leaderboard</p>
+  <p>Sports Hall of Fame 🏆</p>
 </div>
 
-<div class="container" id="leaderboard"></div>
+<div id="content"></div>
 
 <button class="back-btn" onclick="location.href='index.html'">
-  ← Back to Home
+← Back to Home
 </button>
 
 <script>
-fetch('leaderboard.json?t=' + Date.now())
+fetch("leaderboard.json?t=" + Date.now())
 .then(res => res.json())
 .then(data => {
-  if(!data.show){
-    document.getElementById('leaderboard').innerHTML =
-      "<p style='text-align:center;opacity:.7'>Results will be announced soon.</p>";
-    return;
-  }
 
-  gtag('event','leaderboard_open',{
-    event_category:'Sports',
-    event_label:data.title
-  });
+  if(!data.show) return;
 
-  const container = document.getElementById('leaderboard');
+  const container = document.getElementById("content");
 
   data.sports.forEach(sport => {
-    const card = document.createElement('div');
-    card.className = 'leader-card';
+
+    const card = document.createElement("div");
+    card.className = "card";
 
     let html = `<h2>🏅 ${sport.sport}</h2>`;
 
     sport.winners.forEach(w => {
-      let cls = w.position === 1 ? 'gold' :
-                w.position === 2 ? 'silver' : 'bronze';
+      let cls =
+        w.position === 1 ? "gold" :
+        w.position === 2 ? "silver" : "bronze";
 
       html += `
-        <div class="winner">
+        <div class="row">
           <span class="badge ${cls}">#${w.position}</span>
           <span>${w.name}</span>
           <span>${w.class}</span>
@@ -139,16 +138,8 @@ fetch('leaderboard.json?t=' + Date.now())
 
     card.innerHTML = html;
     container.appendChild(card);
-
-    gtag('event','sport_result_view',{
-      event_category:'Sports',
-      event_label:sport.sport
-    });
   });
-})
-.catch(() => {
-  document.getElementById('leaderboard').innerHTML =
-    "<p style='text-align:center;color:#ff5555'>Unable to load leaderboard.</p>";
+
 });
 </script>
 
