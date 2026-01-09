@@ -24,5 +24,12 @@
         }
       ]
     }
-  ]
+  ],
+  "theme": {
+    "gold": "#00ffff",
+    "silver": "#00ffff",
+    "titleColor": "#00ffff",
+    "bronze": "#00ffff",
+    "glowColor": "rgba(0,0,0,0.6)"
+  }
 }
