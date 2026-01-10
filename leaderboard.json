@@ -3,10 +3,10 @@
   "title": "🏆 Sports Hall of Fame",
   "theme": {
     "cardGradient": [
-      "#0f2027",
-      "#203a43",
-      "#2c5364",
-      "#00ffff"
+      "#ff0000",
+      "#00ffff",
+      "#ff00ff",
+      "#00ff00"
     ],
     "glowColor": "rgba(255, 0, 0, 0.6)",
     "titleColor": "#ffcc70",
