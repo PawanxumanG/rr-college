@@ -15,12 +15,12 @@
   },
   "sports": [
     {
-      "sport": "Leaderboard",
+      "sport": "Cricket Winner \"Boys\"",
       "winners": [
         {
-          "position": 1,
-          "name": "All the best ",
-          "class": "Class"
+          "position": 0,
+          "name": "Team name Bindass Boys ",
+          "class": "All Class"
         }
       ]
     }
