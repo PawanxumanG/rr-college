@@ -1,10 +1,10 @@
 {
-  "show": true,
+  "show": false,
   "title": "📢 Announcement",
   "message": "All students participating in the Annual Sports Day must be present sharp by 7:00 AM on Saturday, 10th January at the college. Kindly report on time in proper sports attire and follow the instructions given by the committee.",
   "type": "important",
-  "updated": "2026-01-08T18:19:45.606Z",
-  "id": "ann-1767896385606",
+  "updated": "2026-01-10T07:59:15.630Z",
+  "id": "ann-1768031955630",
   "theme": {
     "gradient": [
       "#0000ff",
