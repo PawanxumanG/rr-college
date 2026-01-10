@@ -23,6 +23,16 @@
           "class": "All Class"
         }
       ]
+    },
+    {
+      "sport": "Kho Kho",
+      "winners": [
+        {
+          "position": 1,
+          "name": "TBD",
+          "class": "N/A"
+        }
+      ]
     }
   ]
 }
