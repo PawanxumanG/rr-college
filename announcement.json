@@ -1,10 +1,10 @@
 {
-  "show": false,
+  "show": true,
   "title": "📢 Announcement",
-  "message": "All students participating in the Annual Sports Day must be present sharp by 7:00 AM on Saturday, 10th January at the college. Kindly report on time in proper sports attire and follow the instructions given by the committee.",
-  "type": "important",
-  "updated": "2026-01-10T07:59:15.630Z",
-  "id": "ann-1768031955630",
+  "message": "15th January is a Holiday ",
+  "type": "normal",
+  "updated": "2026-01-14T17:51:29.731Z",
+  "id": "ann-1768413089731",
   "theme": {
     "gradient": [
       "#0000ff",
@@ -33,7 +33,7 @@
     "glow": {
       "color": "rgba(255,152,0,0.65)",
       "blur": 30,
-      "intensity": 1
+      "intensity": 0.81
     },
     "textColor": "#ffffff",
     "buttonColor": "#000000"
