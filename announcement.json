@@ -1,10 +1,10 @@
 {
-  "show": true,
+  "show": false,
   "title": "📢 Announcement",
   "message": "15th January is a Holiday ",
   "type": "normal",
-  "updated": "2026-01-14T17:51:29.731Z",
-  "id": "ann-1768413089731",
+  "updated": "2026-01-15T16:10:39.731Z",
+  "id": "ann-1768493439731",
   "theme": {
     "gradient": [
       "#0000ff",
