@@ -1,10 +1,10 @@
 {
-  "show": false,
-  "title": "📢 Announcement",
-  "message": "15th January is a Holiday ",
+  "show": true,
+  "title": "📢 ATTENTION E-SPORTS PARTICIPANTS:",
+  "message": "\n\nKindly make sure no hacks are used in the tournament. \nIf any participant is found using hacks in the official tournament will be disqualified and will be fined for the same.",
   "type": "normal",
-  "updated": "2026-01-15T16:10:39.731Z",
-  "id": "ann-1768493439731",
+  "updated": "2026-01-22T16:00:09.527Z",
+  "id": "ann-1769097609527",
   "theme": {
     "gradient": [
       "#0000ff",
